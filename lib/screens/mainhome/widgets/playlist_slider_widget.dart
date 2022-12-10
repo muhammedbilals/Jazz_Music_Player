@@ -22,23 +22,15 @@ class PlaylistSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0, top: 5, bottom: 5),
-              child: Text('Your Playlists',
-                  style: GoogleFonts.kanit(fontSize: 20, color: colorwhite)),
-            )
-          ],
-        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: SizedBox(
-            height: 200,
+            height: 160,
+            /////////////////////
             child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: playlist.length,
-                physics: ClampingScrollPhysics(),
+                // physics: ClampingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemBuilder: ((context, index) => Column(
                       children: [

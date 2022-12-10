@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 
@@ -74,40 +71,40 @@ class AllSongsWidget extends StatelessWidget {
             )
           ],
         ),
-        Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: songs.length,
-            itemBuilder: ((context, index) => Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0, left: 5),
-                  child: ListTile(
-                    leading: ClipRRect(
-                        child: Image.asset(
-                      songimage[index],
-                    )),
-                    title: Text(
-                      songs[index],
-                      style: GoogleFonts.kanit(color: colorwhite),
-                    ),
-                    subtitle: Text(author[index],
-                        style: GoogleFonts.kanit(
-                            color: colorwhite.withOpacity(0.7), fontSize: 12)),
-                    trailing: Wrap(
-                      spacing: 10,
-                      children: [
-                        Icon(
-                          Icons.favorite_border_outlined,
-                          color: colorwhite,
-                        ),
-                        Icon(
-                          Icons.more_vert,
-                          color: colorwhite,
-                        ),
-                      ],
-                    ),
+        ///////////////////
+        ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: songs.length,
+          itemBuilder: ((context, index) => Padding(
+                padding: const EdgeInsets.only(bottom: 8.0, left: 5),
+                child: ListTile(
+                  leading: ClipRRect(
+                      child: Image.asset(
+                    songimage[index],
+                  )),
+                  title: Text(
+                    songs[index],
+                    style: GoogleFonts.kanit(color: colorwhite),
                   ),
-                )),
-          ),
+                  subtitle: Text(author[index],
+                      style: GoogleFonts.kanit(
+                          color: colorwhite.withOpacity(0.7), fontSize: 12)),
+                  trailing: Wrap(
+                    spacing: 10,
+                    children: [
+                      Icon(
+                        Icons.favorite_border_outlined,
+                        color: colorwhite,
+                      ),
+                      Icon(
+                        Icons.more_vert,
+                        color: colorwhite,
+                      ),
+                    ],
+                  ),
+                ),
+              )),
         ),
       ],
     );
