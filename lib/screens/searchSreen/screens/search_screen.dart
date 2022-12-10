@@ -8,20 +8,30 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Container(
-            height: 40,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: colorextralight),
-            child: TextField(
-              decoration: InputDecoration.collapsed(
-                  border: InputBorder.none,
-                  hintText: 'What do you want to listen to?'),
-              textAlign: TextAlign.start,
+    return Container(
+      color: colordark,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: colordark,
+          body: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              height: 47,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: colorextralight),
+              child: Padding(
+                padding: const EdgeInsets.only(left:10),
+                child: TextField(
+                  
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search ),
+                      border: InputBorder.none,
+                      hintText: 'What do you want to listen to?'),
+                     
+                  
+                ),
+              ),
             ),
           ),
         ),

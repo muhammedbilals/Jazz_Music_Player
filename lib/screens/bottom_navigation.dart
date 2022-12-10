@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/screens/libraryScreen/screens/library_screen.dart';
 import 'package:music_player/screens/mainhome/screens/home_screen.dart';
 import 'package:music_player/screens/searchSreen/screens/search_screen.dart';
 
@@ -24,10 +25,7 @@ class _HomeMainState extends State<HomeMain> {
   static const List<Widget> _widgetOptions = <Widget>[
      PlayerHome(),
     SearchScreen(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    LibraryScreen()
   ];
   void _onItemTapped(int index) {
     setState(() {
