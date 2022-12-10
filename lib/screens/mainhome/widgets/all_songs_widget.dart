@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/screens/mainhome/widgets/alert_dialog.dart';
 
 class AllSongsWidget extends StatelessWidget {
   AllSongsWidget({super.key});
@@ -11,16 +12,16 @@ class AllSongsWidget extends StatelessWidget {
     'Dark Knight Theme song',
     'Gladiator Sound track',
     'Top Gun: Maverick Soundtrack',
-        'There He Is Song The Amazing Spider-Man 2',
-        'Hans Zimmer - Interstellar',
+    'There He Is Song The Amazing Spider-Man 2',
+    'Hans Zimmer - Interstellar',
     'Hans Zimmer - The Classics ',
     'Dune sound track',
     'evantually',
     'Dark Knight Theme song',
     'Gladiator Sound track',
     'Top Gun: Maverick Soundtrack',
-        'There He Is Song The Amazing Spider-Man 2',
-        'Hans Zimmer - Interstellar',
+    'There He Is Song The Amazing Spider-Man 2',
+    'Hans Zimmer - Interstellar',
   ];
   List<String> author = [
     'Hans Zimmer',
@@ -91,14 +92,17 @@ class AllSongsWidget extends StatelessWidget {
                       style: GoogleFonts.kanit(
                           color: colorwhite.withOpacity(0.7), fontSize: 12)),
                   trailing: Wrap(
-                    spacing: 10,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       Icon(
                         Icons.favorite_border_outlined,
                         color: colorwhite,
                       ),
-                      Icon(
-                        Icons.more_vert,
+                      IconButton(
+                        onPressed: () {
+                          showOptions(context);
+                        },
+                        icon: Icon(Icons.more_vert),
                         color: colorwhite,
                       ),
                     ],
@@ -109,4 +113,83 @@ class AllSongsWidget extends StatelessWidget {
       ],
     );
   }
+}
+
+showOptions(BuildContext context) {
+  double vwidth = MediaQuery.of(context).size.width;
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      insetPadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.zero,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      backgroundColor: colorextralight,
+      content: Container(
+        height: 250,
+        width: vwidth,
+        child: Padding(
+          padding: const EdgeInsets.only(left:10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextButton.icon(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.favorite,
+                    color: colorblack,
+                  ),
+                  label: Text(
+                    'Add to Favourites',
+                    style: GoogleFonts.kanit(color: colorblack,fontSize: 17),
+                  )),
+              TextButton.icon(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.playlist_add,
+                    color: colorblack,
+                  ),
+                  label: Text(
+                    'Add to Playlist',
+                    style: GoogleFonts.kanit(color: colorblack,fontSize: 17),
+                  )),
+              TextButton.icon(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.share,
+                    color: colorblack,
+                  ),
+                  label: Text(
+                    'Share',
+                    style: GoogleFonts.kanit(color: colorblack,fontSize: 17),
+                  )),
+              TextButton.icon(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.shuffle,
+                    color: colorblack,
+                  ),
+                  label: Text(
+                    'Shuffle',
+                    style: GoogleFonts.kanit(color: colorblack,fontSize: 17),
+                  )),
+              TextButton.icon(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.repeat,
+                  color: colorblack,
+                ),
+                label: Text(
+                  'Repeat',
+                  style: GoogleFonts.kanit(color: colorblack,fontSize: 17),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }

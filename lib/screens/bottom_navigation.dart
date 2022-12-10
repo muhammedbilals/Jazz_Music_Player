@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/screens/home_screen.dart';
+import 'package:music_player/screens/searchSreen/screens/search_screen.dart';
 
 class HomeMain extends StatefulWidget {
   HomeMain({super.key});
@@ -22,10 +23,7 @@ class _HomeMainState extends State<HomeMain> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
      PlayerHome(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
+    SearchScreen(),
     Text(
       'Index 2: School',
       style: optionStyle,
