@@ -20,51 +20,48 @@ class PlaylistSlider extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0, top: 5, bottom: 5),
-                child: Text('Your Playlists',
-                    style: GoogleFonts.kanit(fontSize: 20, color: colorwhite)),
-              )
-            ],
+    return Column(
+      children: [
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0, top: 5, bottom: 5),
+              child: Text('Your Playlists',
+                  style: GoogleFonts.kanit(fontSize: 20, color: colorwhite)),
+            )
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: 200,
+            child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: playlist.length,
+                physics: ClampingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: ((context, index) => Column(
+                      children: [
+                        SizedBox(
+                          height: 130,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.asset(Playlistimage[index])),
+                          ),
+                        ),
+                        Text(
+                          playlist[index],
+                          style: GoogleFonts.kanit(
+                              fontSize: 15,
+                              color: colorwhite.withOpacity(0.5)),
+                        )
+                      ],
+                    ))),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                height: 200,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: playlist.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: ((context, index) => Column(
-                          children: [
-                            SizedBox(
-                              height: 150,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 10.0),
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(Playlistimage[index])),
-                              ),
-                            ),
-                            Text(
-                              playlist[index],
-                              style: GoogleFonts.kanit(
-                                  fontSize: 15,
-                                  color: colorwhite.withOpacity(0.5)),
-                            )
-                          ],
-                        ))),
-              ),
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 }
