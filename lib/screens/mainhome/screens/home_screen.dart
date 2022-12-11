@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/screens/mainhome/screens/playlist_list_screen.dart';
 import 'package:music_player/screens/mainhome/widgets/all_songs_widget.dart';
 import 'package:music_player/screens/mainhome/widgets/card_widget.dart';
 import 'package:music_player/screens/mainhome/widgets/playlist_slider_widget.dart';
@@ -48,6 +49,7 @@ class PlayerHome extends StatelessWidget {
                       )
                     ],
                   ),
+
                   Row(
                     children: [
                       Padding(
@@ -58,11 +60,48 @@ class PlayerHome extends StatelessWidget {
                       )
                     ],
                   ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CardWidget(
-                          cardicon: Icons.favorite, cardtext: 'Liked Songs'),
+                      // CardWidget(
+                      //     cardicon: Icons.favorite, cardtext: 'Liked Songs'),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const PlayListScreen()),
+                            );
+                          },
+                          child: Container(
+                            height: 55,
+                            width: vwidth * 0.45,
+                            decoration: BoxDecoration(
+                                color: colorextralight,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 15.0, right: 10),
+                                  child: Icon(Icons.favorite),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10.0, right: 10),
+                                  child: Text(
+                                    'Liked Songs',
+                                    style: GoogleFonts.kanit(fontSize: 20),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                       CardWidget(cardicon: Icons.album, cardtext: 'Albums'),
                     ],
                   ),

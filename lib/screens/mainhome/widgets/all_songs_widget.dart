@@ -3,8 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/widgets/alert_dialog.dart';
 
-class AllSongsWidget extends StatelessWidget {
+class AllSongsWidget extends StatefulWidget {
   AllSongsWidget({super.key});
+
+  @override
+  State<AllSongsWidget> createState() => _AllSongsWidgetState();
+}
+
+class _AllSongsWidgetState extends State<AllSongsWidget> {
+  bool istaped = true;
+
   List<String> songs = [
     'Hans Zimmer - The Classics ',
     'Dune sound track',
@@ -23,6 +31,7 @@ class AllSongsWidget extends StatelessWidget {
     'There He Is Song The Amazing Spider-Man 2',
     'Hans Zimmer - Interstellar',
   ];
+
   List<String> author = [
     'Hans Zimmer',
     'Hans Zimmer',
@@ -41,6 +50,7 @@ class AllSongsWidget extends StatelessWidget {
     'Hans Zimmer',
     'Hans Zimmer',
   ];
+
   List<String> songimage = [
     'assets/images/hanzimmer.jpg',
     'assets/images/hanszimmer.jpg',
@@ -59,6 +69,7 @@ class AllSongsWidget extends StatelessWidget {
     'assets/images/tame-impala-eventually-1400px_800.jpg',
     'assets/images/TDKR_sdtrck_cover.jpg',
   ];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -94,10 +105,16 @@ class AllSongsWidget extends StatelessWidget {
                   trailing: Wrap(
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      Icon(
-                        Icons.favorite_border_outlined,
-                        color: colorwhite,
-                      ),
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              istaped = false;
+                            });
+                          },
+                          icon: Icon(Icons.favorite,
+                              color: (istaped)
+                                  ? Color.fromARGB(255, 121, 121, 121)
+                                  : Color.fromARGB(255, 255, 0, 0))),
                       IconButton(
                         onPressed: () {
                           showOptions(context);
@@ -113,83 +130,105 @@ class AllSongsWidget extends StatelessWidget {
       ],
     );
   }
-}
 
-showOptions(BuildContext context) {
-  double vwidth = MediaQuery.of(context).size.width;
-  showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      insetPadding: EdgeInsets.zero,
-      contentPadding: EdgeInsets.zero,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      backgroundColor: colorextralight,
-      content: Container(
-        height: 250,
-        width: vwidth,
-        child: Padding(
-          padding: const EdgeInsets.only(left:10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextButton.icon(
+//   Widget? iconfav() {
+//     if (istaped = true) {
+//       return Icon(Icons.favorite_border_outlined);
+//     } else {
+//       return Icon(Icons.favorite_border_outlined);
+//     }
+//   }
+
+//   Widget? istapeda() {
+//     if (istaped = true) return Icon(Icons.favorite_border_outlined);
+//     return Icon(Icons.favorite);
+//   }
+// }
+
+// Widget lovebuttonoutline() {
+//   return Icon(Icons.favorite);
+// }
+
+// Widget lovebuttonfilled() {
+//   return Icon(Icons.favorite_border_outlined);
+// }
+
+  showOptions(BuildContext context) {
+    double vwidth = MediaQuery.of(context).size.width;
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        insetPadding: EdgeInsets.zero,
+        contentPadding: EdgeInsets.zero,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        backgroundColor: colorextralight,
+        content: Container(
+          height: 250,
+          width: vwidth,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextButton.icon(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.favorite,
+                      color: colorblack,
+                    ),
+                    label: Text(
+                      'Add to Favourites',
+                      style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
+                    )),
+                TextButton.icon(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.playlist_add,
+                      color: colorblack,
+                    ),
+                    label: Text(
+                      'Add to Playlist',
+                      style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
+                    )),
+                TextButton.icon(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.share,
+                      color: colorblack,
+                    ),
+                    label: Text(
+                      'Share',
+                      style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
+                    )),
+                TextButton.icon(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.shuffle,
+                      color: colorblack,
+                    ),
+                    label: Text(
+                      'Shuffle',
+                      style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
+                    )),
+                TextButton.icon(
                   onPressed: () {},
                   icon: Icon(
-                    Icons.favorite,
+                    Icons.repeat,
                     color: colorblack,
                   ),
                   label: Text(
-                    'Add to Favourites',
-                    style: GoogleFonts.kanit(color: colorblack,fontSize: 17),
-                  )),
-              TextButton.icon(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.playlist_add,
-                    color: colorblack,
+                    'Repeat',
+                    style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
                   ),
-                  label: Text(
-                    'Add to Playlist',
-                    style: GoogleFonts.kanit(color: colorblack,fontSize: 17),
-                  )),
-              TextButton.icon(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.share,
-                    color: colorblack,
-                  ),
-                  label: Text(
-                    'Share',
-                    style: GoogleFonts.kanit(color: colorblack,fontSize: 17),
-                  )),
-              TextButton.icon(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.shuffle,
-                    color: colorblack,
-                  ),
-                  label: Text(
-                    'Shuffle',
-                    style: GoogleFonts.kanit(color: colorblack,fontSize: 17),
-                  )),
-              TextButton.icon(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.repeat,
-                  color: colorblack,
                 ),
-                label: Text(
-                  'Repeat',
-                  style: GoogleFonts.kanit(color: colorblack,fontSize: 17),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
