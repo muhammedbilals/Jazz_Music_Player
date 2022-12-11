@@ -25,7 +25,7 @@ class PlaylistSlider extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: SizedBox(
-            height: 160,
+            height: 140,
             /////////////////////
             child: ListView.builder(
                 shrinkWrap: true,
@@ -35,7 +35,7 @@ class PlaylistSlider extends StatelessWidget {
                 itemBuilder: ((context, index) => Column(
                       children: [
                         SizedBox(
-                          height: 130,
+                          height: 115,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10.0),
                             child: ClipRRect(

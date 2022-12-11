@@ -17,67 +17,69 @@ class LibraryScreen extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: colordark,
-          body: Column(
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
-                    child: Text(
-                      'Your Library',
-                      style: GoogleFonts.kanit(fontSize: 40, color: colorwhite),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Text(
+                        'Your Library',
+                        style: GoogleFonts.kanit(fontSize: 40, color: colorwhite),
+                      ),
                     ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15.0),
+                        child: Icon(
+                          Icons.library_music_outlined,
+                          color: colorwhite,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: Text('Your Playlists',
+                            style: GoogleFonts.kanit(
+                                fontSize: 20, color: colorwhite)),
+                      )
+                    ],
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20.0),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15.0),
-                      child: Icon(
-                        Icons.library_music_outlined,
-                        color: colorwhite,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text('Your Playlists',
-                          style: GoogleFonts.kanit(
-                              fontSize: 20, color: colorwhite)),
-                    )
-                  ],
                 ),
-              ),
-              LibraryList(),
-              SeeMoreWidget(),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20.0),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15.0),
-                      child: Icon(
-                        Icons.album_outlined,
-                        color: colorwhite,
+                LibraryList(),
+                SeeMoreWidget(),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15.0),
+                        child: Icon(
+                          Icons.album_outlined,
+                          color: colorwhite,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text('Albums',
-                          style: GoogleFonts.kanit(
-                              fontSize: 20, color: colorwhite)),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: Text('Albums',
+                            style: GoogleFonts.kanit(
+                                fontSize: 20, color: colorwhite)),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              AlbumsListWidget(),
-              SeeMoreWidget(),
-            ],
+                AlbumsListWidget(),
+                SeeMoreWidget(),
+              ],
+            ),
           ),
         ),
       ),

@@ -153,6 +153,10 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
 //   return Icon(Icons.favorite_border_outlined);
 // }
 
+
+
+
+          
   showOptions(BuildContext context) {
     double vwidth = MediaQuery.of(context).size.width;
     showDialog(
@@ -165,6 +169,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
         contentPadding: EdgeInsets.zero,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         backgroundColor: colorextralight,
+        alignment: Alignment.bottomCenter,
         content: Container(
           height: 250,
           width: vwidth,
@@ -231,4 +236,5 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
       ),
     );
   }
+  
 }
