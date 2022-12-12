@@ -20,8 +20,8 @@ class SearchScreen extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: colorextralight),
-              child: Padding(
-                padding: const EdgeInsets.only(left:10),
+              child: const Padding(
+                padding: EdgeInsets.only(left:10),
                 child: TextField(
                   
                   decoration: InputDecoration(

@@ -31,15 +31,15 @@ class LibraryScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20.0),
                   child: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 15.0),
                         child: Icon(
                           Icons.library_music_outlined,
                           color: colorwhite,
@@ -55,13 +55,13 @@ class LibraryScreen extends StatelessWidget {
                   ),
                 ),
                 LibraryList(),
-                SeeMoreWidget(),
+                const SeeMoreWidget(),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20.0),
                   child: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 15.0),
                         child: Icon(
                           Icons.album_outlined,
                           color: colorwhite,
@@ -77,7 +77,7 @@ class LibraryScreen extends StatelessWidget {
                   ),
                 ),
                 AlbumsListWidget(),
-                SeeMoreWidget(),
+                const SeeMoreWidget(),
               ],
             ),
           ),

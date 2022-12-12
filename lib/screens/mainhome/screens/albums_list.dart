@@ -60,8 +60,8 @@ class AlbumsList extends StatelessWidget {
                                 width: 40,
                                 height: 40,
                                 child: IconButton(
-                                  icon: Padding(
-                                    padding: const EdgeInsets.only(left: 5.0),
+                                  icon: const Padding(
+                                    padding: EdgeInsets.only(left: 5.0),
                                     child: Icon(
                                       Icons.arrow_back_ios,
                                     ),
@@ -74,7 +74,7 @@ class AlbumsList extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       ListTile(
@@ -91,8 +91,8 @@ class AlbumsList extends StatelessWidget {
                         trailing: Wrap(
                           spacing: 10,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(6.0),
+                            const Padding(
+                              padding: EdgeInsets.all(6.0),
                               child: Icon(
                                 Icons.shuffle,
                                 color: colorwhite,
@@ -105,7 +105,7 @@ class AlbumsList extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(30),
                                     color: colorextralight),
-                                child: Icon(
+                                child: const Icon(
                                   Icons.play_arrow,
                                   color: colordark,
                                   size: 30,
@@ -116,7 +116,7 @@ class AlbumsList extends StatelessWidget {
 
                       // Icon(Icons.play_arrow)
                       ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: songs.length,
                         itemBuilder: ((context, index) => Padding(
@@ -140,14 +140,14 @@ class AlbumsList extends StatelessWidget {
                                   children: [
                                     IconButton(
                                       onPressed: () {},
-                                      icon: Icon(Icons.favorite),
+                                      icon: const Icon(Icons.favorite),
                                       color: Colors.red,
                                     ),
                                     IconButton(
                                       onPressed: () {
                                         showOptions(context);
                                       },
-                                      icon: Icon(Icons.more_vert),
+                                      icon: const Icon(Icons.more_vert),
                                       color: colorwhite,
                                     ),
                                   ],
@@ -182,7 +182,7 @@ class AlbumsList extends StatelessWidget {
               children: [
                 TextButton.icon(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.favorite,
                       color: colorblack,
                     ),
@@ -192,7 +192,7 @@ class AlbumsList extends StatelessWidget {
                     )),
                 TextButton.icon(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.playlist_add,
                       color: colorblack,
                     ),
@@ -202,7 +202,7 @@ class AlbumsList extends StatelessWidget {
                     )),
                 TextButton.icon(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.share,
                       color: colorblack,
                     ),
@@ -212,7 +212,7 @@ class AlbumsList extends StatelessWidget {
                     )),
                 TextButton.icon(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.shuffle,
                       color: colorblack,
                     ),
@@ -222,7 +222,7 @@ class AlbumsList extends StatelessWidget {
                     )),
                 TextButton.icon(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.repeat,
                     color: colorblack,
                   ),

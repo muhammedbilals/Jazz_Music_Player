@@ -4,7 +4,7 @@ import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/widgets/alert_dialog.dart';
 
 class AllSongsWidget extends StatefulWidget {
-  AllSongsWidget({super.key});
+  const AllSongsWidget({super.key});
 
   @override
   State<AllSongsWidget> createState() => _AllSongsWidgetState();
@@ -85,7 +85,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
         ),
         ///////////////////
         ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: songs.length,
           itemBuilder: ((context, index) => Padding(
@@ -113,13 +113,13 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                           },
                           icon: Icon(Icons.favorite,
                               color: (istaped)
-                                  ? Color.fromARGB(255, 121, 121, 121)
-                                  : Color.fromARGB(255, 255, 0, 0))),
+                                  ? const Color.fromARGB(255, 121, 121, 121)
+                                  : const Color.fromARGB(255, 255, 0, 0))),
                       IconButton(
                         onPressed: () {
                           showOptions(context);
                         },
-                        icon: Icon(Icons.more_vert),
+                        icon: const Icon(Icons.more_vert),
                         color: colorwhite,
                       ),
                     ],
@@ -180,7 +180,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
               children: [
                 TextButton.icon(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.favorite,
                       color: colorblack,
                     ),
@@ -190,7 +190,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                     )),
                 TextButton.icon(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.playlist_add,
                       color: colorblack,
                     ),
@@ -200,7 +200,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                     )),
                 TextButton.icon(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.share,
                       color: colorblack,
                     ),
@@ -210,7 +210,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                     )),
                 TextButton.icon(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.shuffle,
                       color: colorblack,
                     ),
@@ -220,7 +220,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                     )),
                 TextButton.icon(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.repeat,
                     color: colorblack,
                   ),

@@ -63,9 +63,9 @@ class _HomeMainState extends State<HomeMain> {
                     borderRadius: BorderRadius.circular(25)),
                 height: 40,
                 width: 100,
-                child: Icon(Icons.home_outlined)),
+                child: const Icon(Icons.home_outlined)),
             label: 'Home',
-            activeIcon: Icon(
+            activeIcon: const Icon(
               Icons.home_sharp,
             ),
           ),
@@ -77,9 +77,9 @@ class _HomeMainState extends State<HomeMain> {
                     borderRadius: BorderRadius.circular(25)),
                 height: 40,
                 width: 100,
-                child: Icon(Icons.search)),
+                child: const Icon(Icons.search)),
             label: 'Business',
-            activeIcon: Icon(
+            activeIcon: const Icon(
               Icons.search_sharp,
             ),
           ),
@@ -91,9 +91,9 @@ class _HomeMainState extends State<HomeMain> {
                     borderRadius: BorderRadius.circular(25)),
                 height: 40,
                 width: 100,
-                child: Icon(Icons.library_music_outlined)),
+                child: const Icon(Icons.library_music_outlined)),
             label: 'School',
-            activeIcon: Icon(
+            activeIcon: const Icon(
               Icons.library_music,
             ),
           ),

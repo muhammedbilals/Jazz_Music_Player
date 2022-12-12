@@ -44,7 +44,7 @@ class PlayerHome extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(30)),
                             width: 40,
                             height: 40,
-                            child: Icon(
+                            child: const Icon(
                               Icons.person,
                               color: colorblack,
                               size: 25,
@@ -87,8 +87,8 @@ class PlayerHome extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(15)),
                             child: Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
+                                const Padding(
+                                  padding: EdgeInsets.only(
                                       left: 15.0, right: 10),
                                   child: Icon(Icons.favorite),
                                 ),
@@ -124,8 +124,8 @@ class PlayerHome extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(15)),
                             child: Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
+                                const Padding(
+                                  padding: EdgeInsets.only(
                                       left: 15.0, right: 10),
                                   child: Icon(Icons.album),
                                 ),
@@ -155,7 +155,7 @@ class PlayerHome extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PlayListScreen()),
+                                  builder: (context) => const PlayListScreen()),
                             );
                           },
                           child: Container(
@@ -166,8 +166,8 @@ class PlayerHome extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(15)),
                             child: Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
+                                const Padding(
+                                  padding: EdgeInsets.only(
                                       left: 15.0, right: 10),
                                   child: Icon(Icons.queue_music),
                                 ),

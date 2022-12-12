@@ -26,8 +26,8 @@ class PlayListScreen extends StatelessWidget {
                       width: 40,
                       height: 40,
                       child: IconButton(
-                        icon: Padding(
-                          padding: const EdgeInsets.only(left: 5.0),
+                        icon: const Padding(
+                          padding: EdgeInsets.only(left: 5.0),
                           child: Icon(
                             Icons.arrow_back_ios,
                           ),
@@ -40,7 +40,7 @@ class PlayListScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ListTile(
@@ -63,7 +63,7 @@ class PlayListScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           color: colorextralight),
                       child: IconButton(
-                        icon: Icon(Icons.add),
+                        icon: const Icon(Icons.add),
                         color: colordark,
                         iconSize: 30,
                         onPressed: () {

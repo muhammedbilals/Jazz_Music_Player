@@ -28,11 +28,11 @@ class DialogExample extends StatelessWidget {
           title: Column(
             
             children: [
-           TextButton.icon(onPressed: (){}, icon: Icon(Icons.favorite), label: Text('Add to Favourites')),
-           TextButton.icon(onPressed: (){}, icon: Icon(Icons.playlist_add), label: Text('Add to Playlist')),
-           TextButton.icon(onPressed: (){}, icon: Icon(Icons.share), label: Text('Share')),
-           TextButton.icon(onPressed: (){}, icon: Icon(Icons.shuffle), label: Text('Shuffle')),
-           TextButton.icon(onPressed: (){}, icon: Icon(Icons.repeat), label: Text('Repeat'))
+           TextButton.icon(onPressed: (){}, icon: const Icon(Icons.favorite), label: const Text('Add to Favourites')),
+           TextButton.icon(onPressed: (){}, icon: const Icon(Icons.playlist_add), label: const Text('Add to Playlist')),
+           TextButton.icon(onPressed: (){}, icon: const Icon(Icons.share), label: const Text('Share')),
+           TextButton.icon(onPressed: (){}, icon: const Icon(Icons.shuffle), label: const Text('Shuffle')),
+           TextButton.icon(onPressed: (){}, icon: const Icon(Icons.repeat), label: const Text('Repeat'))
               
             ],
           ),
