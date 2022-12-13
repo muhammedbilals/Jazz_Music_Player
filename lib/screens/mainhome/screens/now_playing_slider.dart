@@ -15,21 +15,20 @@ class NowPlayingSlider extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: GestureDetector(
-        onVerticalDragDown: (details) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => NowPlayingScreen())));
-         
-        },
+        // onVerticalDragDown: (details) {
+        //   Navigator.push(context,
+        //       MaterialPageRoute(builder: ((context) => NowPlayingScreen())));
+
+        // },
         onTap: () {
           Navigator.push(context,
               MaterialPageRoute(builder: ((context) => NowPlayingScreen())));
-         
         },
         child: Container(
           decoration: BoxDecoration(
               color: colorextralight, borderRadius: BorderRadius.circular(20)),
           width: vwidth,
-          height: 75,
+          height: 65,
           child: Row(
             children: [
               ClipRRect(
@@ -55,7 +54,7 @@ class NowPlayingSlider extends StatelessWidget {
                   width: 50,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: colorlightdark),
+                      color: colordark),
                   child: IconButton(
                     icon: Icon(
                       Icons.play_arrow,
@@ -71,7 +70,7 @@ class NowPlayingSlider extends StatelessWidget {
                   height: 35,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: colorlightdark),
+                      color: colordark),
                   child: IconButton(
                     onPressed: () {},
                     icon: Icon(
