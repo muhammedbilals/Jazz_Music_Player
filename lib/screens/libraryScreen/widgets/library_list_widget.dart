@@ -19,7 +19,7 @@ class LibraryList extends StatelessWidget {
     'Playlist',
   ];
   List<String> songs = [
-    'Fav Songs',
+     'Fav Songs',
     'Hans Zimmer Fav',
     'Imapala Fav',
   ];

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/libraryScreen/widgets/albums_list_widget.dart';
@@ -9,7 +7,7 @@ import 'package:music_player/screens/libraryScreen/widgets/see_more_widget.dart'
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 
 class LibraryScreen extends StatelessWidget {
-  const LibraryScreen({super.key});
+   LibraryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +54,8 @@ class LibraryScreen extends StatelessWidget {
                   ),
                 ),
                 LibraryList(),
-                const SeeMoreWidget(),
+                  SeeMoreWidget(),
+                  
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20.0),
                   child: Row(
@@ -78,7 +77,7 @@ class LibraryScreen extends StatelessWidget {
                   ),
                 ),
                 AlbumsListWidget(),
-                const SeeMoreWidget(),
+                 SeeMoreWidget(),
               ],
             ),
           ),

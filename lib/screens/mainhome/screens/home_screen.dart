@@ -20,6 +20,11 @@ class PlayerHome extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: colordark,
+          // body: Container(
+          //   decoration: BoxDecoration(
+          //     image: DecorationImage(image: AssetImage('assets/images/gulf livery.jpg'),fit: BoxFit.cover)
+
+          //   ),
           body: ScrollConfiguration(
             behavior: MyBehavior(),
             child: SingleChildScrollView(
@@ -210,8 +215,9 @@ class PlayerHome extends StatelessWidget {
               ),
             ),
           ),
-          bottomSheet: NowPlayingSlider(),
+           bottomSheet: NowPlayingSlider(),
         ),
+       
       ),
     );
   }

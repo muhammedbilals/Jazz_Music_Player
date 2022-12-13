@@ -156,11 +156,12 @@ showPlaylistOptions(BuildContext context) {
                           borderRadius: BorderRadius.circular(15),
                           color: colorlight,
                         ),
-                        child: TextButton(
+                        child: TextButton.icon(
+                          icon: Icon(Icons.close,color: colorblack,),
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text(
+                            label: Text(
                               'Cancel',
                               style: GoogleFonts.kanit(
                                   fontSize: 20, color: colorblack),
@@ -174,12 +175,13 @@ showPlaylistOptions(BuildContext context) {
                           borderRadius: BorderRadius.circular(15),
                           color: colorlight,
                         ),
-                        child: TextButton(
+                        child: TextButton.icon(
+                          icon: Icon(Icons.done,color: colorblack,),
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text(
-                              'continue',
+                            label: Text(
+                              'Done',
                               style: GoogleFonts.kanit(
                                   fontSize: 20, color: colorblack),
                             ))),
