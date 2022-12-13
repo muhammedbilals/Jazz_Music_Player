@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_screen.dart';
@@ -13,7 +11,7 @@ class NowPlayingSlider extends StatelessWidget {
     double vwidth = MediaQuery.of(context).size.width;
     double vheight = MediaQuery.of(context).size.height;
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(10.0),
       child: GestureDetector(
         // onVerticalDragDown: (details) {
         //   Navigator.push(context,

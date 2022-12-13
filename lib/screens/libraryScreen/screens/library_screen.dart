@@ -6,6 +6,7 @@ import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/libraryScreen/widgets/albums_list_widget.dart';
 import 'package:music_player/screens/libraryScreen/widgets/library_list_widget.dart';
 import 'package:music_player/screens/libraryScreen/widgets/see_more_widget.dart';
+import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 
 class LibraryScreen extends StatelessWidget {
   const LibraryScreen({super.key});
@@ -81,6 +82,7 @@ class LibraryScreen extends StatelessWidget {
               ],
             ),
           ),
+          bottomSheet: NowPlayingSlider(),
         ),
       ),
     );

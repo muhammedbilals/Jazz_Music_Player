@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -31,9 +32,12 @@ class SearchScreen extends StatelessWidget {
                      
                   
                 ),
+                
               ),
+              
             ),
           ),
+          bottomSheet: NowPlayingSlider(),
         ),
       ),
     );

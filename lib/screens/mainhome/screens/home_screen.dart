@@ -45,7 +45,7 @@ class PlayerHome extends StatelessWidget {
                             width: 40,
                             height: 40,
                             child: const Icon(
-                              Icons.person,
+                              Icons.info,
                               color: colorblack,
                               size: 25,
                             )),
@@ -202,21 +202,15 @@ class PlayerHome extends StatelessWidget {
                   PlaylistSlider(),
                   Stack(
                     children: [
-                                        
                       AllSongsWidget(),
-                      
-                       ],
+                    ],
                   ),
                   // Expanded(child: AllSongsWidget())
-                  
                 ],
               ),
             ),
           ),
-          bottomSheet:
-          
-           NowPlayingSlider(),
-           
+          bottomSheet: NowPlayingSlider(),
         ),
       ),
     );
