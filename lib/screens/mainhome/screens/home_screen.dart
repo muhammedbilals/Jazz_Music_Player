@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
-import 'package:music_player/screens/libraryScreen/widgets/albums_list_widget.dart';
 import 'package:music_player/screens/mainhome/screens/Liked_songs_list.dart';
 import 'package:music_player/screens/mainhome/screens/albums_list.dart';
+import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:music_player/screens/mainhome/screens/playlist_list_screen.dart';
 import 'package:music_player/screens/mainhome/widgets/all_songs_widget.dart';
 import 'package:music_player/screens/mainhome/widgets/card_widget.dart';
@@ -88,8 +88,8 @@ class PlayerHome extends StatelessWidget {
                             child: Row(
                               children: [
                                 const Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 15.0, right: 10),
+                                  padding:
+                                      EdgeInsets.only(left: 15.0, right: 10),
                                   child: Icon(Icons.favorite),
                                 ),
                                 Padding(
@@ -125,8 +125,8 @@ class PlayerHome extends StatelessWidget {
                             child: Row(
                               children: [
                                 const Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 15.0, right: 10),
+                                  padding:
+                                      EdgeInsets.only(left: 15.0, right: 10),
                                   child: Icon(Icons.album),
                                 ),
                                 Padding(
@@ -167,8 +167,8 @@ class PlayerHome extends StatelessWidget {
                             child: Row(
                               children: [
                                 const Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 15.0, right: 10),
+                                  padding:
+                                      EdgeInsets.only(left: 15.0, right: 10),
                                   child: Icon(Icons.queue_music),
                                 ),
                                 Padding(
@@ -200,12 +200,23 @@ class PlayerHome extends StatelessWidget {
                     ],
                   ),
                   PlaylistSlider(),
-                  AllSongsWidget(),
+                  Stack(
+                    children: [
+                                        
+                      AllSongsWidget(),
+                      
+                       ],
+                  ),
                   // Expanded(child: AllSongsWidget())
+                  
                 ],
               ),
             ),
           ),
+          bottomSheet:
+          
+           NowPlayingSlider(),
+           
         ),
       ),
     );

@@ -43,6 +43,11 @@ class LibraryList extends StatelessWidget {
               subtitle: Text(author[index],
                   style: GoogleFonts.kanit(
                       color: colorwhite.withOpacity(0.7), fontSize: 15)),
+                      trailing: IconButton(
+                        onPressed: () {
+                          
+                        },
+                        icon: Icon(Icons.edit,color: colorwhite,)),
             ),
           )),
     );

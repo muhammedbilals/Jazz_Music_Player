@@ -70,6 +70,7 @@ class PlayListScreen extends StatelessWidget {
                           showPlaylistOptions(context);
                         },
                       )),
+                     
                 ],
               ),
             ),
