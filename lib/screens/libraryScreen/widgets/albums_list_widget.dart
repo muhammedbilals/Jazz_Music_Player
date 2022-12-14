@@ -12,11 +12,11 @@ class AlbumsListWidget extends StatelessWidget {
     'assets/images/hanszimmer.jpg',
     'assets/images/tame-impala-eventually-1400px_800.jpg',
   ];
-  List<String> author = [
-    'Album',
-    'Album',
-    'Album',
-  ];
+  // List<String> author = [
+  //   'Album',
+  //   'Album',
+  //   'Album',
+  // ];
   List<String> songs = [
     'Interstellar',
     'Hans Zimmer',
@@ -24,26 +24,18 @@ class AlbumsListWidget extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
+    return GridView.builder(
       itemCount: songs.length,
-      itemBuilder: ((context, index) => Padding(
-            padding: const EdgeInsets.only(bottom: 8.0, left: 0),
-            child: ListTile(
-              leading: ClipRRect(
-                  child: Image.asset(
-                songimage[index],
-              )),
-              title: Text(
-                songs[index],
-                style: GoogleFonts.kanit(color: colorwhite, fontSize: 25),
-              ),
-              subtitle: Text(author[index],
-                  style: GoogleFonts.kanit(
-                      color: colorwhite.withOpacity(0.7), fontSize: 15)),
-            ),
-          )),
+      shrinkWrap: true,
+      
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      itemBuilder: (_, index) => GridTile(
+        
+        child: Image.asset(songimage[index]),
+        footer: Text(songs[index]),
+      ),
+      // itemCount: 4,
     );
   }
 }

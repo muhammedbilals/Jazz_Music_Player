@@ -3,22 +3,39 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
-import 'package:music_player/screens/mainhome/screens/album_full_list.dart';
-import 'package:music_player/screens/mainhome/screens/playlist_list_screen.dart';
-import 'package:music_player/screens/mainhome/widgets/playlist_alert_dialog.dart';
 
-class AlbumsList extends StatelessWidget {
-  AlbumsList({super.key});
-  List<String> songs = [
-    'Hans Zimmer',
-    'Dune ',
-    'currents',
-    'Dark Knight',
-    'Gladiator',
-    'Top Gun: Maverick',
+class AlbumFullList extends StatelessWidget {
+   AlbumFullList({super.key});
+ List<String> songs = [
+    'Hans Zimmer - The Classics ',
+    'Dune sound track',
+    'evantually',
+    'Dark Knight Theme song',
+    'Gladiator Sound track',
+    'Top Gun: Maverick Soundtrack',
+    'There He Is Song The Amazing Spider-Man 2',
+    'Hans Zimmer - Interstellar',
+    'Hans Zimmer - The Classics ',
+    'Dune sound track',
+    'evantually',
+    'Dark Knight Theme song',
+    'Gladiator Sound track',
+    'Top Gun: Maverick Soundtrack',
+    'There He Is Song The Amazing Spider-Man 2',
+    'Hans Zimmer - Interstellar',
   ];
 
   List<String> author = [
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
     'Hans Zimmer',
     'Hans Zimmer',
     'Hans Zimmer',
@@ -34,8 +51,18 @@ class AlbumsList extends StatelessWidget {
     'assets/images/TDKR_sdtrck_cover.jpg',
     'assets/images/hanzimmer.jpg',
     'assets/images/hanszimmer.jpg',
+    'assets/images/tame-impala-eventually-1400px_800.jpg',
+    'assets/images/TDKR_sdtrck_cover.jpg',
+    'assets/images/hanzimmer.jpg',
+    'assets/images/hanszimmer.jpg',
+    'assets/images/tame-impala-eventually-1400px_800.jpg',
+    'assets/images/TDKR_sdtrck_cover.jpg',
+    'assets/images/hanzimmer.jpg',
+    'assets/images/hanszimmer.jpg',
+    'assets/images/tame-impala-eventually-1400px_800.jpg',
+    'assets/images/TDKR_sdtrck_cover.jpg',
   ];
-  @override
+ @override
   Widget build(BuildContext context) {
     double vwidth = MediaQuery.of(context).size.width;
 
@@ -75,73 +102,89 @@ class AlbumsList extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: ListTile(
-                          title: Text(
-                            'Albums',
-                            style: GoogleFonts.kanit(
-                                fontSize: 20, color: colorwhite),
-                          ),
-                          subtitle: Text(
-                            '6 albums',
-                            style: GoogleFonts.kanit(
-                                fontSize: 14,
-                                color: colorwhite.withOpacity(0.7)),
-                          ),
+                      ListTile(
+                        title: Text(
+                          'Current',
+                          style: GoogleFonts.kanit(
+                              fontSize: 20, color: colorwhite),
+                        ),
+                        subtitle: Text(
+                          '120 Songs',
+                          style: GoogleFonts.kanit(
+                              fontSize: 14, color: colorwhite.withOpacity(0.7)),
+                        ),
+                        trailing: Wrap(
+                          spacing: 10,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(6.0),
+                              child: Icon(
+                                Icons.shuffle,
+                                color: colorwhite,
+                                size: 30,
+                              ),
+                            ),
+                            Container(
+                                width: 45,
+                                height: 45,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: colorextralight),
+                                child: const Icon(
+                                  Icons.play_arrow,
+                                  color: colordark,
+                                  size: 30,
+                                )),
+                          ],
                         ),
                       ),
 
                       // Icon(Icons.play_arrow)
-                      GridView.builder(
-                        itemCount: songs.length,
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
-                        itemBuilder: (_, index) => GridTile(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: ((context) =>
-                                            AlbumFullList())));
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: colordark,
-                                    borderRadius: BorderRadius.circular(20)),
-                                height: 500,
-                                child: Column(
+                        itemCount: songs.length,
+                        itemBuilder: ((context, index) => Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 8.0, left: 5),
+                              child: ListTile(
+                                leading: ClipRRect(
+                                    child: Image.asset(
+                                  songimage[index],
+                                )),
+                                title: Text(
+                                  songs[index],
+                                  style: GoogleFonts.kanit(color: colorwhite),
+                                ),
+                                subtitle: Text(author[index],
+                                    style: GoogleFonts.kanit(
+                                        color: colorwhite.withOpacity(0.7),
+                                        fontSize: 12)),
+                                trailing: Wrap(
+                                  crossAxisAlignment: WrapCrossAlignment.center,
                                   children: [
-                                    Flexible(
-                                        child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            child:
-                                                Image.asset(songimage[index]))),
-                                    Text(
-                                      author[index],
-                                      style: GoogleFonts.kanit(
-                                          fontSize: 20,
-                                          color: colorwhite.withOpacity(0.7)),
-                                    )
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(Icons.favorite),
+                                      color: Colors.red,
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        showOptions(context);
+                                      },
+                                      icon: const Icon(Icons.more_vert),
+                                      color: colorwhite,
+                                    ),
                                   ],
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
-                        // itemCount: 4,
-                      )
+                            )),
+                      ),
                     ],
                   ),
                 ))));
   }
-
-  showOptions(BuildContext context) {
+   showOptions(BuildContext context) {
     double vwidth = MediaQuery.of(context).size.width;
     showDialog(
       context: context,
