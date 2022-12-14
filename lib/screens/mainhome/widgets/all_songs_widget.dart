@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
-import 'package:music_player/screens/mainhome/widgets/alert_dialog.dart';
 
 class AllSongsWidget extends StatefulWidget {
   const AllSongsWidget({super.key});

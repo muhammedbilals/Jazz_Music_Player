@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/widgets/now_playing_playbutton_row.dart';

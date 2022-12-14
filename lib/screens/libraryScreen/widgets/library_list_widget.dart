@@ -1,11 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/screens/playlist_full_lsit.dart';
-import 'package:music_player/screens/mainhome/widgets/all_songs_widget.dart';
 
 class LibraryList extends StatelessWidget {
   LibraryList({super.key});
@@ -27,7 +23,7 @@ class LibraryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: songs.length,
       itemBuilder: ((context, index) => Padding(
@@ -56,7 +52,7 @@ class LibraryList extends StatelessWidget {
                     onPressed: () {
                       showPlaylistOptions(context);
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.edit,
                       color: colorwhite,
                     )),
@@ -64,7 +60,7 @@ class LibraryList extends StatelessWidget {
                     onPressed: () {
                       playlistDeleteOption(context);
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.delete,
                       color: colorwhite,
                     ))
@@ -148,7 +144,7 @@ showPlaylistOptions(BuildContext context) {
                           color: colorlight,
                         ),
                         child: TextButton.icon(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.close,
                               color: colorblack,
                             ),
@@ -170,7 +166,7 @@ showPlaylistOptions(BuildContext context) {
                           color: colorlight,
                         ),
                         child: TextButton.icon(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.done,
                               color: colorblack,
                             ),
@@ -247,7 +243,7 @@ playlistDeleteOption(BuildContext context) {
                           color: colorlight,
                         ),
                         child: TextButton.icon(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.close,
                               color: colorblack,
                             ),
@@ -269,7 +265,7 @@ playlistDeleteOption(BuildContext context) {
                           color: colorlight,
                         ),
                         child: TextButton.icon(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.done,
                               color: colorblack,
                             ),

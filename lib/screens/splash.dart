@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/login_page.dart';
 

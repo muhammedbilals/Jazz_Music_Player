@@ -24,7 +24,7 @@ class _HomeMainState extends State<HomeMain> {
   // Color? colorafa = colorextralight;
   // Color? selectedcolor = colorlightdark;
   List<Widget> _NavScreens() {
-    return [PlayerHome(), SearchScreen(), LibraryScreen()];
+    return [const PlayerHome(), const SearchScreen(), LibraryScreen()];
   }
   // void _onItemTapped(int index) {
   //   setState(() {
@@ -36,19 +36,19 @@ class _HomeMainState extends State<HomeMain> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.home),
+        icon: const Icon(Icons.home),
         title: ("Home"),
         activeColorPrimary: colorextralight,
         inactiveColorPrimary: colorwhite,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.search),
+        icon: const Icon(Icons.search),
         title: ("SEARCH"),
         activeColorPrimary: colorextralight,
         inactiveColorPrimary: colorwhite,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.library_music),
+        icon: const Icon(Icons.library_music),
         title: ("LIBRARY"),
         activeColorPrimary: colorextralight,
         inactiveColorPrimary: colorwhite,
@@ -79,12 +79,12 @@ class _HomeMainState extends State<HomeMain> {
       popAllScreensOnTapOfSelectedTab: true,
 
       popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: ItemAnimationProperties(
+      itemAnimationProperties: const ItemAnimationProperties(
         // Navigation Bar's items animation properties.
         duration: Duration(milliseconds: 200),
         curve: Curves.ease,
       ),
-      screenTransitionAnimation: ScreenTransitionAnimation(
+      screenTransitionAnimation: const ScreenTransitionAnimation(
         // Screen transition animation on change of selected tab.
         animateTabTransition: true,
         curve: Curves.ease,
