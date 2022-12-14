@@ -92,7 +92,7 @@ class AlbumsList extends StatelessWidget {
                       GridView.builder(
                         itemCount: songs.length,
                         shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2),
                         itemBuilder: (_, index) => GridTile(
                           child: Padding(

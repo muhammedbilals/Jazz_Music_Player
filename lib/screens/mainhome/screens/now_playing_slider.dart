@@ -20,7 +20,7 @@ class NowPlayingSlider extends StatelessWidget {
         // },
         onTap: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => NowPlayingScreen())));
+              MaterialPageRoute(builder: ((context) => const NowPlayingScreen())));
         },
         child: Container(
           decoration: BoxDecoration(
@@ -54,7 +54,7 @@ class NowPlayingSlider extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30),
                       color: colordark),
                   child: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.play_arrow,
                       color: colorwhite,
                       size: 30,
@@ -71,7 +71,7 @@ class NowPlayingSlider extends StatelessWidget {
                       color: colordark),
                   child: IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.skip_next,
                       color: colorwhite,
                       size: 20,

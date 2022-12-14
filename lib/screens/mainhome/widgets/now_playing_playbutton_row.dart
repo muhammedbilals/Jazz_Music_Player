@@ -17,7 +17,7 @@ class NowPlayingPlayButtonRow extends StatelessWidget {
               children: [
                 IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.shuffle,
                       color: colorwhite,
                     )),
@@ -29,7 +29,7 @@ class NowPlayingPlayButtonRow extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30)),
                   child: IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.skip_previous,
                         color: colorblack,
                       )),
@@ -42,7 +42,7 @@ class NowPlayingPlayButtonRow extends StatelessWidget {
                       borderRadius: BorderRadius.circular(35)),
                   child: IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.play_arrow,
                         color: colorblack,
                         size: 35,
@@ -56,14 +56,14 @@ class NowPlayingPlayButtonRow extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30)),
                   child: IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.skip_next,
                         color: colorblack,
                       )),
                 ),
                 IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.repeat,
                       color: colorwhite,
                     )),
@@ -72,7 +72,7 @@ class NowPlayingPlayButtonRow extends StatelessWidget {
           ),
         ),
         Row(
-          children: [
+          children: const [
             
           ],
         )

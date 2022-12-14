@@ -35,7 +35,7 @@ class SearchScreen extends StatelessWidget {
               
             ),
           ),
-          bottomSheet: NowPlayingSlider(),
+          bottomSheet: const NowPlayingSlider(),
         ),
       ),
     );

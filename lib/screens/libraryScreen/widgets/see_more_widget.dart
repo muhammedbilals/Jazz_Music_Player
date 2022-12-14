@@ -22,10 +22,10 @@ class SeeMoreWidget extends StatelessWidget {
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: ((context) =>
           
-            PlayListScreen()
+            const PlayListScreen()
           )));
         },
-        icon: Icon(
+        icon: const Icon(
           Icons.expand_more,
           color: colorblack,
         ),

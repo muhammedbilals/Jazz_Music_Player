@@ -20,7 +20,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
         backgroundColor: colordark,
         body: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -54,7 +54,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Padding(
@@ -63,7 +63,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                   borderRadius: BorderRadius.circular(20),
                   child: Image.asset('assets/images/interstellar.jpg')),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -93,13 +93,13 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                 ),
                 IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.favorite_border_outlined,
                       color: colorwhite,
                     ))
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Slider(
@@ -133,7 +133,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                 ],
               ),
             ),
-            NowPlayingPlayButtonRow()
+            const NowPlayingPlayButtonRow()
           ],
         ),
       ),

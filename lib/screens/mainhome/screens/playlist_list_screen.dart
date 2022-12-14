@@ -155,7 +155,7 @@ showPlaylistOptions(BuildContext context) {
                           color: colorlight,
                         ),
                         child: TextButton.icon(
-                          icon: Icon(Icons.close,color: colorblack,),
+                          icon: const Icon(Icons.close,color: colorblack,),
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -174,7 +174,7 @@ showPlaylistOptions(BuildContext context) {
                           color: colorlight,
                         ),
                         child: TextButton.icon(
-                          icon: Icon(Icons.done,color: colorblack,),
+                          icon: const Icon(Icons.done,color: colorblack,),
                             onPressed: () {
                               Navigator.pop(context);
                             },

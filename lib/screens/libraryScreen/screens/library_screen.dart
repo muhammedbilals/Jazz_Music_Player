@@ -54,7 +54,7 @@ class LibraryScreen extends StatelessWidget {
                   ),
                 ),
                 LibraryList(),
-                  SeeMoreWidget(),
+                  const SeeMoreWidget(),
                   
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20.0),
@@ -77,11 +77,11 @@ class LibraryScreen extends StatelessWidget {
                   ),
                 ),
                 AlbumsListWidget(),
-                 SeeMoreWidget(),
+                 const SeeMoreWidget(),
               ],
             ),
           ),
-          bottomSheet: NowPlayingSlider(),
+          bottomSheet: const NowPlayingSlider(),
         ),
       ),
     );

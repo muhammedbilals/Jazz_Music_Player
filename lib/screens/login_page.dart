@@ -13,10 +13,10 @@ class PlayerLogin extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HomeMain()),
+                MaterialPageRoute(builder: (context) => const HomeMain()),
               );
             },
-            icon: Icon(Icons.arrow_back)),
+            icon: const Icon(Icons.arrow_back)),
       ),
     );
   }

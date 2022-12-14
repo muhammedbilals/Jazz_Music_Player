@@ -206,7 +206,7 @@ class PlayerHome extends StatelessWidget {
                   ),
                   PlaylistSlider(),
                   Stack(
-                    children: [
+                    children: const [
                       AllSongsWidget(),
                     ],
                   ),
@@ -215,7 +215,7 @@ class PlayerHome extends StatelessWidget {
               ),
             ),
           ),
-           bottomSheet: NowPlayingSlider(),
+           bottomSheet: const NowPlayingSlider(),
         ),
        
       ),
