@@ -50,7 +50,7 @@ class LibraryList extends StatelessWidget {
               trailing: Wrap(children: [
                 IconButton(
                     onPressed: () {
-                      showPlaylistOptions(context);
+                      showPlaylistDeleteOptions(context);
                     },
                     icon: const Icon(
                       Icons.edit,
@@ -97,6 +97,127 @@ showPlaylistOptions(BuildContext context) {
                 child: Center(
                   child: Text(
                     'Create Playlist',
+                    style: GoogleFonts.kanit(fontSize: 25, color: colorblack),
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Container(
+                      width: vwidth * 0.90,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: colorlight,
+                      ),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          fillColor: colorlightdark,
+                          label: Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              'Enter Playlist Name:',
+                              style: GoogleFonts.kanit(
+                                  fontSize: 20,
+                                  color: colorblack.withOpacity(0.5)),
+                            ),
+                          ),
+                          // alignLabelWithHint: true,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                        width: vwidth * 0.43,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: colorlight,
+                        ),
+                        child: TextButton.icon(
+                            icon: const Icon(
+                              Icons.close,
+                              color: colorblack,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            label: Text(
+                              'Cancel',
+                              style: GoogleFonts.kanit(
+                                  fontSize: 20, color: colorblack),
+                            ))),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                        width: vwidth * 0.43,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: colorlight,
+                        ),
+                        child: TextButton.icon(
+                            icon: const Icon(
+                              Icons.done,
+                              color: colorblack,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            label: Text(
+                              'Done',
+                              style: GoogleFonts.kanit(
+                                  fontSize: 20, color: colorblack),
+                            ))),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+
+
+
+showPlaylistDeleteOptions(BuildContext context) {
+  double vwidth = MediaQuery.of(context).size.width;
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      insetPadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.zero,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      backgroundColor: colorextralight,
+      alignment: Alignment.bottomCenter,
+      content: Container(
+        height: 250,
+        width: vwidth,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Center(
+                  child: Text(
+                    'Edit Playlist',
                     style: GoogleFonts.kanit(fontSize: 25, color: colorblack),
                   ),
                 ),

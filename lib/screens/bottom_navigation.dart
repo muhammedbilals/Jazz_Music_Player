@@ -24,7 +24,7 @@ class _HomeMainState extends State<HomeMain> {
   // Color? colorafa = colorextralight;
   // Color? selectedcolor = colorlightdark;
   List<Widget> _NavScreens() {
-    return [const PlayerHome(), const SearchScreen(), LibraryScreen()];
+    return [ PlayerHome(), const SearchScreen(), LibraryScreen()];
   }
   // void _onItemTapped(int index) {
   //   setState(() {

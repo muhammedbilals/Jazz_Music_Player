@@ -3,9 +3,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_screen.dart';
 
-class NowPlayingSlider extends StatelessWidget {
-  const NowPlayingSlider({super.key});
+class NowPlayingSlider extends StatefulWidget {
+   NowPlayingSlider({super.key});
+ 
+  @override
+  State<NowPlayingSlider> createState() => _NowPlayingSliderState();
+}
 
+class _NowPlayingSliderState extends State<NowPlayingSlider> {
+  bool istaped = true;
   @override
   Widget build(BuildContext context) {
     double vwidth = MediaQuery.of(context).size.width;
@@ -54,12 +60,18 @@ class NowPlayingSlider extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30),
                       color: colordark),
                   child: IconButton(
-                    icon: const Icon(
-                      Icons.play_arrow,
+                    icon:  Icon(
+                      (istaped)?Icons.play_arrow:Icons.pause,
+                      
                       color: colorwhite,
                       size: 30,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                              
+                              istaped = !istaped;
+                            });
+                    },
                   )),
               Padding(
                 padding: const EdgeInsets.only(left: 5.0),

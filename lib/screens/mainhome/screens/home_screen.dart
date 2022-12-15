@@ -5,12 +5,13 @@ import 'package:music_player/screens/mainhome/screens/Liked_songs_list.dart';
 import 'package:music_player/screens/mainhome/screens/albums_list.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:music_player/screens/mainhome/screens/playlist_list_screen.dart';
+import 'package:music_player/screens/mainhome/screens/profile_page.dart';
 import 'package:music_player/screens/mainhome/widgets/all_songs_widget.dart';
 import 'package:music_player/screens/mainhome/widgets/card_widget.dart';
 import 'package:music_player/screens/mainhome/widgets/playlist_slider_widget.dart';
 
 class PlayerHome extends StatelessWidget {
-  const PlayerHome({super.key});
+  PlayerHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +50,18 @@ class PlayerHome extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(30)),
                             width: 40,
                             height: 40,
-                            child: const Icon(
-                              Icons.info,
-                              color: colorblack,
-                              size: 25,
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) => ProfilePage())));
+                              },
+                              icon: const Icon(
+                                Icons.info,
+                                color: colorblack,
+                                size: 25,
+                              ),
                             )),
                       )
                     ],
@@ -70,126 +79,29 @@ class PlayerHome extends StatelessWidget {
                   ),
                   // ----------------------------------------Liked songs---------------------------------
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // CardWidget(
-                      //     cardicon: Icons.favorite, cardtext: 'Liked Songs'),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LikedSongsList()),
-                            );
-                          },
-                          child: Container(
-                            height: 55,
-                            width: vwidth * 0.45,
-                            decoration: BoxDecoration(
-                                color: colorextralight,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Row(
-                              children: [
-                                const Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 15.0, right: 10),
-                                  child: Icon(Icons.favorite),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10.0, right: 10),
-                                  child: Text(
-                                    'Liked Songs',
-                                    style: GoogleFonts.kanit(fontSize: 20),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      // ----------------------------------------albums---------------------------------
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AlbumsList()),
-                            );
-                          },
-                          child: Container(
-                            height: 55,
-                            width: vwidth * 0.45,
-                            decoration: BoxDecoration(
-                                color: colorextralight,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Row(
-                              children: [
-                                const Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 15.0, right: 10),
-                                  child: Icon(Icons.album),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10.0, right: 10),
-                                  child: Text(
-                                    'Albums',
-                                    style: GoogleFonts.kanit(fontSize: 20),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      CardWidget(
+                          cardicon: Icons.favorite,
+                          cardtext: 'Liked Songs',
+                          index: 0),
+                      CardWidget(
+                          cardicon: Icons.album, cardtext: 'Albums', index: 1),
                     ],
                   ),
 // ----------------------------------------playlist-------------------------------------
+
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const PlayListScreen()),
-                            );
-                          },
-                          child: Container(
-                            height: 55,
-                            width: vwidth * 0.45,
-                            decoration: BoxDecoration(
-                                color: colorextralight,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Row(
-                              children: [
-                                const Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 15.0, right: 10),
-                                  child: Icon(Icons.queue_music),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10.0, right: 10),
-                                  child: Text(
-                                    'Playlists',
-                                    style: GoogleFonts.kanit(fontSize: 20),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
+                      CardWidget(
+                        cardicon: Icons.queue_music_outlined,
+                        cardtext: 'Playlists',
+                        index: 2,
                       ),
-                      CardWidget(cardicon: Icons.person, cardtext: 'Artist')
+                      CardWidget(
+                        cardicon: Icons.restart_alt,
+                        cardtext: 'Most Played',
+                        index: 3,
+                      ),
                     ],
                   ),
 
@@ -215,9 +127,8 @@ class PlayerHome extends StatelessWidget {
               ),
             ),
           ),
-           bottomSheet: const NowPlayingSlider(),
+          bottomSheet:  NowPlayingSlider(),
         ),
-       
       ),
     );
   }

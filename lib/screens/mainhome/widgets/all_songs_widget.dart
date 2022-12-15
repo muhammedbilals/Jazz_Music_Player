@@ -107,7 +107,8 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                       IconButton(
                           onPressed: () {
                             setState(() {
-                              istaped = false;
+                              
+                              istaped = !istaped;
                             });
                           },
                           icon: Icon(Icons.favorite,
@@ -152,10 +153,6 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
 //   return Icon(Icons.favorite_border_outlined);
 // }
 
-
-
-
-          
   showOptions(BuildContext context) {
     double vwidth = MediaQuery.of(context).size.width;
     showDialog(
@@ -235,5 +232,4 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
       ),
     );
   }
-  
 }

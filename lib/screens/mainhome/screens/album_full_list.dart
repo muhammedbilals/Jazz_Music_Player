@@ -111,30 +111,7 @@ class AlbumFullList extends StatelessWidget {
                           style: GoogleFonts.kanit(
                               fontSize: 14, color: colorwhite.withOpacity(0.7)),
                         ),
-                        trailing: Wrap(
-                          spacing: 10,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.all(6.0),
-                              child: Icon(
-                                Icons.shuffle,
-                                color: colorwhite,
-                                size: 30,
-                              ),
-                            ),
-                            Container(
-                                width: 45,
-                                height: 45,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: colorextralight),
-                                child: const Icon(
-                                  Icons.play_arrow,
-                                  color: colordark,
-                                  size: 30,
-                                )),
-                          ],
-                        ),
+                        
                       ),
 
                       // Icon(Icons.play_arrow)

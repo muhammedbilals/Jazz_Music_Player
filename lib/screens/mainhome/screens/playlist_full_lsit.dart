@@ -102,12 +102,12 @@ class PlaylistFullList extends StatelessWidget {
                       ),
                       ListTile(
                         title: Text(
-                          'Liked Songs',
+                          'Fav Songs',
                           style: GoogleFonts.kanit(
                               fontSize: 20, color: colorwhite),
                         ),
                         subtitle: Text(
-                          '120 Songs',
+                          '20 Songs',
                           style: GoogleFonts.kanit(
                               fontSize: 14, color: colorwhite.withOpacity(0.7)),
                         ),

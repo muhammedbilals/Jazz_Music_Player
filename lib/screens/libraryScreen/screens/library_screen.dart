@@ -81,7 +81,7 @@ class LibraryScreen extends StatelessWidget {
               ],
             ),
           ),
-          bottomSheet: const NowPlayingSlider(),
+          bottomSheet:  NowPlayingSlider(),
         ),
       ),
     );
