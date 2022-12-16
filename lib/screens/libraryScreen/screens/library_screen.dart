@@ -5,9 +5,11 @@ import 'package:music_player/screens/bottom_navigation.dart';
 import 'package:music_player/screens/libraryScreen/widgets/library_list_widget.dart';
 import 'package:music_player/screens/mainhome/screens/Liked_songs_list.dart';
 import 'package:music_player/screens/mainhome/screens/albums_list.dart';
+import 'package:music_player/screens/mainhome/screens/all_songs_screen.dart';
 import 'package:music_player/screens/mainhome/screens/most_played.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:music_player/screens/mainhome/screens/playlist_list_screen.dart';
+import 'package:music_player/screens/mainhome/screens/recently_played.dart';
 
 class LibraryScreen extends StatelessWidget {
   LibraryScreen({super.key});
@@ -28,10 +30,10 @@ class LibraryScreen extends StatelessWidget {
     Icons.library_music_outlined,
   ];
   List titlenavigation = [
-    HomeMain(),
+    AllSongsScreen(),
     LikedSongsList(),
     MostPlayed(),
-    MostPlayed(),
+    RecentlyPlayed(),
     AlbumsList(),
     PlayListScreen()
 

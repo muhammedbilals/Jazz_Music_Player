@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:music_player/screens/mainhome/widgets/all_songs_widget.dart';
+import 'package:music_player/screens/searchSreen/widgets/search_song_list.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -39,7 +40,7 @@ class SearchScreen extends StatelessWidget {
                     
                   ),
                 ),
-                AllSongsWidget()
+                SearchSongList()
               ],
             ),
           ),
