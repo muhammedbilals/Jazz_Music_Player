@@ -121,12 +121,14 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    _value.toString(),
+                    // _value.toString(),
+                    '1.00',
                     style: GoogleFonts.kanit(
                         fontSize: 15, color: colorwhite.withOpacity(0.7)),
                   ),
                   Text(
-                    (_value.toString()),
+                    // (_value.toString()),
+                    '3.10',
                     style: GoogleFonts.kanit(
                         fontSize: 15, color: colorwhite.withOpacity(0.7)),
                   )
