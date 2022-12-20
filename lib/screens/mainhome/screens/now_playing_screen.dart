@@ -15,7 +15,33 @@ class NowPlayingScreen extends StatefulWidget {
 class _NowPlayingScreenState extends State<NowPlayingScreen> {
   double _value = 6;
   final player = AudioPlayer(); 
-  
+   
+  @override
+  void initState() {
+    AudioPlayer _audioPlayer;
+    super.initState();
+    _audioPlayer = AudioPlayer();
+
+    _audioPlayer
+        .setAudioSource(ConcatenatingAudioSource(children: [
+      AudioSource.uri(Uri.parse(
+          "https://archive.org/download/IGM-V7/IGM%20-%20Vol.%207/25%20Diablo%20-%20Tristram%20%28Blizzard%29.mp3")),
+      AudioSource.uri(Uri.parse(
+          "https://archive.org/download/igm-v8_202101/IGM%20-%20Vol.%208/15%20Pokemon%20Red%20-%20Cerulean%20City%20%28Game%20Freak%29.mp3")),
+      AudioSource.uri(Uri.parse(
+          "https://scummbar.com/mi2/MI1-CD/01%20-%20Opening%20Themes%20-%20Introduction.mp3")),
+    ]))
+        .catchError((error) {
+      // catch load errors: 404, invalid url ...
+      print("An error occured $error");
+    });
+
+    @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+  }
   List<String> songs = [
     'Hans Zimmer - The Classics ',
     'Dune sound track',
@@ -74,7 +100,6 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
   ];
   @override
 
-  
   Widget build(BuildContext context) {
     if(widget.index ==null){
               print('index is null');
@@ -147,7 +172,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 12.0),
                       child: Text(
-                        songs[widget.index!],
+                        songs[widget.index],
                         style:
                             GoogleFonts.kanit(fontSize: 25, color: colorwhite),
                       ),
@@ -155,7 +180,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 12.0),
                       child: Text(
-                        author[widget.index!],
+                        author[widget.index],
                         style: GoogleFonts.kanit(
                             fontSize: 15, color: colorwhite.withOpacity(0.7)),
                       ),

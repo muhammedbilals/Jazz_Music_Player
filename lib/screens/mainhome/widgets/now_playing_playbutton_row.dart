@@ -2,9 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:music_player/colors/colors.dart';
 
-class NowPlayingPlayButtonRow extends StatelessWidget {
+class NowPlayingPlayButtonRow extends StatefulWidget {
   const NowPlayingPlayButtonRow({super.key});
 
+  @override
+  State<NowPlayingPlayButtonRow> createState() =>
+      _NowPlayingPlayButtonRowState();
+}
+
+class _NowPlayingPlayButtonRowState extends State<NowPlayingPlayButtonRow> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -41,7 +47,9 @@ class NowPlayingPlayButtonRow extends StatelessWidget {
                       color: colorextralight,
                       borderRadius: BorderRadius.circular(35)),
                   child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        
+                      },
                       icon: const Icon(
                         Icons.play_arrow,
                         color: colorblack,
@@ -72,9 +80,7 @@ class NowPlayingPlayButtonRow extends StatelessWidget {
           ),
         ),
         Row(
-          children: const [
-            
-          ],
+          children: const [],
         )
       ],
     );
