@@ -4,7 +4,7 @@ import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_screen.dart';
 
 class NowPlayingSlider extends StatefulWidget {
-  NowPlayingSlider({super.key,required this.index});
+  NowPlayingSlider({super.key, this.index});
   int? index;
 
   @override

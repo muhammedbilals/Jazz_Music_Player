@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/widgets/now_playing_playbutton_row.dart';
 
@@ -13,7 +14,7 @@ class NowPlayingScreen extends StatefulWidget {
 
 class _NowPlayingScreenState extends State<NowPlayingScreen> {
   double _value = 6;
-  
+  final player = AudioPlayer(); 
   
   List<String> songs = [
     'Hans Zimmer - The Classics ',
@@ -72,6 +73,8 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
     'assets/images/TDKR_sdtrck_cover.jpg',
   ];
   @override
+
+  
   Widget build(BuildContext context) {
     if(widget.index ==null){
               print('index is null');
