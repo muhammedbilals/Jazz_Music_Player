@@ -4,7 +4,8 @@ import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/widgets/now_playing_playbutton_row.dart';
 
 class NowPlayingScreen extends StatefulWidget {
-  const NowPlayingScreen({super.key});
+  NowPlayingScreen({super.key,required  this.index});
+   int index;
 
   @override
   State<NowPlayingScreen> createState() => _NowPlayingScreenState();
@@ -12,9 +13,69 @@ class NowPlayingScreen extends StatefulWidget {
 
 class _NowPlayingScreenState extends State<NowPlayingScreen> {
   double _value = 6;
+  
+  
+  List<String> songs = [
+    'Hans Zimmer - The Classics ',
+    'Dune sound track',
+    'evantually',
+    'Dark Knight Theme song',
+    'Gladiator Sound track',
+    'Top Gun: Maverick Soundtrack',
+    'There He Is Song The Amazing Spider-Man 2',
+    'Hans Zimmer - Interstellar',
+    'Hans Zimmer - The Classics ',
+    'Dune sound track',
+    'evantually',
+    'Dark Knight Theme song',
+    'Gladiator Sound track',
+    'Top Gun: Maverick Soundtrack',
+    'There He Is Song The Amazing Spider-Man 2',
+    'Hans Zimmer - Interstellar',
+  ];
 
+  List<String> author = [
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+    'Hans Zimmer',
+  ];
+
+  List<String> songimage = [
+    'assets/images/hanzimmer.jpg',
+    'assets/images/hanszimmer.jpg',
+    'assets/images/tame-impala-eventually-1400px_800.jpg',
+    'assets/images/TDKR_sdtrck_cover.jpg',
+    'assets/images/hanzimmer.jpg',
+    'assets/images/hanszimmer.jpg',
+    'assets/images/tame-impala-eventually-1400px_800.jpg',
+    'assets/images/TDKR_sdtrck_cover.jpg',
+    'assets/images/hanzimmer.jpg',
+    'assets/images/hanszimmer.jpg',
+    'assets/images/tame-impala-eventually-1400px_800.jpg',
+    'assets/images/TDKR_sdtrck_cover.jpg',
+    'assets/images/hanzimmer.jpg',
+    'assets/images/hanszimmer.jpg',
+    'assets/images/tame-impala-eventually-1400px_800.jpg',
+    'assets/images/TDKR_sdtrck_cover.jpg',
+  ];
   @override
   Widget build(BuildContext context) {
+    if(widget.index ==null){
+              print('index is null');
+            }
     return SafeArea(
       child: Scaffold(
         backgroundColor: colordark,
@@ -60,9 +121,16 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: ClipRRect(
+                
                   borderRadius: BorderRadius.circular(20),
-                  child: Image.asset('assets/images/interstellar.jpg')),
+                  child: Image.asset(songimage[widget.index]
+                  
+                  )
+                
+                  ),
+                  
             ),
+            
             const SizedBox(
               height: 10,
             ),
@@ -76,7 +144,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 12.0),
                       child: Text(
-                        'New Person, Same Old Mistakes',
+                        songs[widget.index!],
                         style:
                             GoogleFonts.kanit(fontSize: 25, color: colorwhite),
                       ),
@@ -84,7 +152,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 12.0),
                       child: Text(
-                        'Tame Impala',
+                        author[widget.index!],
                         style: GoogleFonts.kanit(
                             fontSize: 15, color: colorwhite.withOpacity(0.7)),
                       ),

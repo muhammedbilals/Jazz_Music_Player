@@ -12,7 +12,7 @@ import 'package:music_player/screens/mainhome/widgets/playlist_slider_widget.dar
 
 class PlayerHome extends StatelessWidget {
   PlayerHome({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     double vwidth = MediaQuery.of(context).size.width;

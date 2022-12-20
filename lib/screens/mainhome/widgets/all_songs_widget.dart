@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/screens/mainhome/screens/now_playing_screen.dart';
+import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 
 class AllSongsWidget extends StatefulWidget {
   const AllSongsWidget({super.key});
@@ -90,6 +92,15 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
           itemBuilder: ((context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 8.0, left: 5),
                 child: ListTile(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NowPlayingScreen(index: index),
+                        ));
+                    NowPlayingSlider(index: index);
+                    print(index);
+                  },
                   leading: ClipRRect(
                       child: Image.asset(
                     songimage[index],
@@ -107,7 +118,6 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                       IconButton(
                           onPressed: () {
                             setState(() {
-                              
                               istaped = !istaped;
                             });
                           },
