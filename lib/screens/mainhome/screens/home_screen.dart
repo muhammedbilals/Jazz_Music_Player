@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/mainhome/screens/Liked_songs_list.dart';
 import 'package:music_player/screens/mainhome/screens/albums_list.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
@@ -12,9 +13,11 @@ import 'package:music_player/screens/mainhome/widgets/playlist_slider_widget.dar
 
 class PlayerHome extends StatelessWidget {
   PlayerHome({super.key});
-  
+  final box = SongBox.getInstance();
+
   @override
   Widget build(BuildContext context) {
+    List<Songs> dbsongs = box.values.toList();
     double vwidth = MediaQuery.of(context).size.width;
     return Container(
       color: colordark,
@@ -52,6 +55,7 @@ class PlayerHome extends StatelessWidget {
                             height: 40,
                             child: IconButton(
                               onPressed: () {
+                                // print(dbsongs[0].songname);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -127,7 +131,7 @@ class PlayerHome extends StatelessWidget {
               ),
             ),
           ),
-          bottomSheet:  NowPlayingSlider(),
+          bottomSheet: NowPlayingSlider( ),
         ),
       ),
     );

@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/mainhome/widgets/now_playing_playbutton_row.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 
 class NowPlayingScreen extends StatefulWidget {
-  NowPlayingScreen({super.key,required  this.index});
-   int index;
+  NowPlayingScreen({super.key, required this.index,this.songs});
+  int? index;
+  List<Songs>? songs;
 
   @override
   State<NowPlayingScreen> createState() => _NowPlayingScreenState();
@@ -14,96 +17,13 @@ class NowPlayingScreen extends StatefulWidget {
 
 class _NowPlayingScreenState extends State<NowPlayingScreen> {
   double _value = 6;
-  final player = AudioPlayer(); 
-   
+  final player = AudioPlayer();
+
   @override
-  void initState() {
-    AudioPlayer _audioPlayer;
-    super.initState();
-    _audioPlayer = AudioPlayer();
-
-    _audioPlayer
-        .setAudioSource(ConcatenatingAudioSource(children: [
-      AudioSource.uri(Uri.parse(
-          "https://archive.org/download/IGM-V7/IGM%20-%20Vol.%207/25%20Diablo%20-%20Tristram%20%28Blizzard%29.mp3")),
-      AudioSource.uri(Uri.parse(
-          "https://archive.org/download/igm-v8_202101/IGM%20-%20Vol.%208/15%20Pokemon%20Red%20-%20Cerulean%20City%20%28Game%20Freak%29.mp3")),
-      AudioSource.uri(Uri.parse(
-          "https://scummbar.com/mi2/MI1-CD/01%20-%20Opening%20Themes%20-%20Introduction.mp3")),
-    ]))
-        .catchError((error) {
-      // catch load errors: 404, invalid url ...
-      print("An error occured $error");
-    });
-
-    @override
-  void dispose() {
-    _audioPlayer.dispose();
-    super.dispose();
-  }
-  }
-  List<String> songs = [
-    'Hans Zimmer - The Classics ',
-    'Dune sound track',
-    'evantually',
-    'Dark Knight Theme song',
-    'Gladiator Sound track',
-    'Top Gun: Maverick Soundtrack',
-    'There He Is Song The Amazing Spider-Man 2',
-    'Hans Zimmer - Interstellar',
-    'Hans Zimmer - The Classics ',
-    'Dune sound track',
-    'evantually',
-    'Dark Knight Theme song',
-    'Gladiator Sound track',
-    'Top Gun: Maverick Soundtrack',
-    'There He Is Song The Amazing Spider-Man 2',
-    'Hans Zimmer - Interstellar',
-  ];
-
-  List<String> author = [
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-  ];
-
-  List<String> songimage = [
-    'assets/images/hanzimmer.jpg',
-    'assets/images/hanszimmer.jpg',
-    'assets/images/tame-impala-eventually-1400px_800.jpg',
-    'assets/images/TDKR_sdtrck_cover.jpg',
-    'assets/images/hanzimmer.jpg',
-    'assets/images/hanszimmer.jpg',
-    'assets/images/tame-impala-eventually-1400px_800.jpg',
-    'assets/images/TDKR_sdtrck_cover.jpg',
-    'assets/images/hanzimmer.jpg',
-    'assets/images/hanszimmer.jpg',
-    'assets/images/tame-impala-eventually-1400px_800.jpg',
-    'assets/images/TDKR_sdtrck_cover.jpg',
-    'assets/images/hanzimmer.jpg',
-    'assets/images/hanszimmer.jpg',
-    'assets/images/tame-impala-eventually-1400px_800.jpg',
-    'assets/images/TDKR_sdtrck_cover.jpg',
-  ];
-  @override
-
   Widget build(BuildContext context) {
-    if(widget.index ==null){
-              print('index is null');
-            }
+    if (widget.index == null) {
+      print('index is null');
+    }
     return SafeArea(
       child: Scaffold(
         backgroundColor: colordark,
@@ -146,19 +66,11 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
             const SizedBox(
               height: 30,
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ClipRRect(
-                
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.asset(songimage[widget.index]
-                  
-                  )
-                
-                  ),
-                  
-            ),
-            
+            QueryArtworkWidget(
+                        artworkBorder: BorderRadius.circular(10),
+                        id:  widget.songs![widget.index!].id!,
+                        type: ArtworkType.AUDIO,
+                      ),
             const SizedBox(
               height: 10,
             ),
@@ -172,7 +84,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 12.0),
                       child: Text(
-                        songs[widget.index],
+                        widget.songs![widget.index!].songname!,
                         style:
                             GoogleFonts.kanit(fontSize: 25, color: colorwhite),
                       ),
@@ -180,7 +92,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 12.0),
                       child: Text(
-                        author[widget.index],
+                        widget.songs![widget.index!].artist!,
                         style: GoogleFonts.kanit(
                             fontSize: 15, color: colorwhite.withOpacity(0.7)),
                       ),

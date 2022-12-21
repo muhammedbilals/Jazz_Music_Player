@@ -1,30 +1,38 @@
-
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:music_player/model/songmodel.dart';
 
 import 'package:music_player/screens/splash.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(SongsAdapter());
+  await Hive.openBox<Songs>(boxname);
   runApp(const MyApp());
-
-
 }
 
-
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-       builder: (context, child) {
-    return ScrollConfiguration(
-      behavior: MyBehavior(),
-      child: child!,
-    );
-  },
+      builder: (context, child) {
+        return ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: child!,
+        );
+      },
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -37,15 +45,14 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
-        bottomSheetTheme: BottomSheetThemeData(
-            backgroundColor: Colors.black.withOpacity(0)),
+        bottomSheetTheme:
+            BottomSheetThemeData(backgroundColor: Colors.black.withOpacity(0)),
       ),
-      
       home: const PlayerSplash(),
-      
     );
   }
 }
+
 class MyBehavior extends ScrollBehavior {
   @override
   Widget buildOverscrollIndicator(
