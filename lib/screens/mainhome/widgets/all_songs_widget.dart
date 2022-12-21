@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_screen.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
+import 'package:on_audio_query/on_audio_query.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class AllSongsWidget extends StatefulWidget {
   const AllSongsWidget({super.key});
@@ -70,6 +72,24 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
     'assets/images/tame-impala-eventually-1400px_800.jpg',
     'assets/images/TDKR_sdtrck_cover.jpg',
   ];
+  final OnAudioQuery _audioQuery = OnAudioQuery();
+
+  @override
+  void initState() {
+    super.initState();
+    requestPermission();
+  }
+
+  requestPermission() async {
+    // Web platform don't support permissions methods.
+    if (!kIsWeb) {
+      bool permissionStatus = await _audioQuery.permissionsStatus();
+      if (!permissionStatus) {
+        await _audioQuery.permissionsRequest();
+      }
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,58 +105,82 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
           ],
         ),
         ///////////////////
-        ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: songs.length,
-          itemBuilder: ((context, index) => Padding(
-                padding: const EdgeInsets.only(bottom: 8.0, left: 5),
-                child: ListTile(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NowPlayingScreen(index: index),
-                        ));
-                    NowPlayingSlider(index: index);
-                    print(index);
-                  },
-                  leading: ClipRRect(
-                      child: Image.asset(
-                    songimage[index],
-                  )),
-                  title: Text(
-                    songs[index],
-                    style: GoogleFonts.kanit(color: colorwhite),
-                  ),
-                  subtitle: Text(author[index],
-                      style: GoogleFonts.kanit(
-                          color: colorwhite.withOpacity(0.7), fontSize: 12)),
-                  trailing: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              istaped = !istaped;
-                            });
-                          },
-                          icon: Icon(Icons.favorite,
-                              color: (istaped)
-                                  ? const Color.fromARGB(255, 121, 121, 121)
-                                  : const Color.fromARGB(255, 255, 0, 0))),
-                      IconButton(
-                        onPressed: () {
-                          showOptions(context);
+        FutureBuilder(
+            // Default values:
+            future: _audioQuery.querySongs(
+              sortType: null,
+              orderType: OrderType.ASC_OR_SMALLER,
+              uriType: UriType.EXTERNAL,
+              ignoreCase: true,
+            ),
+            builder: (context, item) {
+              // Loading content
+              if (item.data == null) return const CircularProgressIndicator();
+
+              // When you try "query" without asking for [READ] or [Library] permission
+              // the plugin will return a [Empty] list.
+              if (item.data!.isEmpty) return const Text("Nothing found!");
+
+              // You can use [item.data!] direct or you can create a:
+              // List<SongModel> songs = item.data!;
+              return ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: item.data!.length,
+                itemBuilder: ((context, index) => Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0, left: 5),
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    NowPlayingScreen(index: index),
+                              ));
+                          NowPlayingSlider(index: index);
+                          print(index);
                         },
-                        icon: const Icon(Icons.more_vert),
-                        color: colorwhite,
+                        leading: QueryArtworkWidget(
+                          artworkBorder: BorderRadius.circular(10),
+                          id: item.data![index].id,
+                          type: ArtworkType.AUDIO,
+                        ),
+                        title: Text(
+                          item.data![index].title,
+                          style: GoogleFonts.kanit(color: colorwhite),
+                        ),
+                        subtitle: Text(item.data![index].artist ?? "No Artist",
+                            style: GoogleFonts.kanit(
+                                color: colorwhite.withOpacity(0.7),
+                                fontSize: 12)),
+                        trailing: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    istaped = !istaped;
+                                  });
+                                },
+                                icon: Icon(Icons.favorite,
+                                    color: (istaped)
+                                        ? const Color.fromARGB(
+                                            255, 121, 121, 121)
+                                        : const Color.fromARGB(
+                                            255, 255, 0, 0))),
+                            IconButton(
+                              onPressed: () {
+                                showOptions(context);
+                              },
+                              icon: const Icon(Icons.more_vert),
+                              color: colorwhite,
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              )),
-        ),
+                    )),
+              );
+            }),
       ],
     );
   }

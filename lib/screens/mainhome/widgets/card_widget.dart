@@ -26,7 +26,7 @@ class CardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double vwidth = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding:  EdgeInsets.all(vwidth*0.02),
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -40,11 +40,11 @@ class CardWidget extends StatelessWidget {
           child: Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 10),
+                padding:  EdgeInsets.only(left:vwidth* 0.02, right: vwidth* 0.02),
                 child: Icon(cardicon),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10),
+                padding:  EdgeInsets.only(left: vwidth* 0.02, right: vwidth* 0.02),
                 child: Text(
                   cardtext.toString(),
                   style: GoogleFonts.kanit(fontSize: 20),
