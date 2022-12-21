@@ -7,7 +7,7 @@ import 'package:music_player/screens/mainhome/widgets/now_playing_playbutton_row
 import 'package:on_audio_query/on_audio_query.dart';
 
 class NowPlayingScreen extends StatefulWidget {
-  NowPlayingScreen({super.key, required this.index,this.songs});
+  NowPlayingScreen({super.key, required this.index, this.songs});
   int? index;
   List<Songs>? songs;
 
@@ -17,7 +17,7 @@ class NowPlayingScreen extends StatefulWidget {
 
 class _NowPlayingScreenState extends State<NowPlayingScreen> {
   double _value = 6;
-  final player = AudioPlayer();
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -67,10 +67,10 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
               height: 30,
             ),
             QueryArtworkWidget(
-                        artworkBorder: BorderRadius.circular(10),
-                        id:  widget.songs![widget.index!].id!,
-                        type: ArtworkType.AUDIO,
-                      ),
+              artworkBorder: BorderRadius.circular(10),
+              id: widget.songs![widget.index!].id!,
+              type: ArtworkType.AUDIO,
+            ),
             const SizedBox(
               height: 10,
             ),

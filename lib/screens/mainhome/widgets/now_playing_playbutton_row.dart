@@ -11,6 +11,7 @@ class NowPlayingPlayButtonRow extends StatefulWidget {
 }
 
 class _NowPlayingPlayButtonRowState extends State<NowPlayingPlayButtonRow> {
+  bool istaped = true;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,10 +49,11 @@ class _NowPlayingPlayButtonRowState extends State<NowPlayingPlayButtonRow> {
                       borderRadius: BorderRadius.circular(35)),
                   child: IconButton(
                       onPressed: () {
-                        
+                        setState(() {
+                                  istaped = !istaped;
+                                });
                       },
-                      icon: const Icon(
-                        Icons.play_arrow,
+                      icon: (istaped)?Icon(Icons.play_arrow):Icon(Icons.pause,
                         color: colorblack,
                         size: 35,
                       )),

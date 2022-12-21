@@ -22,16 +22,21 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
   final box = SongBox.getInstance();
 
   final OnAudioQuery _audioQuery = OnAudioQuery();
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  // playSong(String uri) {
+  //   _audioPlayer.setAudioSource(AudioSource.uri(uri.parse(uri)));
+  // }
 
   @override
   Widget build(BuildContext context) {
     void initState() {
-    // TODO: implement initState
-    List<Songs> dbsongs = box.values.toList();
-    
-    
-    super.initState();
-  }
+      // TODO: implement initState
+      List<Songs> dbsongs = box.values.toList();
+
+      super.initState();
+    }
+
     return Column(
       children: [
         Row(
@@ -71,12 +76,12 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  NowPlayingScreen(index: index,songs: allDbdongs),
+                              builder: (context) => NowPlayingScreen(
+                                  index: index, songs: allDbdongs),
                             ));
                         NowPlayingSlider(index: index);
                         print(index);
-                       print(allDbdongs[index].songname!) ;
+                        print(allDbdongs[index].songname!);
                       },
                       leading: QueryArtworkWidget(
                         artworkBorder: BorderRadius.circular(10),
@@ -123,28 +128,6 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
       ],
     );
   }
-
-//   Widget? iconfav() {
-//     if (istaped = true) {
-//       return Icon(Icons.favorite_border_outlined);
-//     } else {
-//       return Icon(Icons.favorite_border_outlined);
-//     }
-//   }
-
-//   Widget? istapeda() {
-//     if (istaped = true) return Icon(Icons.favorite_border_outlined);
-//     return Icon(Icons.favorite);
-//   }
-// }
-
-// Widget lovebuttonoutline() {
-//   return Icon(Icons.favorite);
-// }
-
-// Widget lovebuttonfilled() {
-//   return Icon(Icons.favorite_border_outlined);
-// }
 
   showOptions(BuildContext context) {
     double vwidth = MediaQuery.of(context).size.width;
