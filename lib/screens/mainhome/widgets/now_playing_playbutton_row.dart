@@ -5,8 +5,13 @@ import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/songmodel.dart';
 
 class NowPlayingPlayButtonRow extends StatefulWidget {
-  NowPlayingPlayButtonRow({super.key, required int this.index});
+  NowPlayingPlayButtonRow({
+    super.key,
+    required int this.index,
+    required this.audioPlayer
+  });
   int? index;
+  final AudioPlayer audioPlayer;
 
   List<Songs> dbsongs = box.values.toList();
   @override
@@ -18,7 +23,6 @@ bool _isplaying = false;
 final box = SongBox.getInstance();
 
 class _NowPlayingPlayButtonRowState extends State<NowPlayingPlayButtonRow> {
-  final AudioPlayer _audioPlayer = AudioPlayer();
   bool istaped = true;
 
   @override
@@ -86,7 +90,11 @@ class _NowPlayingPlayButtonRowState extends State<NowPlayingPlayButtonRow> {
                       color: colorextralight,
                       borderRadius: BorderRadius.circular(30)),
                   child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          widget.index! + 1;
+                        });
+                      },
                       icon: const Icon(
                         Icons.skip_next,
                         color: colorblack,
@@ -110,13 +118,14 @@ class _NowPlayingPlayButtonRowState extends State<NowPlayingPlayButtonRow> {
     );
   }
 
+  
   void playsong() async {
-    await _audioPlayer.setAudioSource(
+    await widget.audioPlayer.setAudioSource(
         AudioSource.uri(Uri.parse(widget.dbsongs[widget.index!].songurl!)));
     if (_isplaying) {
-      _audioPlayer.play();
+       widget.audioPlayer.play();
     } else {
-      _audioPlayer.pause();
+       widget.audioPlayer.pause();
     }
     // _isplaying = true;
   }

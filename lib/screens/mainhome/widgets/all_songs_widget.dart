@@ -32,7 +32,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
   Widget build(BuildContext context) {
     void initState() {
       // TODO: implement initState
-      List<Songs> dbsongs = box.values.toList();
+      List<Songs> allDbdongs = box.values.toList();
 
       super.initState();
     }
@@ -69,21 +69,27 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: allDbdongs.length,
-              itemBuilder: ((context,int  index) => Padding(
+              itemBuilder: ((context,  index) => Padding(
                     padding: const EdgeInsets.only(bottom: 8.0, left: 5),
                     child: ListTile(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => NowPlayingScreen(
-                                  index: index, songs: allDbdongs),
-                            ));
-                        // NowPlayingSlider(index: index);
+                         NowPlayingSlider.enteredvalue.value = index;
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => NowPlayingScreen(
+                        //           index: index, songs: allDbdongs),
+                                  
+                        //     ));
+                           
+                        NowPlayingSlider();
                         print(index);
                         print(allDbdongs[index].songname!);
+
+                        
                       },
                       leading: QueryArtworkWidget(
+                        keepOldArtwork: true,
                         artworkBorder: BorderRadius.circular(10),
                         id: allDbdongs[index].id!,
                         type: ArtworkType.AUDIO,
@@ -92,7 +98,8 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                         allDbdongs[index].songname!,
                         style: GoogleFonts.kanit(color: colorwhite),
                       ),
-                      subtitle: Text(allDbdongs[index].artist ?? "No Artist",
+                      subtitle: Text(
+                        allDbdongs[index].artist ?? "No Artist",
                           style: GoogleFonts.kanit(
                               color: colorwhite.withOpacity(0.7),
                               fontSize: 12)),

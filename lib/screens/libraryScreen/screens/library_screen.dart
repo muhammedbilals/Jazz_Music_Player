@@ -93,7 +93,7 @@ class LibraryScreen extends StatelessWidget {
               ],
             ),
           ),
-          bottomSheet: NowPlayingSlider(),
+          // bottomSheet: NowPlayingSlider(),
         ),
       ),
     );

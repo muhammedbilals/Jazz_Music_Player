@@ -17,22 +17,9 @@ class _HomeMainState extends State<HomeMain> {
   int _selectedIndex = 0;
   PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
-
-//       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-//   static const List<Widget> _widgetOptions = <Widget>[
-  // int  index= _selectedIndex;
-  // Color? colorafa = colorextralight;
-  // Color? selectedcolor = colorlightdark;
   List<Widget> _NavScreens() {
     return [ PlayerHome(), const SearchScreen(), LibraryScreen()];
   }
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _selectedIndex = index;
-
-  //     // colorafa = colordark;
-  //   });
-  // }
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
