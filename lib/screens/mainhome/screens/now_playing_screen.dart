@@ -21,6 +21,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     if (widget.index == null) {
       print('index is null');
     }
@@ -143,7 +144,8 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                 ],
               ),
             ),
-            const NowPlayingPlayButtonRow()
+             NowPlayingPlayButtonRow(index: widget.index!,)
+             
           ],
         ),
       ),

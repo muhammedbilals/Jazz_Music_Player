@@ -69,7 +69,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: allDbdongs.length,
-              itemBuilder: ((context, index) => Padding(
+              itemBuilder: ((context,int  index) => Padding(
                     padding: const EdgeInsets.only(bottom: 8.0, left: 5),
                     child: ListTile(
                       onTap: () {
@@ -79,7 +79,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                               builder: (context) => NowPlayingScreen(
                                   index: index, songs: allDbdongs),
                             ));
-                        NowPlayingSlider(index: index);
+                        // NowPlayingSlider(index: index);
                         print(index);
                         print(allDbdongs[index].songname!);
                       },

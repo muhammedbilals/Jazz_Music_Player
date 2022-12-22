@@ -1,19 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/model/songmodel.dart';
 
 class NowPlayingPlayButtonRow extends StatefulWidget {
-  const NowPlayingPlayButtonRow({super.key});
+  NowPlayingPlayButtonRow({super.key, required int this.index});
+  int? index;
 
+  List<Songs> dbsongs = box.values.toList();
   @override
   State<NowPlayingPlayButtonRow> createState() =>
       _NowPlayingPlayButtonRowState();
 }
 
+bool _isplaying = false;
+final box = SongBox.getInstance();
+
 class _NowPlayingPlayButtonRowState extends State<NowPlayingPlayButtonRow> {
+  final AudioPlayer _audioPlayer = AudioPlayer();
   bool istaped = true;
+
   @override
   Widget build(BuildContext context) {
+    void initState() {
+      // TODO: implement initState
+      playsong();
+      super.initState();
+    }
+
     return Column(
       children: [
         Container(
@@ -48,15 +63,21 @@ class _NowPlayingPlayButtonRowState extends State<NowPlayingPlayButtonRow> {
                       color: colorextralight,
                       borderRadius: BorderRadius.circular(35)),
                   child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                                  istaped = !istaped;
-                                });
-                      },
-                      icon: (istaped)?Icon(Icons.play_arrow):Icon(Icons.pause,
-                        color: colorblack,
-                        size: 35,
-                      )),
+                    onPressed: () {
+                      playsong();
+                      print(widget.index);
+                      setState(() {
+                        _isplaying = !_isplaying;
+                      });
+                    },
+                    icon: (_isplaying)
+                        ? Icon(Icons.pause)
+                        : Icon(
+                            Icons.play_arrow,
+                            color: colorblack,
+                            size: 35,
+                          ),
+                  ),
                 ),
                 Container(
                   width: 50,
@@ -72,11 +93,12 @@ class _NowPlayingPlayButtonRowState extends State<NowPlayingPlayButtonRow> {
                       )),
                 ),
                 IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.repeat,
-                      color: colorwhite,
-                    )),
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.repeat,
+                    color: colorwhite,
+                  ),
+                ),
               ],
             ),
           ),
@@ -86,5 +108,16 @@ class _NowPlayingPlayButtonRowState extends State<NowPlayingPlayButtonRow> {
         )
       ],
     );
+  }
+
+  void playsong() async {
+    await _audioPlayer.setAudioSource(
+        AudioSource.uri(Uri.parse(widget.dbsongs[widget.index!].songurl!)));
+    if (_isplaying) {
+      _audioPlayer.play();
+    } else {
+      _audioPlayer.pause();
+    }
+    // _isplaying = true;
   }
 }

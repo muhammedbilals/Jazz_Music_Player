@@ -27,7 +27,6 @@ class PlayerHome extends StatelessWidget {
           // body: Container(
           //   decoration: BoxDecoration(
           //     image: DecorationImage(image: AssetImage('assets/images/gulf livery.jpg'),fit: BoxFit.cover)
-
           //   ),
           body: ScrollConfiguration(
             behavior: MyBehavior(),
@@ -48,26 +47,27 @@ class PlayerHome extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(right: 15),
                         child: Container(
-                            decoration: BoxDecoration(
-                                color: colorextralight,
-                                borderRadius: BorderRadius.circular(30)),
-                            width: 40,
-                            height: 40,
-                            child: IconButton(
-                              onPressed: () {
-                                // print(dbsongs[0].songname);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: ((context) => ProfilePage())));
-                              },
-                              icon: const Icon(
-                                Icons.info,
-                                color: colorblack,
-                                size: 25,
-                              ),
-                            )),
-                      )
+                          decoration: BoxDecoration(
+                              color: colorextralight,
+                              borderRadius: BorderRadius.circular(30)),
+                          width: 40,
+                          height: 40,
+                          child: IconButton(
+                            onPressed: () {
+                              // print(dbsongs[0].songname);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) => ProfilePage())));
+                            },
+                            icon: const Icon(
+                              Icons.info,
+                              color: colorblack,
+                              size: 25,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
 
@@ -131,7 +131,7 @@ class PlayerHome extends StatelessWidget {
               ),
             ),
           ),
-          bottomSheet: NowPlayingSlider( ),
+          bottomSheet: NowPlayingSlider(),
         ),
       ),
     );
