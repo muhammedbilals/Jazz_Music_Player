@@ -147,41 +147,8 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Slider(
-                      value: _value,
-                      min: 0,
-                      max: 100,
-                      // divisions: (3600 / 30 - 1).toInt(),
-                      // value: _value,
-                      onChanged: (value) {
-                        setState(() {
-                          _value = value;
-                          print(_value);
-                        });
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0, right: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            // _value.toString(),
-                            '1.00',
-                            style: GoogleFonts.kanit(
-                                fontSize: 15,
-                                color: colorwhite.withOpacity(0.7)),
-                          ),
-                          Text(
-                            // (_value.toString()),
-                            '3.10',
-                            style: GoogleFonts.kanit(
-                                fontSize: 15,
-                                color: colorwhite.withOpacity(0.7)),
-                          )
-                        ],
-                      ),
-                    ),
+                    
+                    
                   ],
                 );
               }),
