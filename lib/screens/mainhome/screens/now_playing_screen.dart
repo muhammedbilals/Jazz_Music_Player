@@ -17,7 +17,7 @@ class NowPlayingScreen extends StatefulWidget {
 }
 
 class _NowPlayingScreenState extends State<NowPlayingScreen> {
-  double _value = 6;
+  
   final box = SongBox.getInstance();
   final AudioPlayer _audioPlayer = AudioPlayer();
 
@@ -147,14 +147,11 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    
-                    
                   ],
                 );
               }),
             ),
             NowPlayingPlayButtonRow(
-              index: widget.index!,
               audioPlayer: _audioPlayer,
             )
           ],

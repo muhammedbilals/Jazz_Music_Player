@@ -4,12 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/songmodel.dart';
+import 'package:music_player/screens/mainhome/screens/now_playing_screen.dart';
+import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 
 class NowPlayingPlayButtonRow extends StatefulWidget {
-  NowPlayingPlayButtonRow(
-      {super.key, required int this.index, required this.audioPlayer});
-  int? index;
+  NowPlayingPlayButtonRow({super.key, required this.audioPlayer});
+
+  // static int? index = 0;
   final AudioPlayer audioPlayer;
+  // static ValueNotifier<int> buttonvalue = ValueNotifier(index!);
 
   List<Songs> dbsongs = box.values.toList();
   @override
@@ -100,7 +103,7 @@ class _NowPlayingPlayButtonRowState extends State<NowPlayingPlayButtonRow> {
                   child: IconButton(
                     onPressed: () {
                       playsong();
-                      print(widget.index);
+                      print('now playing slider inde${NowPlayingSlider.index}');
                       setState(() {
                         _isplaying = !_isplaying;
                       });
@@ -122,8 +125,10 @@ class _NowPlayingPlayButtonRowState extends State<NowPlayingPlayButtonRow> {
                       borderRadius: BorderRadius.circular(30)),
                   child: IconButton(
                       onPressed: () {
+                        skipMusic(_isplaying, widget.audioPlayer,
+                            NowPlayingSlider.index!);
                         setState(() {
-                          widget.index! + 1;
+                          NowPlayingSlider.index! + 1;
                         });
                       },
                       icon: const Icon(
@@ -150,8 +155,8 @@ class _NowPlayingPlayButtonRowState extends State<NowPlayingPlayButtonRow> {
   }
 
   void playsong() async {
-    await widget.audioPlayer.setAudioSource(
-        AudioSource.uri(Uri.parse(widget.dbsongs[widget.index!].songurl!)));
+    await widget.audioPlayer.setAudioSource(AudioSource.uri(
+        Uri.parse(widget.dbsongs[NowPlayingSlider.index!].songurl!)));
     if (_isplaying) {
       widget.audioPlayer.play();
     } else {
@@ -173,5 +178,34 @@ class _NowPlayingPlayButtonRowState extends State<NowPlayingPlayButtonRow> {
   void changeToSeconds(int seconds) {
     Duration duration = Duration(seconds: seconds);
     widget.audioPlayer.seek(duration);
+  }
+
+  skipMusic(bool isPlaying, AudioPlayer audioplayer, int index) async {
+    if (!isPlaying) {
+      await audioplayer.stop();
+    }
+
+    index++;
+    await widget.audioPlayer.setAudioSource(AudioSource.uri(
+        Uri.parse(widget.dbsongs[NowPlayingSlider.index!].songurl!)));
+    setState(() {
+      NowPlayingSlider.enteredvalue.value++;
+    });
+  }
+
+  previousMusic(bool isPlaying, AudioPlayer player, List<Songs> dbsongs,
+      int index) async {
+    if (!isPlaying) {
+      await player.seekToPrevious();
+    }
+
+    index--;
+    NowPlayingSlider.enteredvalue.value--;
+    // HomeBottomTile.vindex.value--;
+
+    await widget.audioPlayer.setAudioSource(AudioSource.uri(
+        Uri.parse(widget.dbsongs[NowPlayingSlider.index!].songurl!)));
+
+    // HomeBottomTile.vindex.value--;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_screen.dart';
@@ -9,9 +10,12 @@ import 'package:on_audio_query/on_audio_query.dart';
 
 class NowPlayingSlider extends StatefulWidget {
   NowPlayingSlider({super.key});
+  
   static int? index = 0;
-  final box = SongBox.getInstance();
-  static ValueNotifier<int> enteredvalue = ValueNotifier(index!);
+  // final box = SongBox.getInstance();
+  static ValueNotifier<int> enteredvalue = ValueNotifier<int>(index!);
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  List<Songs> dbsongs = box.values.toList();
 
   @override
   State<NowPlayingSlider> createState() => _NowPlayingSliderState();
@@ -19,6 +23,8 @@ class NowPlayingSlider extends StatefulWidget {
 
 class _NowPlayingSliderState extends State<NowPlayingSlider> {
   bool istaped = true;
+  bool _isplaying = true;
+  List<Songs> dbsongs = box.values.toList();
   @override
   Widget build(BuildContext context) {
     void initState() {
@@ -33,7 +39,8 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
 
     return ValueListenableBuilder(
         valueListenable: NowPlayingSlider.enteredvalue,
-        builder: (BuildContext context, int newValue, child) {
+        builder: (BuildContext context, int value, child) {
+          print(' entered value index is ===$value');
           return ValueListenableBuilder(
             valueListenable: box.listenable(),
             builder: ((context, Box<Songs> allsongbox, child) {
@@ -53,7 +60,8 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => NowPlayingScreen(
-                              index: newValue,),
+                            index: value,
+                          ),
                         ));
                   },
                   child: Container(
@@ -71,7 +79,7 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                           artworkHeight: vheight * 0.16,
                           keepOldArtwork: true,
                           artworkBorder: BorderRadius.circular(10),
-                          id: allDbdongs[newValue].id!,
+                          id: allDbdongs[value].id!,
                           type: ArtworkType.AUDIO,
                         ),
                         Column(
@@ -81,13 +89,13 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                             SizedBox(
                               width: vwidth * 0.5,
                               child: Text(
-                                allDbdongs[newValue].songname!,
+                                allDbdongs[value].songname!,
                                 style: GoogleFonts.kanit(fontSize: 18),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             Text(
-                              allDbdongs[newValue].artist ?? "No Artist",
+                              allDbdongs[value].artist ?? "No Artist",
                               style: GoogleFonts.kanit(fontSize: 13),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -114,6 +122,7 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                                       size: 30,
                                     ),
                                     onPressed: () {
+                                      playsong(value);
                                       setState(() {
                                         istaped = !istaped;
                                       });
@@ -145,5 +154,16 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
             }),
           );
         });
+  }
+
+  void playsong(int value) async {
+    await widget._audioPlayer.setAudioSource(
+        AudioSource.uri(Uri.parse(widget.dbsongs[value].songurl!)));
+    if (_isplaying) {
+      widget._audioPlayer.play();
+      
+    } else {
+      widget._audioPlayer.pause();
+    }
   }
 }

@@ -69,24 +69,27 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: allDbdongs.length,
-              itemBuilder: ((context,  index) => Padding(
+              itemBuilder: ((context, index) => Padding(
                     padding: const EdgeInsets.only(bottom: 8.0, left: 5),
                     child: ListTile(
                       onTap: () {
-                         NowPlayingSlider.enteredvalue.value = index;
+                        NowPlayingSlider.enteredvalue.value = index;
+                       
+                        print('value notifirer passing index$index');
+
                         // Navigator.push(
                         //     context,
                         //     MaterialPageRoute(
                         //       builder: (context) => NowPlayingScreen(
                         //           index: index, songs: allDbdongs),
-                                  
+
                         //     ));
-                           
-                        NowPlayingSlider();
+
+                        NowPlayingSlider(
+                         
+                        );
                         print(index);
                         print(allDbdongs[index].songname!);
-
-                        
                       },
                       leading: QueryArtworkWidget(
                         keepOldArtwork: true,
@@ -98,8 +101,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                         allDbdongs[index].songname!,
                         style: GoogleFonts.kanit(color: colorwhite),
                       ),
-                      subtitle: Text(
-                        allDbdongs[index].artist ?? "No Artist",
+                      subtitle: Text(allDbdongs[index].artist ?? "No Artist",
                           style: GoogleFonts.kanit(
                               color: colorwhite.withOpacity(0.7),
                               fontSize: 12)),
