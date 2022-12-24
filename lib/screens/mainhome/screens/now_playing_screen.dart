@@ -17,7 +17,6 @@ class NowPlayingScreen extends StatefulWidget {
 }
 
 class _NowPlayingScreenState extends State<NowPlayingScreen> {
-  
   final box = SongBox.getInstance();
   final AudioPlayer _audioPlayer = AudioPlayer();
 
@@ -39,122 +38,124 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: colordark,
-        body: Column(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: colorextralight,
-                        borderRadius: BorderRadius.circular(30)),
-                    width: 40,
-                    height: 40,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Icons.expand_more,
-                        color: colorblack,
-                        size: 25,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: colorextralight,
+                          borderRadius: BorderRadius.circular(30)),
+                      width: 40,
+                      height: 40,
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.expand_more,
+                          color: colorblack,
+                          size: 25,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 70.0),
-                  child: Text(
-                    'Now Playing',
-                    style: GoogleFonts.kanit(fontSize: 40, color: colorwhite),
+                  Padding(
+                    padding: EdgeInsets.only(left: vwidth * 0.17),
+                    child: Text(
+                      'Now Playing',
+                      style: GoogleFonts.kanit(fontSize: 35, color: colorwhite),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            ValueListenableBuilder<Box<Songs>>(
-              valueListenable: box.listenable(),
-              builder: ((context, Box<Songs> allsongbox, child) {
-                List<Songs> allDbdongs = allsongbox.values.toList();
-                // List<MostPlayed> allmostplayedsongs = mostplayedsongs.values.toList();
-                if (allDbdongs.isEmpty) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (allDbdongs == null) {
-                  print('no songs');
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return Column(
-                  children: [
-                    QueryArtworkWidget(
-                      // quality: 100,
-                      artworkQuality: FilterQuality.high,
-                      artworkHeight: vheight * 0.44,
-                      artworkWidth: vheight * 0.44,
-                      artworkBorder: BorderRadius.circular(10),
-                      artworkFit: BoxFit.cover,
-                      id: allDbdongs[widget.index!].id!,
-                      type: ArtworkType.AUDIO,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 12.0),
-                              child: Text(
-                                allDbdongs[widget.index!].songname!,
-                                style: GoogleFonts.kanit(
-                                    fontSize: 25, color: colorwhite),
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              ValueListenableBuilder<Box<Songs>>(
+                valueListenable: box.listenable(),
+                builder: ((context, Box<Songs> allsongbox, child) {
+                  List<Songs> allDbdongs = allsongbox.values.toList();
+                  // List<MostPlayed> allmostplayedsongs = mostplayedsongs.values.toList();
+                  if (allDbdongs.isEmpty) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (allDbdongs == null) {
+                    print('no songs');
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return Column(
+                    children: [
+                      QueryArtworkWidget(
+                        // quality: 100,
+                        artworkQuality: FilterQuality.high,
+                        artworkHeight: vheight * 0.44,
+                        artworkWidth: vheight * 0.44,
+                        artworkBorder: BorderRadius.circular(10),
+                        artworkFit: BoxFit.cover,
+                        id: allDbdongs[widget.index!].id!,
+                        type: ArtworkType.AUDIO,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12.0),
+                                child: Text(
+                                  allDbdongs[widget.index!].songname!,
+                                  style: GoogleFonts.kanit(
+                                      fontSize: 25, color: colorwhite),
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 12.0),
-                              child: Text(
-                                allDbdongs[widget.index!].artist!,
-                                style: GoogleFonts.kanit(
-                                    fontSize: 15,
-                                    color: colorwhite.withOpacity(0.7)),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12.0),
+                                child: Text(
+                                  allDbdongs[widget.index!].artist!,
+                                  style: GoogleFonts.kanit(
+                                      fontSize: 15,
+                                      color: colorwhite.withOpacity(0.7)),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.favorite_border_outlined,
-                              color: colorwhite,
-                            ))
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                );
-              }),
-            ),
-            NowPlayingPlayButtonRow(
-              audioPlayer: _audioPlayer,
-            )
-          ],
+                            ],
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.favorite_border_outlined,
+                                color: colorwhite,
+                              ))
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  );
+                }),
+              ),
+              NowPlayingPlayButtonRow(
+                audioPlayer: _audioPlayer,
+              )
+            ],
+          ),
         ),
       ),
     );

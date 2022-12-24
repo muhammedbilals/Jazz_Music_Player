@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/songmodel.dart';
-import 'package:music_player/screens/mainhome/screens/now_playing_screen.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -52,14 +50,14 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
         ValueListenableBuilder<Box<Songs>>(
           valueListenable: box.listenable(),
           builder: ((context, Box<Songs> allsongbox, child) {
-            List<Songs> allDbdongs = allsongbox.values.toList();
+            List<Songs> allDbsongs = allsongbox.values.toList();
             // List<MostPlayed> allmostplayedsongs = mostplayedsongs.values.toList();
-            if (allDbdongs.isEmpty) {
+            if (allDbsongs.isEmpty) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
-            if (allDbdongs == null) {
+            if (allDbsongs == null) {
               print('no songs');
               return const Center(
                 child: CircularProgressIndicator(),
@@ -68,7 +66,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
             return ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: allDbdongs.length,
+              itemCount: allDbsongs.length,
               itemBuilder: ((context, index) => Padding(
                     padding: const EdgeInsets.only(bottom: 8.0, left: 5),
                     child: ListTile(
@@ -89,19 +87,19 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                          
                         );
                         print(index);
-                        print(allDbdongs[index].songname!);
+                        print(allDbsongs[index].songname!);
                       },
                       leading: QueryArtworkWidget(
                         keepOldArtwork: true,
                         artworkBorder: BorderRadius.circular(10),
-                        id: allDbdongs[index].id!,
+                        id: allDbsongs[index].id!,
                         type: ArtworkType.AUDIO,
                       ),
                       title: Text(
-                        allDbdongs[index].songname!,
+                        allDbsongs[index].songname!,
                         style: GoogleFonts.kanit(color: colorwhite),
                       ),
-                      subtitle: Text(allDbdongs[index].artist ?? "No Artist",
+                      subtitle: Text(allDbsongs[index].artist ?? "No Artist",
                           style: GoogleFonts.kanit(
                               color: colorwhite.withOpacity(0.7),
                               fontSize: 12)),
@@ -114,7 +112,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                   istaped = !istaped;
                                 });
 
-                                print(allDbdongs[index].songname!);
+                                print(allDbsongs[index].songname!);
                               },
                               icon: Icon(Icons.favorite,
                                   color: (istaped)
