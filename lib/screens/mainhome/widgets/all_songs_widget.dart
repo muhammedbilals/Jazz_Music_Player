@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/model/dbfunctions.dart';
+import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/model/songmodel.dart';
+
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
+import 'package:music_player/screens/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -22,12 +26,14 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
   bool istaped = true;
   final box = SongBox.getInstance();
   List<Audio> convertAudios = [];
+  
 
   @override
   Widget build(BuildContext context) {
     void initState() {
       // TODO: implement initState
       List<Songs> dbsongs = box.values.toList();
+
       for (var item in dbsongs) {
         convertAudios.add(Audio.file(item.songurl!,
             metas: Metas(
@@ -61,6 +67,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
         ValueListenableBuilder<Box<Songs>>(
           valueListenable: box.listenable(),
           builder: ((context, Box<Songs> allsongbox, child) {
+            
             List<Songs> allDbsongs = allsongbox.values.toList();
             // List<MostPlayed> allmostplayedsongs = mostplayedsongs.values.toList();
             if (allDbsongs.isEmpty) {
@@ -78,60 +85,69 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: allDbsongs.length,
-              itemBuilder: ((context, index) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0, left: 5),
-                    child: ListTile(
-                      onTap: () {
-                        _audioPlayer.open(
-                          Audio.file(allDbsongs[index].songurl!),
-                        );
-                        NowPlayingSlider.enteredvalue.value = index;
-
-                        print('value notifirer passing index$index');
-                        print(index);
-                        print(allDbsongs[index].songname!);
-                      },
-                      leading: QueryArtworkWidget(
-                        keepOldArtwork: true,
-                        artworkBorder: BorderRadius.circular(10),
-                        id: allDbsongs[index].id!,
-                        type: ArtworkType.AUDIO,
-                      ),
-                      title: Text(
-                        allDbsongs[index].songname!,
-                        style: GoogleFonts.kanit(color: colorwhite),
-                      ),
-                      subtitle: Text(allDbsongs[index].artist ?? "No Artist",
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.kanit(
-                              color: colorwhite.withOpacity(0.7),
-                              fontSize: 12)),
-                      trailing: Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  istaped = !istaped;
-                                });
-
-                                print(allDbsongs[index].songname!);
-                              },
-                              icon: Icon(Icons.favorite,
-                                  color: (istaped)
-                                      ? const Color.fromARGB(255, 121, 121, 121)
-                                      : const Color.fromARGB(255, 255, 0, 0))),
-                          IconButton(
-                            onPressed: () {
-                              showOptions(context);
-                            },
-                            icon: const Icon(Icons.more_vert),
-                            color: colorwhite,
-                          ),
-                        ],
-                      ),
+              itemBuilder: ((context, index) {
+                RecentlyPlayed rsongs;
+                Songs songs = allDbsongs[index];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0, left: 5),
+                  child: ListTile(
+                    onTap: () {
+                      _audioPlayer.open(
+                        Audio.file(allDbsongs[index].songurl!),
+                      );
+                      rsongs = RecentlyPlayed(
+                          id: songs.id,
+                          artist: songs.artist,
+                          duration: songs.duration,
+                          songname: songs.songname,
+                          songurl: songs.songurl);
+                      NowPlayingSlider.enteredvalue.value = index;
+                      updateRecentlyPlayed(rsongs  , index);
+                      print('value notifirer passing index$index');
+                      print(index);
+                      print(allDbsongs[index].songname!);
+                    },
+                    leading: QueryArtworkWidget(
+                      keepOldArtwork: true,
+                      artworkBorder: BorderRadius.circular(10),
+                      id: allDbsongs[index].id!,
+                      type: ArtworkType.AUDIO,
                     ),
-                  )),
+                    title: Text(
+                      allDbsongs[index].songname!,
+                      style: GoogleFonts.kanit(color: colorwhite),
+                    ),
+                    subtitle: Text(allDbsongs[index].artist ?? "No Artist",
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.kanit(
+                            color: colorwhite.withOpacity(0.7), fontSize: 12)),
+                    trailing: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                istaped = !istaped;
+                              });
+
+                              print(allDbsongs[index].songname!);
+                            },
+                            icon: Icon(Icons.favorite,
+                                color: (istaped)
+                                    ? const Color.fromARGB(255, 121, 121, 121)
+                                    : const Color.fromARGB(255, 255, 0, 0))),
+                        IconButton(
+                          onPressed: () {
+                            showOptions(context);
+                          },
+                          icon: const Icon(Icons.more_vert),
+                          color: colorwhite,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
             );
           }),
         )

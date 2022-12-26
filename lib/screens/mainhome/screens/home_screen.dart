@@ -40,7 +40,6 @@ class PlayerHome extends StatelessWidget {
                               fontSize: 40, color: colorwhite),
                         ),
                       ),
-                      
                     ],
                   ),
 
@@ -62,7 +61,9 @@ class PlayerHome extends StatelessWidget {
                           cardtext: 'Liked Songs',
                           index: 0),
                       CardWidget(
-                          cardicon: Icons.album, cardtext: 'Albums', index: 1),
+                          cardicon: Icons.queue_music_outlined,
+                          cardtext: 'Playlists',
+                          index: 1),
                     ],
                   ),
                   // ----------------------------------------playlist-------------------------------------
@@ -70,8 +71,8 @@ class PlayerHome extends StatelessWidget {
                   Row(
                     children: [
                       CardWidget(
-                        cardicon: Icons.queue_music_outlined,
-                        cardtext: 'Playlists',
+                        cardicon: Icons.history,
+                        cardtext: 'Recently Played',
                         index: 2,
                       ),
                       CardWidget(

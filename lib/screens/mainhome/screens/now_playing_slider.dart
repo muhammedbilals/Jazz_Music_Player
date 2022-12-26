@@ -115,7 +115,7 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                             Text(
                               allDbdongs[value].artist ?? "No Artist",
                               style: GoogleFonts.kanit(fontSize: 13),
-                              overflow: TextOverflow.ellipsis,
+                              overflow: TextOverflow.fade,
                             ),
                           ],
                         ),

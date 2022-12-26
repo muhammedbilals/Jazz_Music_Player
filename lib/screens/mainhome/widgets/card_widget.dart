@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/screens/Liked_songs_list.dart';
-import 'package:music_player/screens/mainhome/screens/albums_list.dart';
+import 'package:music_player/screens/mainhome/screens/album_full_list.dart';
 import 'package:music_player/screens/mainhome/screens/most_played.dart';
 import 'package:music_player/screens/mainhome/screens/playlist_list_screen.dart';
 
@@ -18,13 +18,13 @@ class CardWidget extends StatelessWidget {
   //  Function navbutton();
   List screens = [
     LikedSongsList(),
-    AlbumsList(),
     PlayListScreen(),
+    AlbumFullList(),
     MostPlayed(),
   ];
   @override
   Widget build(BuildContext context) {
-    double vwidth = MediaQuery.of(context).size.width;
+    double vwidth = MediaQuery.of(context).size.width;  
     return Padding(
       padding:  EdgeInsets.all(vwidth*0.02),
       child: InkWell(
