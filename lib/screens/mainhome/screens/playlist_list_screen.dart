@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
-import 'package:music_player/screens/libraryScreen/widgets/library_list_widget.dart';
 
 class PlayListScreen extends StatelessWidget {
   const PlayListScreen({super.key});
@@ -72,8 +71,6 @@ class PlayListScreen extends StatelessWidget {
                 ],
               ),
             ),
-            LibraryList(),
-            LibraryList()
           ],
         ),
       ),

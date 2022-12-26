@@ -22,39 +22,42 @@ class ProfilePage extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: colordark,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0),
-              child: Text(
-                'Your Profile',
-                style: GoogleFonts.kanit(fontSize: 40, color: colorwhite),
+    return Container(
+      color: colordark,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: colordark,
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0),
+                child: Text(
+                  'Your Profile',
+                  style: GoogleFonts.kanit(fontSize: 40, color: colorwhite),
+                ),
               ),
-            ),
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: profilelist.length,
-              itemBuilder: ((context, index) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0, left: 5),
-                    child: ListTile(
-                      leading: Icon(
-                        icon[index],
-                        color: colorwhite,
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: profilelist.length,
+                itemBuilder: ((context, index) => Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0, left: 5),
+                      child: ListTile(
+                        leading: Icon(
+                          icon[index],
+                          color: colorwhite,
+                        ),
+                        title: Text(
+                          profilelist[index],
+                          style:
+                              GoogleFonts.kanit(color: colorwhite, fontSize: 20),
+                        ),
                       ),
-                      title: Text(
-                        profilelist[index],
-                        style:
-                            GoogleFonts.kanit(color: colorwhite, fontSize: 20),
-                      ),
-                    ),
-                  )),
-            ),
-          ],
+                    )),
+              ),
+            ],
+          ),
         ),
       ),
     );

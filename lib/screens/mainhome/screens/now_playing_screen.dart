@@ -217,28 +217,29 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                 width: 50,
                                                 height: 50,
                                                 decoration: BoxDecoration(
-                                                    color: colorextralight,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30)),
+                                                  color: colorextralight,
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                ),
                                                 child: IconButton(
-                                                    onPressed: () {
-                                                      previousSong(_audioPlayer,
-                                                          value1, allDbdongs);
-                                                    },
-                                                    icon: const Icon(
-                                                      Icons.skip_previous,
-                                                      color: colorblack,
-                                                    )),
+                                                  onPressed: () {
+                                                    previousSong(_audioPlayer,
+                                                        value1, allDbdongs);
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.skip_previous,
+                                                    color: colorblack,
+                                                  ),
+                                                ),
                                               ),
                                               Container(
                                                 width: 70,
                                                 height: 70,
                                                 decoration: BoxDecoration(
-                                                    color: colorextralight,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            35)),
+                                                  color: colorextralight,
+                                                  borderRadius:
+                                                      BorderRadius.circular(35),
+                                                ),
                                                 child: IconButton(
                                                   onPressed: () {
                                                     if (isPlaying) {

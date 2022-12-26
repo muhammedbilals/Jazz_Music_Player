@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:music_player/colors/colors.dart';
-import 'package:music_player/screens/libraryScreen/screens/library_screen.dart';
 import 'package:music_player/screens/mainhome/screens/home_screen.dart';
+import 'package:music_player/screens/mainhome/screens/profile_page.dart';
 import 'package:music_player/screens/searchSreen/screens/search_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -18,7 +18,7 @@ class _HomeMainState extends State<HomeMain> {
   PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
   List<Widget> _NavScreens() {
-    return [ PlayerHome(), const SearchScreen(), LibraryScreen()];
+    return [ PlayerHome(), const SearchScreen(),ProfilePage()];
   }
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
@@ -35,8 +35,8 @@ class _HomeMainState extends State<HomeMain> {
         inactiveColorPrimary: colorwhite,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(Icons.library_music),
-        title: ("LIBRARY"),
+        icon: const Icon(Icons.settings),
+        title: ("SETTINGS"),
         activeColorPrimary: colorextralight,
         inactiveColorPrimary: colorwhite,
       ),

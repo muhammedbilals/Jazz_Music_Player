@@ -4,9 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/songmodel.dart';
-import 'package:music_player/screens/mainhome/screens/now_playing_screen.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
-import 'package:music_player/screens/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -88,18 +86,8 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                           Audio.file(allDbsongs[index].songurl!),
                         );
                         NowPlayingSlider.enteredvalue.value = index;
-                        
 
                         print('value notifirer passing index$index');
-
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => NowPlayingScreen(
-                        //           index: index, songs: allDbdongs),
-
-                        //     ));
-
                         print(index);
                         print(allDbsongs[index].songname!);
                       },
@@ -114,6 +102,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                         style: GoogleFonts.kanit(color: colorwhite),
                       ),
                       subtitle: Text(allDbsongs[index].artist ?? "No Artist",
+                          overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.kanit(
                               color: colorwhite.withOpacity(0.7),
                               fontSize: 12)),

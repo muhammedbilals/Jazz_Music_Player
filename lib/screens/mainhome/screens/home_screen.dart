@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
-import 'package:music_player/screens/mainhome/screens/profile_page.dart';
 import 'package:music_player/screens/mainhome/widgets/all_songs_widget.dart';
 import 'package:music_player/screens/mainhome/widgets/card_widget.dart';
 import 'package:music_player/screens/mainhome/widgets/playlist_slider_widget.dart';
@@ -41,30 +40,7 @@ class PlayerHome extends StatelessWidget {
                               fontSize: 40, color: colorwhite),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: colorextralight,
-                              borderRadius: BorderRadius.circular(30)),
-                          width: 40,
-                          height: 40,
-                          child: IconButton(
-                            onPressed: () {
-                              // print(dbsongs[0].songname);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) => ProfilePage())));
-                            },
-                            icon: const Icon(
-                              Icons.info,
-                              color: colorblack,
-                              size: 25,
-                            ),
-                          ),
-                        ),
-                      ),
+                      
                     ],
                   ),
 
