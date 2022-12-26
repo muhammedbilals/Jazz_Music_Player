@@ -20,12 +20,3 @@ class RecentlyPlayed {
       this.songurl,
       required this.id});
 }
-
-String boxname = 'recentlyplayed';
-
-class SongBox {
-  static Box<RecentlyPlayed>? _box;
-  static Box<RecentlyPlayed> getInstance() {
-    return _box ??= Hive.box(boxname);
-  }
-}
