@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:music_player/model/songmodel.dart';
 
 import 'package:music_player/screens/splash.dart';

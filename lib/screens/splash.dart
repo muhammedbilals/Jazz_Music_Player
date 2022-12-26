@@ -68,7 +68,7 @@ class _PlayerSplashState extends State<PlayerSplash> {
 }
 
 navigateToHome(BuildContext ctx) async {
-  await Future.delayed(const Duration(milliseconds: 1500), () {
+  await Future.delayed(const Duration(milliseconds: 500), () {
     Navigator.of(ctx).pushReplacement(
       MaterialPageRoute(
         builder: (ctx) => const HomeMain(),

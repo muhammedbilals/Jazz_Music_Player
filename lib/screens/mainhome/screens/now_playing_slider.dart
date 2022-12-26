@@ -1,36 +1,51 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_screen.dart';
 import 'package:music_player/screens/mainhome/widgets/now_playing_playbutton_row.dart';
+import 'package:music_player/screens/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class NowPlayingSlider extends StatefulWidget {
   NowPlayingSlider({super.key});
-  
+
   static int? index = 0;
-  // final box = SongBox.getInstance();
   static ValueNotifier<int> enteredvalue = ValueNotifier<int>(index!);
-  final AudioPlayer _audioPlayer = AudioPlayer();
+
   List<Songs> dbsongs = box.values.toList();
 
   @override
   State<NowPlayingSlider> createState() => _NowPlayingSliderState();
 }
 
+final AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.withId('0');
+
 class _NowPlayingSliderState extends State<NowPlayingSlider> {
-  bool istaped = true;
-  bool _isplaying = true;
+  // bool istaped = false;
+
   List<Songs> dbsongs = box.values.toList();
+  List<Audio> convertAudios = [];
+
   @override
   Widget build(BuildContext context) {
     void initState() {
       // TODO: implement initState
-      List<Songs> allDbdongs = box.values.toList();
-
+      List<Songs> dbsongs = box.values.toList();
+      for (var item in dbsongs) {
+        convertAudios.add(Audio.file(item.songurl!,
+            metas: Metas(
+                title: item.songname,
+                artist: item.artist,
+                id: item.id.toString())));
+      }
+      _audioPlayer.open(
+        Playlist(audios: convertAudios),
+        showNotification: true,
+        headPhoneStrategy: HeadPhoneStrategy.pauseOnUnplugPlayOnPlug,
+      );
       super.initState();
     }
 
@@ -52,15 +67,18 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                   child: CircularProgressIndicator(),
                 );
               }
+
               return Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: GestureDetector(
                   onTap: () {
+                    NowPlayingScreen.nowplayingindex.value = value;
+                    
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => NowPlayingScreen(
-                            index: value,
+                          
                           ),
                         ));
                   },
@@ -101,51 +119,63 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                             ),
                           ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(right: vwidth * 0.01),
-                          child: Wrap(
-                            spacing: 10,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: [
-                              Container(
-                                  height: 50,
-                                  width: 50,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30),
-                                      color: colordark),
-                                  child: IconButton(
-                                    icon: Icon(
-                                      (istaped)
-                                          ? Icons.play_arrow
-                                          : Icons.pause,
-                                      color: colorwhite,
-                                      size: 30,
+                        PlayerBuilder.isPlaying(
+                            player: _audioPlayer,
+                            builder: ((context, isPlaying) {
+                              return Padding(
+                                padding: EdgeInsets.only(right: vwidth * 0.01),
+                                child: Wrap(
+                                  spacing: 10,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  children: [
+                                    Container(
+                                        height: 50,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            color: colordark),
+                                        child: IconButton(
+                                          icon: Icon(
+                                            (isPlaying)
+                                                ? Icons.pause
+                                                : Icons.play_arrow,
+                                            color: colorwhite,
+                                            size: 30,
+                                          ),
+                                          onPressed: () async {
+                                            await _audioPlayer.playOrPause();
+
+                                            // playsong(value);
+                                            setState(() {
+                                              isPlaying = !isPlaying;
+                                            });
+                                           
+                                          },
+                                        )),
+                                    Container(
+                                      width: 35,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          color: colordark),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          skipMusic(
+                                              _audioPlayer, value, allDbdongs);
+                                        },
+                                        icon: const Icon(
+                                          Icons.skip_next,
+                                          color: colorwhite,
+                                          size: 20,
+                                        ),
+                                      ),
                                     ),
-                                    onPressed: () {
-                                      playsong(value);
-                                      setState(() {
-                                        istaped = !istaped;
-                                      });
-                                    },
-                                  )),
-                              Container(
-                                width: 35,
-                                height: 35,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: colordark),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.skip_next,
-                                    color: colorwhite,
-                                    size: 20,
-                                  ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
+                              );
+                            }))
                       ],
                     ),
                   ),
@@ -156,14 +186,16 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
         });
   }
 
-  void playsong(int value) async {
-    await widget._audioPlayer.setAudioSource(
-        AudioSource.uri(Uri.parse(widget.dbsongs[value].songurl!)));
-    if (_isplaying) {
-      widget._audioPlayer.play();
-      
-    } else {
-      widget._audioPlayer.pause();
-    }
+  void skipMusic(AssetsAudioPlayer assetsAudioPlayer, int index,
+      List<Songs> dbsongs) async {
+    
+    _audioPlayer.open(
+      Audio.file(dbsongs[index + 1].songurl!),
+    );
+    // await _audioPlayer.next();
+    setState(() {
+      NowPlayingSlider.enteredvalue.value++;
+    });
+    await _audioPlayer.stop();
   }
 }

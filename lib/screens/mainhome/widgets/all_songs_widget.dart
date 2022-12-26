@@ -1,10 +1,12 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/songmodel.dart';
+import 'package:music_player/screens/mainhome/screens/now_playing_screen.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
+import 'package:music_player/screens/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -15,24 +17,35 @@ class AllSongsWidget extends StatefulWidget {
   State<AllSongsWidget> createState() => _AllSongsWidgetState();
 }
 
+final OnAudioQuery _audioQuery = OnAudioQuery();
+final AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.withId('0');
+
 class _AllSongsWidgetState extends State<AllSongsWidget> {
   bool istaped = true;
   final box = SongBox.getInstance();
-
-  final OnAudioQuery _audioQuery = OnAudioQuery();
-  final AudioPlayer _audioPlayer = AudioPlayer();
-
-  // playSong(String uri) {
-  //   _audioPlayer.setAudioSource(AudioSource.uri(uri.parse(uri)));
-  // }
+  List<Audio> convertAudios = [];
 
   @override
   Widget build(BuildContext context) {
     void initState() {
       // TODO: implement initState
-      List<Songs> allDbdongs = box.values.toList();
+      List<Songs> dbsongs = box.values.toList();
+      for (var item in dbsongs) {
+        convertAudios.add(Audio.file(item.songurl!,
+            metas: Metas(
+                title: item.songname,
+                artist: item.artist,
+                id: item.id.toString())));
 
-      super.initState();
+        super.initState();
+      }
+    }
+
+    @override
+    void dispose() {
+      _audioPlayer.dispose();
+      print('dispose');
+      super.dispose();
     }
 
     return Column(
@@ -43,7 +56,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
               padding: const EdgeInsets.only(left: 15.0, top: 5, bottom: 5),
               child: Text('All Songs',
                   style: GoogleFonts.kanit(fontSize: 20, color: colorwhite)),
-            )
+            ),
           ],
         ),
         ///////////////////
@@ -71,8 +84,12 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                     padding: const EdgeInsets.only(bottom: 8.0, left: 5),
                     child: ListTile(
                       onTap: () {
+                        _audioPlayer.open(
+                          Audio.file(allDbsongs[index].songurl!),
+                        );
                         NowPlayingSlider.enteredvalue.value = index;
-                       
+                        
+
                         print('value notifirer passing index$index');
 
                         // Navigator.push(
@@ -83,9 +100,6 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
 
                         //     ));
 
-                        NowPlayingSlider(
-                         
-                        );
                         print(index);
                         print(allDbsongs[index].songname!);
                       },
