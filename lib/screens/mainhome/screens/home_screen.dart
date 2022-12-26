@@ -65,7 +65,7 @@ class PlayerHome extends StatelessWidget {
                           cardicon: Icons.album, cardtext: 'Albums', index: 1),
                     ],
                   ),
-// ----------------------------------------playlist-------------------------------------
+                  // ----------------------------------------playlist-------------------------------------
 
                   Row(
                     children: [
