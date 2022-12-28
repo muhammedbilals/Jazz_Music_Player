@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:music_player/model/dbfunctions.dart';
+import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/model/songmodel.dart';
 
 import 'package:music_player/screens/splash.dart';
@@ -10,6 +12,9 @@ Future main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(SongsAdapter());
   await Hive.openBox<Songs>(boxname);
+  Hive.registerAdapter(RecentlyPlayedAdapter());
+  // openHiveBox('RecentlyPlayed');
+  openrecentlyplayeddb();
   runApp(const MyApp());
 }
 

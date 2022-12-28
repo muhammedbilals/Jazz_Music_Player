@@ -6,9 +6,10 @@ import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/model/songmodel.dart';
-
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
-import 'package:music_player/screens/splash.dart';
+
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -25,8 +26,8 @@ final AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.withId('0');
 class _AllSongsWidgetState extends State<AllSongsWidget> {
   bool istaped = true;
   final box = SongBox.getInstance();
-  List<Audio> convertAudios = [];
   
+  List<Audio> convertAudios = [];
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,6 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
         ValueListenableBuilder<Box<Songs>>(
           valueListenable: box.listenable(),
           builder: ((context, Box<Songs> allsongbox, child) {
-            
             List<Songs> allDbsongs = allsongbox.values.toList();
             // List<MostPlayed> allmostplayedsongs = mostplayedsongs.values.toList();
             if (allDbsongs.isEmpty) {
@@ -102,8 +102,9 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                           songname: songs.songname,
                           songurl: songs.songurl);
                       NowPlayingSlider.enteredvalue.value = index;
-                      updateRecentlyPlayed(rsongs  , index);
-                      print('value notifirer passing index$index');
+                      updateRecentlyPlayed(rsongs, index);
+                      print('recenttly played passing data is====$rsongs');
+                      print('value notifirer passing index====$index');
                       print(index);
                       print(allDbsongs[index].songname!);
                     },
