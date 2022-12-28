@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
+import 'package:music_player/model/favourites.dart';
 import 'package:music_player/model/recentlyplayed.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -13,6 +14,10 @@ import 'package:path_provider/path_provider.dart';
 late Box<RecentlyPlayed> RecentlyPlayedBox;
 openrecentlyplayeddb() async {
   RecentlyPlayedBox = await Hive.openBox("recentlyplayed");
+}
+late Box<favourites> favouritesdb;
+openFavouritesDB() async {
+  favouritesdb = await Hive.openBox<favourites>('favourites');
 }
 
 updateRecentlyPlayed(RecentlyPlayed value, index) {

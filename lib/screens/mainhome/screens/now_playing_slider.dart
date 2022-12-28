@@ -5,7 +5,6 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_screen.dart';
-import 'package:music_player/screens/mainhome/widgets/now_playing_playbutton_row.dart';
 import 'package:music_player/screens/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
@@ -112,10 +111,13 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            Text(
-                              allDbdongs[value].artist ?? "No Artist",
-                              style: GoogleFonts.kanit(fontSize: 13),
-                              overflow: TextOverflow.fade,
+                            SizedBox(
+                               width: vwidth * 0.5,
+                              child: Text(
+                                allDbdongs[value].artist ?? "No Artist",
+                                style: GoogleFonts.kanit(fontSize: 13),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ],
                         ),

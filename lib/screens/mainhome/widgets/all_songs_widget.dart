@@ -8,6 +8,7 @@ import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 
 import 'package:on_audio_query/on_audio_query.dart';
@@ -25,8 +26,9 @@ final AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.withId('0');
 
 class _AllSongsWidgetState extends State<AllSongsWidget> {
   bool istaped = true;
+  bool isalready = true;
   final box = SongBox.getInstance();
-  
+
   List<Audio> convertAudios = [];
 
   @override
@@ -94,6 +96,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                     onTap: () {
                       _audioPlayer.open(
                         Audio.file(allDbsongs[index].songurl!),
+                        showNotification: true,
                       );
                       rsongs = RecentlyPlayed(
                           id: songs.id,
@@ -127,9 +130,11 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                       children: [
                         IconButton(
                             onPressed: () {
-                              setState(() {
-                                istaped = !istaped;
-                              });
+                              setState(
+                                () {
+                                  istaped = !istaped;
+                                },
+                              );
 
                               print(allDbsongs[index].songname!);
                             },
@@ -139,7 +144,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                     : const Color.fromARGB(255, 255, 0, 0))),
                         IconButton(
                           onPressed: () {
-                            showOptions(context);
+                            showOptions(context, index);
                           },
                           icon: const Icon(Icons.more_vert),
                           color: colorwhite,
@@ -156,91 +161,112 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
     );
   }
 
-  showOptions(BuildContext context) {
+  showOptions(BuildContext context, int index) {
     double vwidth = MediaQuery.of(context).size.width;
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        insetPadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        backgroundColor: colorextralight,
-        alignment: Alignment.bottomCenter,
-        content: Container(
-          height: 250,
-          width: vwidth,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextButton.icon(
+      builder: (context) => StatefulBuilder(builder: (context, setState) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          insetPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          backgroundColor: colorextralight,
+          alignment: Alignment.bottomCenter,
+          content: Container(
+            height: 250,
+            width: vwidth,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextButton.icon(
+                      onPressed: () {
+                        if (isalready) {
+                          addToFavourites(index, isalready);
+                        }
+                        setState(() {
+                          isalready = !isalready;
+                        });
+                        isalready = true;
+                        Navigator.pop(context);
+                        // if (checkFavoriteStatus(index, context) == false) {
+                        //   removefavourite(index);
+                        // }
+                      },
+                      icon: (checkFavoriteStatus(index, context))
+                          ? const Icon(
+                              Icons.favorite,
+                              color: colorblack,
+                            )
+                          : Icon(
+                              Icons.favorite_border_outlined,
+                              color: colorblack,
+                            ),
+                      label: (checkFavoriteStatus(index, context))
+                          ? Text(
+                              'Add to Favourites',
+                              style: GoogleFonts.kanit(
+                                  color: colorblack, fontSize: 17),
+                            )
+                          : Text(
+                              'Remove from Favourites',
+                              style: GoogleFonts.kanit(
+                                  color: colorblack, fontSize: 17),
+                            )),
+                  TextButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.playlist_add,
+                        color: colorblack,
+                      ),
+                      label: Text(
+                        'Add to Playlist',
+                        style:
+                            GoogleFonts.kanit(color: colorblack, fontSize: 17),
+                      )),
+                  TextButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.share,
+                        color: colorblack,
+                      ),
+                      label: Text(
+                        'Share',
+                        style:
+                            GoogleFonts.kanit(color: colorblack, fontSize: 17),
+                      )),
+                  TextButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.shuffle,
+                        color: colorblack,
+                      ),
+                      label: Text(
+                        'Shuffle',
+                        style:
+                            GoogleFonts.kanit(color: colorblack, fontSize: 17),
+                      )),
+                  TextButton.icon(
                     onPressed: () {},
                     icon: const Icon(
-                      Icons.favorite,
+                      Icons.repeat,
                       color: colorblack,
                     ),
                     label: Text(
-                      'Add to Favourites',
+                      'Repeat',
                       style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                    )),
-                TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.playlist_add,
-                      color: colorblack,
                     ),
-                    label: Text(
-                      'Add to Playlist',
-                      style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                    )),
-                TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.share,
-                      color: colorblack,
-                    ),
-                    label: Text(
-                      'Share',
-                      style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                    )),
-                TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.shuffle,
-                      color: colorblack,
-                    ),
-                    label: Text(
-                      'Shuffle',
-                      style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                    )),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.repeat,
-                    color: colorblack,
                   ),
-                  label: Text(
-                    'Repeat',
-                    style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
-//   playMusic() async {
-//     if (!pauseplay) {
-//       await player.setAudioSource(AudioSource.uri(Uri.parse(widget.songs!.songurl!)));
-//       player.play();
-//     } else {
-//       player.pause();
-// }
-// }
 }
