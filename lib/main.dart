@@ -3,10 +3,12 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/favourites.dart';
+import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/model/songmodel.dart';
 
 import 'package:music_player/screens/splash.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +20,9 @@ Future main() async {
   openrecentlyplayeddb();
   Hive.registerAdapter(favouritesAdapter());
   openFavouritesDB();
+  Hive.registerAdapter(PlaylistSongsAdapter());
+   await Hive.openBox<PlaylistSongs>('playlist');
+  
   runApp(const MyApp());
 }
 

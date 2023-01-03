@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:music_player/model/favourites.dart';
 import 'package:music_player/model/recentlyplayed.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Future<Box> openHiveBox(String boxName) async {
@@ -34,3 +35,4 @@ updateRecentlyPlayed(RecentlyPlayed value, index) {
     print(value.songname);
   }
 }
+

@@ -4,11 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/dbfunctions.dart';
+import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
+import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 
 import 'package:on_audio_query/on_audio_query.dart';
@@ -21,13 +23,15 @@ class AllSongsWidget extends StatefulWidget {
   State<AllSongsWidget> createState() => _AllSongsWidgetState();
 }
 
+final alldbsongs = SongBox.getInstance();
+List<Songs> allDbsongs = alldbsongs.values.toList();
 final OnAudioQuery _audioQuery = OnAudioQuery();
 final AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.withId('0');
+final songbox = SongBox.getInstance();
 
 class _AllSongsWidgetState extends State<AllSongsWidget> {
   bool istaped = true;
   bool isalready = true;
-  final box = SongBox.getInstance();
 
   List<Audio> convertAudios = [];
 
@@ -35,7 +39,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
   Widget build(BuildContext context) {
     void initState() {
       // TODO: implement initState
-      List<Songs> dbsongs = box.values.toList();
+      List<Songs> dbsongs = songbox.values.toList();
 
       for (var item in dbsongs) {
         convertAudios.add(Audio.file(item.songurl!,
@@ -68,7 +72,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
         ),
         ///////////////////
         ValueListenableBuilder<Box<Songs>>(
-          valueListenable: box.listenable(),
+          valueListenable: songbox.listenable(),
           builder: ((context, Box<Songs> allsongbox, child) {
             List<Songs> allDbsongs = allsongbox.values.toList();
             // List<MostPlayed> allmostplayedsongs = mostplayedsongs.values.toList();
@@ -185,17 +189,24 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                 children: [
                   TextButton.icon(
                       onPressed: () {
-                        if (isalready) {
+                        if (checkFavoriteStatus(index, BuildContext)) {
                           addToFavourites(index, isalready);
+                        } else if (!checkFavoriteStatus(index, BuildContext)) {
+                          removefavourite(index);
                         }
                         setState(() {
                           isalready = !isalready;
                         });
                         isalready = true;
-                        Navigator.pop(context);
-                        // if (checkFavoriteStatus(index, context) == false) {
-                        //   removefavourite(index);
+                        // if (checkFavoriteStatus(index, BuildContext) == true) {
+                        //   isalready == false;
+                        //   // addToFavourites(index, isalready);
                         // }
+                        // Navigator.pop(context);
+                        // // if (checkFavoriteStatus(index, context) == false) {
+                        // //   removefavourite(index);
+                        // // }
+                        Navigator.pop(context);
                       },
                       icon: (checkFavoriteStatus(index, context))
                           ? const Icon(
@@ -218,7 +229,9 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                   color: colorblack, fontSize: 17),
                             )),
                   TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        showPlaylistOptions(context, index);
+                      },
                       icon: const Icon(
                         Icons.playlist_add,
                         color: colorblack,
@@ -269,4 +282,74 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
       }),
     );
   }
+}
+
+showPlaylistOptions(BuildContext context, int index) {
+  Songs playsong;
+  final List<PlaylistModel> playlistsong1 = [];
+  final box = PlaylistSongsbox.getInstance();
+  double vwidth = MediaQuery.of(context).size.width;
+  showDialog(
+    context: context,
+    builder: (context) => StatefulBuilder(builder: (context, setState) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        insetPadding: EdgeInsets.zero,
+        contentPadding: EdgeInsets.zero,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        backgroundColor: colorextralight,
+        alignment: Alignment.bottomCenter,
+        content: Container(
+          height: 250,
+          width: vwidth,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ValueListenableBuilder<Box<PlaylistSongs>>(
+                    valueListenable: box.listenable(),
+                    builder:
+                        (context, Box<PlaylistSongs> playlistsongs, child) {
+                      List<PlaylistSongs> playlistsong =
+                          playlistsongs.values.toList();
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: playlistsong.length,
+                        itemBuilder: ((context, index) {
+                          return ListTile(
+                            onTap: () {
+                              List<Songs> playsongdb =
+                                  playlistsong[index].playlistssongs!;
+                              List<Songs> songdb = songbox.values.toList();
+                              playsong = Songs(
+                                  id: allDbsongs[index].id,
+                                  artist: allDbsongs[index].artist,
+                                  duration: allDbsongs[index].duration,
+                                  songname: allDbsongs[index].songname,
+                                  songurl: allDbsongs[index].songurl);
+
+                              allDbsongs.add(playsong);
+                              addToPlaylist(playsong, index);
+                            },
+                            title: Text(
+                              playlistsong[index].playlistname!,
+                              style: GoogleFonts.kanit(color: colorblack),
+                            ),
+                          );
+                        }),
+                      );
+                    },
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }),
+  );
 }

@@ -22,7 +22,7 @@ class favourites {
 }
 String boxname3 = 'favourites';
 
-class favouritesbox {
+class favocuritesbox {
   static Box<favourites>? _box;
   static Box<favourites> getInstance() {
     return _box ??= Hive.box(boxname3);

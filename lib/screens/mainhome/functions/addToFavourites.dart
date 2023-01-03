@@ -12,7 +12,7 @@ addToFavourites(int index, bool isalready) async {
 
   List<favourites> favouritessongs = [];
   favouritessongs = favouritesdb.values.toList();
-  
+
   if (isalready) {
     favouritessongs
         .where((element) => element.songname == dbsongs[index].songname)
@@ -24,24 +24,27 @@ addToFavourites(int index, bool isalready) async {
         songurl: dbsongs[index].songurl,
         id: dbsongs[index].id));
   } else {
-    // favouritessongs
-    //     .where((element) => element.songname == dbsongs[index].songname)
-    //     .isEmpty;
-    int currentindex = favouritessongs.indexWhere(
-                    (element) => element.id == dbsongs[index].id);
-                await favouritesdb.deleteAt(currentindex);
-    // await favouritesdb.deleteAt(index);
+    favouritessongs
+        .where((element) => element.songname == dbsongs[index].songname)
+        .isEmpty;
+    int currentindex = favouritessongs
+        .indexWhere((element) => element.id == dbsongs[index].id);
+    await favouritesdb.deleteAt(currentindex);
+    await favouritesdb.deleteAt(index);
   }
 }
-// removefavourite(int index)async{
-//   List<favourites> favouritessongs = [];
-//   List<Songs> dbsongs = box.values.toList();
-//   int currentindex = favouritessongs.indexWhere(
-//                     (element) => element.id == dbsongs[index].id);
-//                 await favouritesdb.deleteAt(currentindex);
-// }
 
-deletefavourite(int index)async{
+removefavourite(int index) async {
+  final box4 = favocuritesbox.getInstance();
+  // List<favourites> favouritessongs = [];
+  List<favourites> favsongs = box4.values.toList();
+  List<Songs> dbsongs = box.values.toList();
+  int currentindex =
+      favsongs.indexWhere((element) => element.id == dbsongs[index].id);
+  await favouritesdb.deleteAt(currentindex);
+}
+
+deletefavourite(int index) async {
   await favouritesdb.deleteAt(index);
 }
 
