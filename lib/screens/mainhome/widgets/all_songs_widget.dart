@@ -148,8 +148,8 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                             icon: Icon(Icons.favorite,
                                 color: (checkFavoriteStatus(
                                         songindex, BuildContext))
-                                    ? const Color.fromARGB(255, 121, 121, 121)
-                                    : const Color.fromARGB(255, 255, 0, 0))),
+                                    ? Color.fromARGB(255, 85, 85, 85)
+                                    : Color.fromARGB(255, 255, 255, 255))),
                         IconButton(
                           onPressed: () {
                             showOptions(context, songindex);
