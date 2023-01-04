@@ -332,10 +332,11 @@ showPlaylistOptions(BuildContext context, int songindex) {
                                 List<Songs> playsongdb =
                                     playsongs!.playlistssongs!;
                                 List<Songs> songdb = songbox.values.toList();
-
                                 bool isAlreadyAdded = playsongdb.any(
-                                    (element) =>
-                                        element.id == songdb[index].id);
+                                              (element) =>
+                                                  element.id ==
+                                                  songdb[songindex]
+                                                      .id);
                                 if (!isAlreadyAdded) {
                                   playsongdb.add(
                                     Songs(
@@ -358,6 +359,7 @@ showPlaylistOptions(BuildContext context, int songindex) {
                                 // allDbsongs.add(playsong);
                                 // addToPlaylist(playsong, index);
                                 // Hive.box(playlistsongs.put(playlistsongs, playsong));
+                                // Navigator.pop(context);
                               },
                               title: Text(
                                 playlistsong[index].playlistname!,
