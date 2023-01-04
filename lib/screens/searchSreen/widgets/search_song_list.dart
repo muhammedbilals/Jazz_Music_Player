@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/model/songmodel.dart';
+import 'package:music_player/screens/splash.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 
 class SearchSongList extends StatefulWidget {
   const SearchSongList({super.key});
@@ -11,113 +17,64 @@ class SearchSongList extends StatefulWidget {
 
 class _SearchSongListState extends State<SearchSongList> {
   bool istaped = true;
-
-  List<String> songs = [
-    'Hans Zimmer - The Classics ',
-    'Dune sound track',
-    'evantually',
-    'Dark Knight Theme song',
-    'Gladiator Sound track',
-    'Top Gun: Maverick Soundtrack',
-    'There He Is Song The Amazing Spider-Man 2',
-    'Hans Zimmer - Interstellar',
-    'Hans Zimmer - The Classics ',
-    'Dune sound track',
-    'evantually',
-    'Dark Knight Theme song',
-    'Gladiator Sound track',
-    'Top Gun: Maverick Soundtrack',
-    'There He Is Song The Amazing Spider-Man 2',
-    'Hans Zimmer - Interstellar',
-  ];
-
-  List<String> author = [
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-  ];
-
-  List<String> songimage = [
-    'assets/images/hanzimmer.jpg',
-    'assets/images/hanszimmer.jpg',
-    'assets/images/tame-impala-eventually-1400px_800.jpg',
-    'assets/images/TDKR_sdtrck_cover.jpg',
-    'assets/images/hanzimmer.jpg',
-    'assets/images/hanszimmer.jpg',
-    'assets/images/tame-impala-eventually-1400px_800.jpg',
-    'assets/images/TDKR_sdtrck_cover.jpg',
-    'assets/images/hanzimmer.jpg',
-    'assets/images/hanszimmer.jpg',
-    'assets/images/tame-impala-eventually-1400px_800.jpg',
-    'assets/images/TDKR_sdtrck_cover.jpg',
-    'assets/images/hanzimmer.jpg',
-    'assets/images/hanszimmer.jpg',
-    'assets/images/tame-impala-eventually-1400px_800.jpg',
-    'assets/images/TDKR_sdtrck_cover.jpg',
-  ];
+  final songbox = SongBox.getInstance();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        
         ///////////////////
-        ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: songs.length,
-          itemBuilder: ((context, index) => Padding(
-                padding: const EdgeInsets.only(bottom: 8.0, left: 5),
-                child: ListTile(
-                  leading: ClipRRect(
-                      child: Image.asset(
-                    songimage[index],
-                  )),
-                  title: Text(
-                    songs[index],
-                    style: GoogleFonts.kanit(color: colorwhite),
-                  ),
-                  subtitle: Text(author[index],
-                      style: GoogleFonts.kanit(
-                          color: colorwhite.withOpacity(0.7), fontSize: 12)),
-                  trailing: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              
-                              istaped = !istaped;
-                            });
-                          },
-                          icon: Icon(Icons.favorite,
-                              color: (istaped)
-                                  ? const Color.fromARGB(255, 121, 121, 121)
-                                  : const Color.fromARGB(255, 255, 0, 0))),
-                      IconButton(
-                        onPressed: () {
-                          showOptions(context);
-                        },
-                        icon: const Icon(Icons.more_vert),
-                        color: colorwhite,
+        ValueListenableBuilder<Box<Songs>>(
+          valueListenable: songbox.listenable(),
+          builder: (context, Box<Songs> allsongs, child) {
+            List<Songs> allDbsongs = songbox.values.toList();
+            return ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: allDbsongs.length,
+              itemBuilder: ((context, index) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0, left: 5),
+                    child: ListTile(
+                      leading: QueryArtworkWidget(
+                      keepOldArtwork: true,
+                      artworkBorder: BorderRadius.circular(10),
+                      id: allDbsongs[index].id!,
+                      type: ArtworkType.AUDIO,
+                    ),
+                      title: Text(
+                      allDbsongs[index].songname!,
+                      style: GoogleFonts.kanit(color: colorwhite),
+                    ),
+                    subtitle: Text(allDbsongs[index].artist ?? "No Artist",
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.kanit(
+                            color: colorwhite.withOpacity(0.7), fontSize: 12)),
+                      trailing: Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  istaped = !istaped;
+                                });
+                              },
+                              icon: Icon(Icons.favorite,
+                                  color: (istaped)
+                                      ? const Color.fromARGB(255, 121, 121, 121)
+                                      : const Color.fromARGB(255, 255, 0, 0))),
+                          IconButton(
+                            onPressed: () {
+                              showOptions(context);
+                            },
+                            icon: const Icon(Icons.more_vert),
+                            color: colorwhite,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              )),
+                    ),
+                  )),
+            );
+          },
         ),
       ],
     );
