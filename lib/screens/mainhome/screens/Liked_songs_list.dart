@@ -23,6 +23,7 @@ final _audioPlayer = AssetsAudioPlayer.withId('0');
 class _LikedSongsListState extends State<LikedSongsList> {
   final List<favourites> favourite = [];
   final box = favocuritesbox.getInstance();
+  late List<favourites> favouritesongs2 = box.values.toList();
   bool isalready = true;
 
   @override
@@ -71,21 +72,13 @@ class _LikedSongsListState extends State<LikedSongsList> {
                     style: GoogleFonts.kanit(fontSize: 20, color: colorwhite),
                   ),
                   subtitle: Text(
-                    '120 Songs',
+                    '${favouritesongs2.length} Songs',
                     style: GoogleFonts.kanit(
                         fontSize: 14, color: colorwhite.withOpacity(0.7)),
                   ),
                   trailing: Wrap(
                     spacing: 10,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.all(6.0),
-                        child: Icon(
-                          Icons.shuffle,
-                          color: colorwhite,
-                          size: 30,
-                        ),
-                      ),
                       Container(
                           width: 45,
                           height: 45,
