@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/screens/Liked_songs_list.dart';
-import 'package:music_player/screens/mainhome/screens/album_full_list.dart';
+import 'package:music_player/screens/mainhome/screens/favourites_screen.dart';
 import 'package:music_player/screens/mainhome/screens/most_played.dart';
 import 'package:music_player/screens/mainhome/screens/playlist_list_screen.dart';
 

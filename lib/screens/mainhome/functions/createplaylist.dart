@@ -9,9 +9,9 @@ createplaylist(String name) async {
   void initState() {
     // TODO: implement initState
   }
-  List<Songs> dbsongs = box.values.toList();
+  // List<Songs> dbsongs = box.values.toList();
 
-  final List<PlaylistModel> playlistsong1 = [];
+  // final List<PlaylistModel> playlistsong1 = [];
   final box1 = PlaylistSongsbox.getInstance();
 
   List<PlaylistModel> playlist = [];
@@ -25,11 +25,13 @@ createplaylist(String name) async {
 
 addToPlaylist(Songs song, int index) {
   List<Songs> songsplay = [];
+  final box = SongBox.getInstance();
+  List<Songs> allDbsongs = box.values.toList();
   PlaylistSongs playlistModel;
   void initState() {
     // TODO: implement initState
   }
-  List<Songs> dbsongs = box.values.toList();
+  // List<Songs> dbsongs = box.values.toList();
 
   final List<PlaylistModel> playlistsong1 = [];
   final box1 = PlaylistSongsbox.getInstance();
@@ -37,10 +39,9 @@ addToPlaylist(Songs song, int index) {
   List<PlaylistSongs> playlistDB = box1.values.toList();
 
   box1.add(PlaylistSongs(
-      playlistname: playlistDB[index].playlistname, playlistssongs: songsplay));
-      
-
-  
+      playlistname: 'playlistDB[index].playlistname',
+      playlistssongs: allDbsongs));
+  print(playlistDB);
 }
 
 openPlaylist() {}

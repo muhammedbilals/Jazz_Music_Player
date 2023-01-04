@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
-import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
 import 'package:hive/hive.dart';
@@ -101,7 +100,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: ((context) => PlaylistFullList())));
+                                  builder: ((context) => PlaylistFullList(playindex: index,))));
                         },
                         title: Text(
                           playlistsong[index].playlistname!,

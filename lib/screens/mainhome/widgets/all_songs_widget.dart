@@ -91,15 +91,15 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: allDbsongs.length,
-              itemBuilder: ((context, index) {
+              itemBuilder: ((context, songindex) {
                 RecentlyPlayed rsongs;
-                Songs songs = allDbsongs[index];
+                Songs songs = allDbsongs[songindex];
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 8.0, left: 5),
                   child: ListTile(
                     onTap: () {
                       _audioPlayer.open(
-                        Audio.file(allDbsongs[index].songurl!),
+                        Audio.file(allDbsongs[songindex].songurl!),
                         showNotification: true,
                       );
                       rsongs = RecentlyPlayed(
@@ -108,24 +108,24 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                           duration: songs.duration,
                           songname: songs.songname,
                           songurl: songs.songurl);
-                      NowPlayingSlider.enteredvalue.value = index;
-                      updateRecentlyPlayed(rsongs, index);
+                      NowPlayingSlider.enteredvalue.value = songindex;
+                      updateRecentlyPlayed(rsongs, songindex);
                       print('recenttly played passing data is====$rsongs');
-                      print('value notifirer passing index====$index');
-                      print(index);
-                      print(allDbsongs[index].songname!);
+                      print('value notifirer passing index====$songindex');
+                      print(songindex);
+                      print(allDbsongs[songindex].songname!);
                     },
                     leading: QueryArtworkWidget(
                       keepOldArtwork: true,
                       artworkBorder: BorderRadius.circular(10),
-                      id: allDbsongs[index].id!,
+                      id: allDbsongs[songindex].id!,
                       type: ArtworkType.AUDIO,
                     ),
                     title: Text(
-                      allDbsongs[index].songname!,
+                      allDbsongs[songindex].songname!,
                       style: GoogleFonts.kanit(color: colorwhite),
                     ),
-                    subtitle: Text(allDbsongs[index].artist ?? "No Artist",
+                    subtitle: Text(allDbsongs[songindex].artist ?? "No Artist",
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.kanit(
                             color: colorwhite.withOpacity(0.7), fontSize: 12)),
@@ -140,7 +140,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                 },
                               );
 
-                              print(allDbsongs[index].songname!);
+                              print(allDbsongs[songindex].songname!);
                             },
                             icon: Icon(Icons.favorite,
                                 color: (istaped)
@@ -148,7 +148,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                     : const Color.fromARGB(255, 255, 0, 0))),
                         IconButton(
                           onPressed: () {
-                            showOptions(context, index);
+                            showOptions(context, songindex);
                           },
                           icon: const Icon(Icons.more_vert),
                           color: colorwhite,
@@ -169,7 +169,134 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
     double vwidth = MediaQuery.of(context).size.width;
     showDialog(
       context: context,
-      builder: (context) => StatefulBuilder(builder: (context, setState) {
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            insetPadding: EdgeInsets.zero,
+            contentPadding: EdgeInsets.zero,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            backgroundColor: colorextralight,
+            alignment: Alignment.bottomCenter,
+            content: Container(
+              height: 250,
+              width: vwidth,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextButton.icon(
+                        onPressed: () {
+                          if (checkFavoriteStatus(index, BuildContext)) {
+                            addToFavourites(index, isalready);
+                          } else if (!checkFavoriteStatus(
+                              index, BuildContext)) {
+                            removefavourite(index);
+                          }
+                          setState(() {
+                            isalready = !isalready;
+                          });
+                          isalready = true;
+                          // if (checkFavoriteStatus(index, BuildContext) == true) {
+                          //   isalready == false;
+                          //   // addToFavourites(index, isalready);
+                          // }
+                          // Navigator.pop(context);
+                          // // if (checkFavoriteStatus(index, context) == false) {
+                          // //   removefavourite(index);
+                          // // }
+                          Navigator.pop(context);
+                        },
+                        icon: (checkFavoriteStatus(index, context))
+                            ? const Icon(
+                                Icons.favorite,
+                                color: colorblack,
+                              )
+                            : Icon(
+                                Icons.favorite_border_outlined,
+                                color: colorblack,
+                              ),
+                        label: (checkFavoriteStatus(index, context))
+                            ? Text(
+                                'Add to Favourites',
+                                style: GoogleFonts.kanit(
+                                    color: colorblack, fontSize: 17),
+                              )
+                            : Text(
+                                'Remove from Favourites',
+                                style: GoogleFonts.kanit(
+                                    color: colorblack, fontSize: 17),
+                              )),
+                    TextButton.icon(
+                        onPressed: () {
+                          showPlaylistOptions(context, index);
+                        },
+                        icon: const Icon(
+                          Icons.playlist_add,
+                          color: colorblack,
+                        ),
+                        label: Text(
+                          'Add to Playlist',
+                          style: GoogleFonts.kanit(
+                              color: colorblack, fontSize: 17),
+                        )),
+                    TextButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.share,
+                          color: colorblack,
+                        ),
+                        label: Text(
+                          'Share',
+                          style: GoogleFonts.kanit(
+                              color: colorblack, fontSize: 17),
+                        )),
+                    TextButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.shuffle,
+                          color: colorblack,
+                        ),
+                        label: Text(
+                          'Shuffle',
+                          style: GoogleFonts.kanit(
+                              color: colorblack, fontSize: 17),
+                        )),
+                    TextButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.repeat,
+                        color: colorblack,
+                      ),
+                      label: Text(
+                        'Repeat',
+                        style:
+                            GoogleFonts.kanit(color: colorblack, fontSize: 17),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+showPlaylistOptions(BuildContext context, int songindex) {
+  Songs playsong;
+  // final List<PlaylistModel> playlistsong1 = [];
+  final box = PlaylistSongsbox.getInstance();
+  double vwidth = MediaQuery.of(context).size.width;
+  showDialog(
+    context: context,
+    builder: (context) => StatefulBuilder(
+      builder: (context, setState) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
@@ -184,172 +311,70 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
             width: vwidth,
             child: Padding(
               padding: const EdgeInsets.only(left: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextButton.icon(
-                      onPressed: () {
-                        if (checkFavoriteStatus(index, BuildContext)) {
-                          addToFavourites(index, isalready);
-                        } else if (!checkFavoriteStatus(index, BuildContext)) {
-                          removefavourite(index);
-                        }
-                        setState(() {
-                          isalready = !isalready;
-                        });
-                        isalready = true;
-                        // if (checkFavoriteStatus(index, BuildContext) == true) {
-                        //   isalready == false;
-                        //   // addToFavourites(index, isalready);
-                        // }
-                        // Navigator.pop(context);
-                        // // if (checkFavoriteStatus(index, context) == false) {
-                        // //   removefavourite(index);
-                        // // }
-                        Navigator.pop(context);
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ValueListenableBuilder<Box<PlaylistSongs>>(
+                      valueListenable: box.listenable(),
+                      builder:
+                          (context, Box<PlaylistSongs> playlistsongs, child) {
+                        List<PlaylistSongs> playlistsong =
+                            playlistsongs.values.toList();
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: playlistsong.length,
+                          itemBuilder: ((context, index) {
+                            return ListTile(
+                              onTap: () {
+                                PlaylistSongs? playsongs =
+                                    playlistsongs.getAt(index);
+                                List<Songs> playsongdb =
+                                    playsongs!.playlistssongs!;
+                                List<Songs> songdb = songbox.values.toList();
+
+                                bool isAlreadyAdded = playsongdb.any(
+                                    (element) =>
+                                        element.id == songdb[index].id);
+                                if (!isAlreadyAdded) {
+                                  playsongdb.add(
+                                    Songs(
+                                      songname: songdb[songindex].songname,
+                                      artist: songdb[songindex].artist,
+                                      duration: songdb[songindex].duration,
+                                      songurl: songdb[songindex].songurl,
+                                      id: songdb[songindex].id,
+                                    ),
+                                  );
+                                }
+                                playlistsongs.putAt(
+                                    index,
+                                    PlaylistSongs(
+                                        playlistname:
+                                            playlistsong[index].playlistname,
+                                        playlistssongs: playsongdb));
+                                print(
+                                    'song added to${playlistsong[index].playlistname}');
+                                // allDbsongs.add(playsong);
+                                // addToPlaylist(playsong, index);
+                                // Hive.box(playlistsongs.put(playlistsongs, playsong));
+                              },
+                              title: Text(
+                                playlistsong[index].playlistname!,
+                                style: GoogleFonts.kanit(color: colorblack),
+                              ),
+                            );
+                          }),
+                        );
                       },
-                      icon: (checkFavoriteStatus(index, context))
-                          ? const Icon(
-                              Icons.favorite,
-                              color: colorblack,
-                            )
-                          : Icon(
-                              Icons.favorite_border_outlined,
-                              color: colorblack,
-                            ),
-                      label: (checkFavoriteStatus(index, context))
-                          ? Text(
-                              'Add to Favourites',
-                              style: GoogleFonts.kanit(
-                                  color: colorblack, fontSize: 17),
-                            )
-                          : Text(
-                              'Remove from Favourites',
-                              style: GoogleFonts.kanit(
-                                  color: colorblack, fontSize: 17),
-                            )),
-                  TextButton.icon(
-                      onPressed: () {
-                        showPlaylistOptions(context, index);
-                      },
-                      icon: const Icon(
-                        Icons.playlist_add,
-                        color: colorblack,
-                      ),
-                      label: Text(
-                        'Add to Playlist',
-                        style:
-                            GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                      )),
-                  TextButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.share,
-                        color: colorblack,
-                      ),
-                      label: Text(
-                        'Share',
-                        style:
-                            GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                      )),
-                  TextButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.shuffle,
-                        color: colorblack,
-                      ),
-                      label: Text(
-                        'Shuffle',
-                        style:
-                            GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                      )),
-                  TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.repeat,
-                      color: colorblack,
-                    ),
-                    label: Text(
-                      'Repeat',
-                      style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                    ),
-                  ),
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
         );
-      }),
-    );
-  }
-}
-
-showPlaylistOptions(BuildContext context, int index) {
-  Songs playsong;
-  final List<PlaylistModel> playlistsong1 = [];
-  final box = PlaylistSongsbox.getInstance();
-  double vwidth = MediaQuery.of(context).size.width;
-  showDialog(
-    context: context,
-    builder: (context) => StatefulBuilder(builder: (context, setState) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        insetPadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        backgroundColor: colorextralight,
-        alignment: Alignment.bottomCenter,
-        content: Container(
-          height: 250,
-          width: vwidth,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ValueListenableBuilder<Box<PlaylistSongs>>(
-                    valueListenable: box.listenable(),
-                    builder:
-                        (context, Box<PlaylistSongs> playlistsongs, child) {
-                      List<PlaylistSongs> playlistsong =
-                          playlistsongs.values.toList();
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: playlistsong.length,
-                        itemBuilder: ((context, index) {
-                          return ListTile(
-                            onTap: () {
-                              List<Songs> playsongdb =
-                                  playlistsong[index].playlistssongs!;
-                              List<Songs> songdb = songbox.values.toList();
-                              playsong = Songs(
-                                  id: allDbsongs[index].id,
-                                  artist: allDbsongs[index].artist,
-                                  duration: allDbsongs[index].duration,
-                                  songname: allDbsongs[index].songname,
-                                  songurl: allDbsongs[index].songurl);
-
-                              allDbsongs.add(playsong);
-                              addToPlaylist(playsong, index);
-                            },
-                            title: Text(
-                              playlistsong[index].playlistname!,
-                              style: GoogleFonts.kanit(color: colorblack),
-                            ),
-                          );
-                        }),
-                      );
-                    },
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
-    }),
+      },
+    ),
   );
 }

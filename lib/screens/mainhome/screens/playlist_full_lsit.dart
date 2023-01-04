@@ -2,18 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/playlistmodel.dart';
+import 'package:music_player/model/songmodel.dart';
+import 'package:music_player/screens/mainhome/widgets/all_songs_widget.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class PlaylistFullList extends StatelessWidget {
-  PlaylistFullList({super.key});
+class PlaylistFullList extends StatefulWidget {
+  PlaylistFullList({super.key, required int this.playindex});
+  int? playindex;
+  @override
+  State<PlaylistFullList> createState() => _PlaylistFullListState();
+}
 
+class _PlaylistFullListState extends State<PlaylistFullList> {
   @override
   Widget build(BuildContext context) {
     double vwidth = MediaQuery.of(context).size.width;
     final List<PlaylistModel> playlistsong1 = [];
     final box = PlaylistSongsbox.getInstance();
+    final songbox = SongBox.getInstance();
     return Container(
       color: colordark,
       child: SafeArea(
@@ -93,35 +101,48 @@ class PlaylistFullList extends StatelessWidget {
                   builder: (context, Box<PlaylistSongs> playlistsongs, child) {
                     List<PlaylistSongs> playlistsong =
                         playlistsongs.values.toList();
-                    print(playlistsongs);
-                    return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: playlistsong.length,
-                      itemBuilder: ((context, index) => Padding(
-                            padding:
-                                const EdgeInsets.only(bottom: 8.0, left: 5),
-                            child: ListTile(
-                              leading: ClipRRect(
-                                child: Image.asset(
-                                  playlistsong[index]
-                                      .playlistssongs![index]
-                                      .songurl!,
-                                ),
-                              ),
+                        List<Songs> dbsongs = songbox.values.toList();
+                    List<Songs>? playsong =
+                        playlistsong[widget.playindex!].playlistssongs;
+                    print(playlistsong[widget.playindex!].playlistssongs);
+                    if (playlistsong == null) {
+                      print('library songs  is null');
+                      print(playlistsong);
+                      return Center(child: Text('No songs'));
+                    } else {
+                      return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: playsong!.length,
+                        itemBuilder: ((context, index) => ListTile(
+                              // leading: SizedBox(
+                              //   width: 50,
+                              //   height: 50,
+                              //   child: ClipRRect(
+                              //     child: Image.asset(
+                              //       playlistsong[index]
+                              //           .playlistssongs![index]
+                              //           .songurl!,
+                              //     ),
+                              //   ),
+                              // ),
                               title: Text(
-                                playlistsong[index]
-                                    .playlistssongs![index]
-                                    .songname!,
+                                playsong[index].songname!,
+                                // playlistsong[index]
+                                //     .playlistssongs![index]
+                                //     .songname!,
                                 style: GoogleFonts.kanit(color: colorwhite),
                               ),
+
                               subtitle: Text(
-                                  playlistsong[index]
-                                      .playlistssongs![index]
-                                      .artist!,
+                                playsong[index].artist!,
+                                  // playlistsong[index]
+                                  //     .playlistssongs![index]
+                                  //     .artist!,
                                   style: GoogleFonts.kanit(
                                       color: colorwhite.withOpacity(0.7),
                                       fontSize: 12)),
+                                      
                               trailing: Wrap(
                                 crossAxisAlignment: WrapCrossAlignment.center,
                                 children: [
@@ -139,9 +160,10 @@ class PlaylistFullList extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                            ),
-                          )),
-                    );
+                            )),
+                      );
+                    }
+                    // print(playlistsongs);
                   },
                 ),
               ],
