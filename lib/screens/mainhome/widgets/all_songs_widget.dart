@@ -76,11 +76,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
           builder: ((context, Box<Songs> allsongbox, child) {
             List<Songs> allDbsongs = allsongbox.values.toList();
             // List<MostPlayed> allmostplayedsongs = mostplayedsongs.values.toList();
-            if (allDbsongs.isEmpty) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+
             if (allDbsongs == null) {
               print('no songs');
               return const Center(
@@ -134,6 +130,13 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                       children: [
                         IconButton(
                             onPressed: () {
+                              if (checkFavoriteStatus(
+                                  songindex, BuildContext)) {
+                                addToFavourites(songindex, isalready);
+                              } else if (!checkFavoriteStatus(
+                                  songindex, BuildContext)) {
+                                removefavourite(songindex);
+                              }
                               setState(
                                 () {
                                   istaped = !istaped;
@@ -143,7 +146,8 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                               print(allDbsongs[songindex].songname!);
                             },
                             icon: Icon(Icons.favorite,
-                                color: (istaped)
+                                color: (checkFavoriteStatus(
+                                        songindex, BuildContext))
                                     ? const Color.fromARGB(255, 121, 121, 121)
                                     : const Color.fromARGB(255, 255, 0, 0))),
                         IconButton(
@@ -181,7 +185,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
             backgroundColor: colorextralight,
             alignment: Alignment.bottomCenter,
             content: Container(
-              height: 250,
+              height: 200,
               width: vwidth,
               child: Padding(
                 padding: const EdgeInsets.only(left: 10.0),
@@ -196,10 +200,11 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                               index, BuildContext)) {
                             removefavourite(index);
                           }
-                          setState(() {
-                            isalready = !isalready;
-                          });
-                          isalready = true;
+                          setState(() {});
+                          // setState(() {
+                          //   isalready = !isalready;
+                          // });
+                          // isalready = true;
                           // if (checkFavoriteStatus(index, BuildContext) == true) {
                           //   isalready == false;
                           //   // addToFavourites(index, isalready);
@@ -240,17 +245,6 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                         ),
                         label: Text(
                           'Add to Playlist',
-                          style: GoogleFonts.kanit(
-                              color: colorblack, fontSize: 17),
-                        )),
-                    TextButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.share,
-                          color: colorblack,
-                        ),
-                        label: Text(
-                          'Share',
                           style: GoogleFonts.kanit(
                               color: colorblack, fontSize: 17),
                         )),
@@ -307,7 +301,7 @@ showPlaylistOptions(BuildContext context, int songindex) {
           backgroundColor: colorextralight,
           alignment: Alignment.bottomCenter,
           content: Container(
-            height: 250,
+            height: 200,
             width: vwidth,
             child: Padding(
               padding: const EdgeInsets.only(left: 10.0),
@@ -333,10 +327,8 @@ showPlaylistOptions(BuildContext context, int songindex) {
                                     playsongs!.playlistssongs!;
                                 List<Songs> songdb = songbox.values.toList();
                                 bool isAlreadyAdded = playsongdb.any(
-                                              (element) =>
-                                                  element.id ==
-                                                  songdb[songindex]
-                                                      .id);
+                                    (element) =>
+                                        element.id == songdb[songindex].id);
                                 if (!isAlreadyAdded) {
                                   playsongdb.add(
                                     Songs(
