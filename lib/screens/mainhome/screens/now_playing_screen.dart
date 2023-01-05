@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/songmodel.dart';
+import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
@@ -122,42 +123,72 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: vwidth,
-                                        child: Text(
-                                          _audioPlayer.getCurrentAudioTitle,
-                                          // allDbdongs[value1].songname!,
-                                          style: GoogleFonts.kanit(
-                                              fontSize: 25, color: colorwhite),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 12.0),
-                                        child: Text(
-                                          _audioPlayer.getCurrentAudioArtist,
-                                          // allDbdongs[value1].artist!,
-                                          style: GoogleFonts.kanit(
-                                            fontSize: 15,
-                                            color: colorwhite.withOpacity(0.7),
+                                  SizedBox(
+                                    width: vwidth * 0.8,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: vwidth * 0.03,
+                                              right: vwidth * 0.03),
+                                          child: Text(
+                                            _audioPlayer.getCurrentAudioTitle,
+                                            // allDbdongs[value1].songname!,
+                                            style: GoogleFonts.kanit(
+                                                fontSize: 25,
+                                                color: colorwhite),
+                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.favorite_border_outlined,
-                                      color: colorwhite,
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 12.0),
+                                          child: Text(
+                                            _audioPlayer.getCurrentAudioArtist,
+                                            // allDbdongs[value1].artist!,
+                                            style: GoogleFonts.kanit(
+                                              fontSize: 15,
+                                              color:
+                                                  colorwhite.withOpacity(0.7),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
+                                  IconButton(
+                                      onPressed: () {
+                                        if (checkFavoriteStatus(
+                                            playing.index, BuildContext)) {
+                                          addToFavourites(
+                                              playing.index,
+                                              checkFavoriteStatus(
+                                                  playing.index, BuildContext));
+                                        } else if (!checkFavoriteStatus(
+                                            playing.index, BuildContext)) {
+                                          removefavourite(playing.index);
+                                        }
+                                        setState(() {
+                                          checkFavoriteStatus(playing.index,
+                                                  BuildContext) ==
+                                              !checkFavoriteStatus(
+                                                  playing.index, BuildContext);
+                                        });
+                                      },
+                                      icon: (checkFavoriteStatus(
+                                              playing.index, BuildContext))
+                                          ? Icon(
+                                              Icons.favorite_border_outlined,
+                                              color: colorwhite,
+                                            )
+                                          : Icon(
+                                              Icons.favorite,
+                                              color: colorwhite,
+                                            )),
                                 ],
                               ),
                               const SizedBox(
