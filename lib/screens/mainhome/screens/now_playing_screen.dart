@@ -250,7 +250,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                           Icons.shuffle,
                                                           color: colorwhite,
                                                         )
-                                                      : Icon(Icons.shuffle_on,
+                                                      : Icon(Icons.shuffle_rounded,
                                                           color: colorwhite)),
                                               Container(
                                                 width: 50,

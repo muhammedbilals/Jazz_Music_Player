@@ -120,7 +120,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ],
             ),
           ),
-          // bottomSheet:  NowPlayingSlider(),
+          bottomSheet:  NowPlayingSlider(),
         ),
       ),
     );
