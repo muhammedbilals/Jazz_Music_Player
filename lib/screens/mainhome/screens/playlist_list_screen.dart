@@ -16,8 +16,11 @@ class PlayListScreen extends StatefulWidget {
 }
 
 class _PlayListScreenState extends State<PlayListScreen> {
+  final playlistbox = PlaylistSongsbox.getInstance();
+  late List<PlaylistSongs> playlistsong =
+                      playlistbox.values.toList();
   final List<PlaylistModel> playlistsong1 = [];
-  final box = PlaylistSongsbox.getInstance();
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -61,7 +64,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
                   style: GoogleFonts.kanit(fontSize: 20, color: colorwhite),
                 ),
                 subtitle: Text(
-                  '6 Playlist',
+                  '${playlistsong.length} Playlist',
                   style: GoogleFonts.kanit(
                       fontSize: 14, color: colorwhite.withOpacity(0.7)),
                 ),
@@ -87,7 +90,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
                 ),
               ),
               ValueListenableBuilder<Box<PlaylistSongs>>(
-                valueListenable: box.listenable(),
+                valueListenable: playlistbox.listenable(),
                 builder: (context, Box<PlaylistSongs> playlistsongs, child) {
                   List<PlaylistSongs> playlistsong =
                       playlistsongs.values.toList();

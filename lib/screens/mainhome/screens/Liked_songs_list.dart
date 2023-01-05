@@ -109,46 +109,34 @@ class _LikedSongsListState extends State<LikedSongsList> {
                             padding:
                                 const EdgeInsets.only(bottom: 8.0, left: 5),
                             child: ListTile(
-                              onTap: () {
-                                _audioPlayer.open(
-                                  Audio.file(favouritesongs[index].songurl!),
-                                  showNotification: true,
-                                );
-                              },
-                              leading: QueryArtworkWidget(
-                                keepOldArtwork: true,
-                                artworkBorder: BorderRadius.circular(10),
-                                id: favouritesongs[index].id!,
-                                type: ArtworkType.AUDIO,
-                              ),
-                              title: Text(
-                                favouritesongs[index].songname!,
-                                style: GoogleFonts.kanit(color: colorwhite),
-                              ),
-                              subtitle: Text(
-                                  favouritesongs[index].artist ?? "No Artist",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.kanit(
-                                      color: colorwhite.withOpacity(0.7),
-                                      fontSize: 12)),
-                              trailing: Wrap(
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.favorite),
-                                    color: Colors.red,
-                                  ),
-                                  IconButton(
+                                onTap: () {
+                                  _audioPlayer.open(
+                                    Audio.file(favouritesongs[index].songurl!),
+                                    showNotification: true,
+                                  );
+                                },
+                                leading: QueryArtworkWidget(
+                                  keepOldArtwork: true,
+                                  artworkBorder: BorderRadius.circular(10),
+                                  id: favouritesongs[index].id!,
+                                  type: ArtworkType.AUDIO,
+                                ),
+                                title: Text(
+                                  favouritesongs[index].songname!,
+                                  style: GoogleFonts.kanit(color: colorwhite),
+                                ),
+                                subtitle: Text(
+                                    favouritesongs[index].artist ?? "No Artist",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.kanit(
+                                        color: colorwhite.withOpacity(0.7),
+                                        fontSize: 12)),
+                                trailing: IconButton(
                                     onPressed: () {
-                                      showOptions(context, index);
+                                      deletefavourite(index);
                                     },
-                                    icon: const Icon(Icons.more_vert),
-                                    color: colorwhite,
-                                  ),
-                                ],
-                              ),
-                            ),
+                                    icon: const Icon(Icons.favorite),
+                                    color: Colors.white)),
                           )),
                     );
                   },

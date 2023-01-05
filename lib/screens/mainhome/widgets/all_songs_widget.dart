@@ -11,9 +11,7 @@ import 'package:music_player/model/songmodel.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
-import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
-
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -151,7 +149,8 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
 
                               print(allDbsongs[songindex].songname!);
                             },
-                            icon: Icon(Icons.favorite,
+                            icon: 
+                            Icon(Icons.favorite,
                                 color: (checkFavoriteStatus(
                                         songindex, BuildContext))
                                     ? Color.fromARGB(255, 85, 85, 85)
@@ -223,11 +222,11 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                         },
                         icon: (checkFavoriteStatus(index, context))
                             ? const Icon(
-                                Icons.favorite,
+                                Icons.favorite_border_outlined,
                                 color: colorblack,
                               )
                             : Icon(
-                                Icons.favorite_border_outlined,
+                                Icons.favorite,
                                 color: colorblack,
                               ),
                         label: (checkFavoriteStatus(index, context))

@@ -67,7 +67,6 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                   child: CircularProgressIndicator(),
                 );
               }
-
               return audioPlayer.builderCurrent(
                 builder: (context, playing) {
                   return Padding(
@@ -167,10 +166,10 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                                                   BorderRadius.circular(30),
                                               color: colordark),
                                           child: IconButton(
-                                            onPressed: () async{
+                                            onPressed: () async {
                                               // skipMusic(audioPlayer, value,
                                               //     allDbdongs);
-                                             await audioPlayer.next();
+                                              await audioPlayer.next();
                                             },
                                             icon: const Icon(
                                               Icons.skip_next,
