@@ -4,31 +4,29 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/recentlyplayed.dart';
+import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class AlbumFullList extends StatefulWidget {
-  AlbumFullList({super.key});
+class RecentlyPlayedScreen extends StatefulWidget {
+  RecentlyPlayedScreen({super.key});
 
   @override
-  State<AlbumFullList> createState() => _AlbumFullListState();
+  State<RecentlyPlayedScreen> createState() => _RecentlyPlayedScreenState();
 }
 
-class _AlbumFullListState extends State<AlbumFullList> {
+class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
   final List<RecentlyPlayed> recentplay = [];
-    final box = RecentlyPlayedBox.getInstance();
+  final box = RecentlyPlayedBox.getInstance();
 
   @override
   Widget build(BuildContext context) {
     void initState() {
       // TODO: implement initState
-      
 
       List<RecentlyPlayed> Recentplay = box.values.toList();
 
-        super.initState();
-      
+      super.initState();
     }
-
     double vwidth = MediaQuery.of(context).size.width;
     return Container(
       color: colordark,
@@ -83,7 +81,8 @@ class _AlbumFullListState extends State<AlbumFullList> {
                 ValueListenableBuilder<Box<RecentlyPlayed>>(
                   valueListenable: box.listenable(),
                   builder: ((context, Box<RecentlyPlayed> RecentDB, child) {
-                    List<RecentlyPlayed> Recentplayed = RecentDB.values.toList();
+                    List<RecentlyPlayed> Recentplayed =
+                        RecentDB.values.toList();
                     return ListView.builder(
                       reverse: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -112,11 +111,30 @@ class _AlbumFullListState extends State<AlbumFullList> {
                             trailing: Wrap(
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.favorite),
-                                  color: Colors.red,
-                                ),
+                               IconButton(
+                            onPressed: () {
+                              // if (checkFavoriteStatus(
+                              //     index, BuildContext)) {
+                              //   addToFavourites(index);
+                              //   // addToFavorites1(songindex, favourites, context);
+                              // } else if (!checkFavoriteStatus(
+                              //     index, BuildContext)) {
+                              //   removefavourite(index);
+                              // }
+                              // setState(
+                              //   () {
+                                 
+                              //   },
+                              // );
+
+                            
+                            },
+                            icon: 
+                            Icon(Icons.favorite,
+                                color: (checkFavoriteStatus(
+                                        index, BuildContext))
+                                    ? Color.fromARGB(255, 85, 85, 85)
+                                    : Color.fromARGB(255, 255, 255, 255))),
                                 IconButton(
                                   onPressed: () {
                                     showOptions(context);

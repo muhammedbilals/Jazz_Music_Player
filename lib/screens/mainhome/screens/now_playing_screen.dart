@@ -23,6 +23,8 @@ class NowPlayingScreen extends StatefulWidget {
 class _NowPlayingScreenState extends State<NowPlayingScreen> {
   final _audioPlayer = AssetsAudioPlayer.withId('0');
   final box = SongBox.getInstance();
+  bool isRepeat = false;
+  bool isShuffleOn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -239,11 +241,17 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               IconButton(
-                                                  onPressed: () {},
-                                                  icon: const Icon(
-                                                    Icons.shuffle,
-                                                    color: colorwhite,
-                                                  )),
+                                                  onPressed: () {
+                                                    setState(() {});
+                                                    audioPlayer.toggleShuffle();
+                                                  },
+                                                  icon: (isShuffleOn)
+                                                      ? const Icon(
+                                                          Icons.shuffle,
+                                                          color: colorwhite,
+                                                        )
+                                                      : Icon(Icons.shuffle_on,
+                                                          color: colorwhite)),
                                               Container(
                                                 width: 50,
                                                 height: 50,
@@ -316,12 +324,27 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                 ),
                                               ),
                                               IconButton(
-                                                onPressed: () {},
-                                                icon: const Icon(
-                                                  Icons.repeat,
-                                                  color: colorwhite,
-                                                ),
-                                              ),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      if (isRepeat) {
+                                                        audioPlayer.setLoopMode(
+                                                            LoopMode.none);
+                                                        isRepeat = false;
+                                                      } else {
+                                                        audioPlayer.setLoopMode(
+                                                            LoopMode.single);
+                                                        isRepeat = true;
+                                                      }
+                                                    });
+                                                  },
+                                                  icon: (isRepeat)
+                                                      ? const Icon(
+                                                          Icons
+                                                              .repeat_one_outlined,
+                                                          color: colorwhite,
+                                                        )
+                                                      : Icon(Icons.repeat,
+                                                          color: colorwhite)),
                                             ],
                                           ),
                                         ),
