@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/songmodel.dart';
+import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class NowPlayingScreen extends StatefulWidget {
@@ -18,9 +19,8 @@ class NowPlayingScreen extends StatefulWidget {
   State<NowPlayingScreen> createState() => _NowPlayingScreenState();
 }
 
-final _audioPlayer = AssetsAudioPlayer.withId('0');
-
 class _NowPlayingScreenState extends State<NowPlayingScreen> {
+  final _audioPlayer = AssetsAudioPlayer.withId('0');
   final box = SongBox.getInstance();
 
   @override
@@ -105,13 +105,14 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                           return Column(
                             children: [
                               QueryArtworkWidget(
-                                // quality: 100,
+                                size: 2000,
+                                quality: 100,
                                 artworkQuality: FilterQuality.high,
                                 artworkHeight: vheight * 0.44,
                                 artworkWidth: vheight * 0.44,
                                 artworkBorder: BorderRadius.circular(10),
                                 artworkFit: BoxFit.cover,
-                                id: allDbdongs[value1].id!,
+                                id: int.parse(playing.audio.audio.metas.id!),
                                 type: ArtworkType.AUDIO,
                               ),
                               const SizedBox(
@@ -120,29 +121,28 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: [ 
+                                children: [
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 12.0),
+                                      SizedBox(
+                                        width: vwidth,
                                         child: Text(
-                                          // player.getCurrentAudioTitle,
-
-                                          allDbdongs[value1].songname!,
+                                          _audioPlayer.getCurrentAudioTitle,
+                                          // allDbdongs[value1].songname!,
                                           style: GoogleFonts.kanit(
                                               fontSize: 25, color: colorwhite),
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
                                       Padding(
                                         padding:
                                             const EdgeInsets.only(left: 12.0),
                                         child: Text(
-                                          // player.getCurrentAudioArtist,
-                                          allDbdongs[value1].artist!,
+                                          _audioPlayer.getCurrentAudioArtist,
+                                          // allDbdongs[value1].artist!,
                                           style: GoogleFonts.kanit(
                                             fontSize: 15,
                                             color: colorwhite.withOpacity(0.7),
@@ -223,8 +223,9 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                 ),
                                                 child: IconButton(
                                                   onPressed: () {
-                                                    previousSong(_audioPlayer,
-                                                        value1, allDbdongs);
+                                                    // previousSong(_audioPlayer,
+                                                    //     value1, allDbdongs);
+                                                    audioPlayer.previous();
                                                   },
                                                   icon: const Icon(
                                                     Icons.skip_previous,
@@ -272,8 +273,9 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                 ),
                                                 child: IconButton(
                                                   onPressed: () {
-                                                    skipMusic(_audioPlayer,
-                                                        value1, allDbdongs);
+                                                    // skipMusic(_audioPlayer,
+                                                    //     value1, allDbdongs);
+                                                    audioPlayer.next();
                                                     setState(() {});
                                                   },
                                                   icon: const Icon(
@@ -311,28 +313,28 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
       ),
     );
   }
-
-  void skipMusic(AssetsAudioPlayer assetsAudioPlayer, int index,
-      List<Songs> dbsongs) async {
-    _audioPlayer.open(
-      Audio.file(dbsongs[index + 1].songurl!),
-    );
-    // await _audioPlayer.next();
-    setState(() {
-      NowPlayingScreen.nowplayingindex.value++;
-    });
-    await _audioPlayer.stop();
-  }
-
-  void previousSong(AssetsAudioPlayer assetsAudioPlayer, int index,
-      List<Songs> dbsongs) async {
-    _audioPlayer.open(
-      Audio.file(dbsongs[index - 1].songurl!),
-    );
-    // await _audioPlayer.next();
-    setState(() {
-      NowPlayingScreen.nowplayingindex.value--;
-    });
-    await _audioPlayer.stop();
-  }
 }
+//   void skipMusic(AssetsAudioPlayer assetsAudioPlayer, int index,
+//       List<Songs> dbsongs) async {
+//     _audioPlayer.open(
+//       Audio.file(dbsongs[index + 1].songurl!),
+//     );
+//     // await _audioPlayer.next();
+//     setState(() {
+//       NowPlayingScreen.nowplayingindex.value++;
+//     });
+//     await _audioPlayer.stop();
+//   }
+
+//   void previousSong(AssetsAudioPlayer assetsAudioPlayer, int index,
+//       List<Songs> dbsongs) async {
+//     _audioPlayer.open(
+//       Audio.file(dbsongs[index - 1].songurl!),
+//     );
+//     // await _audioPlayer.next();
+//     setState(() {
+//       NowPlayingScreen.nowplayingindex.value--;
+//     });
+//     await _audioPlayer.stop();
+//   }
+// }

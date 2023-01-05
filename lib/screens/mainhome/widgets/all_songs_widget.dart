@@ -27,10 +27,10 @@ class AllSongsWidget extends StatefulWidget {
 final alldbsongs = SongBox.getInstance();
 List<Songs> allDbsongs = alldbsongs.values.toList();
 final OnAudioQuery _audioQuery = OnAudioQuery();
-final AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.withId('0');
+final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
 final songbox = SongBox.getInstance();
-  final box4 = favocuritesbox.getInstance();
-  List<favourites> favdb = box4.values.toList();
+final box4 = favocuritesbox.getInstance();
+List<favourites> favdb = box4.values.toList();
 
 class _AllSongsWidgetState extends State<AllSongsWidget> {
   bool istaped = true;
@@ -39,25 +39,24 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
   List<Audio> convertAudios = [];
 
   @override
-  Widget build(BuildContext context) {
-    void initState() {
-      // TODO: implement initState
-      List<Songs> dbsongs = songbox.values.toList();
-
-      for (var item in dbsongs) {
-        convertAudios.add(Audio.file(item.songurl!,
-            metas: Metas(
-                title: item.songname,
-                artist: item.artist,
-                id: item.id.toString())));
-
-        super.initState();
-      }
+  void initState() {
+    // TODO: implement initState
+    List<Songs> dbsongs = songbox.values.toList();
+    for (var item in dbsongs) {
+      convertAudios.add(Audio.file(item.songurl!,
+          metas: Metas(
+              title: item.songname,
+              artist: item.artist,
+              id: item.id.toString())));
     }
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     @override
     void dispose() {
-      _audioPlayer.dispose();
+      audioPlayer.dispose();
       print('dispose');
       super.dispose();
     }
@@ -97,10 +96,14 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                   padding: const EdgeInsets.only(bottom: 8.0, left: 5),
                   child: ListTile(
                     onTap: () {
-                      _audioPlayer.open(
-                        Audio.file(allDbsongs[songindex].songurl!),
+                      audioPlayer.open(
+                        // Audio.file(allDbsongs[songindex].songurl!),
+                        Playlist(audios: convertAudios, startIndex: songindex),
+                        headPhoneStrategy:
+                            HeadPhoneStrategy.pauseOnUnplugPlayOnPlug,
                         showNotification: true,
                       );
+                       setState(() {});
                       rsongs = RecentlyPlayed(
                           id: songs.id,
                           artist: songs.artist,
@@ -109,10 +112,9 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                           songurl: songs.songurl);
                       NowPlayingSlider.enteredvalue.value = songindex;
                       updateRecentlyPlayed(rsongs, songindex);
-                      print('recenttly played passing data is====$rsongs');
-                      print('value notifirer passing index====$songindex');
                       print(songindex);
                       print(allDbsongs[songindex].songname!);
+                     
                     },
                     leading: QueryArtworkWidget(
                       keepOldArtwork: true,
