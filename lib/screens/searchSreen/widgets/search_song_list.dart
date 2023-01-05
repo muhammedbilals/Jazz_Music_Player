@@ -24,58 +24,7 @@ class _SearchSongListState extends State<SearchSongList> {
     return Column(
       children: [
         ///////////////////
-        ValueListenableBuilder<Box<Songs>>(
-          valueListenable: songbox.listenable(),
-          builder: (context, Box<Songs> allsongs, child) {
-            List<Songs> allDbsongs = songbox.values.toList();
-            return ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: allDbsongs.length,
-              itemBuilder: ((context, index) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0, left: 5),
-                    child: ListTile(
-                      leading: QueryArtworkWidget(
-                      keepOldArtwork: true,
-                      artworkBorder: BorderRadius.circular(10),
-                      id: allDbsongs[index].id!,
-                      type: ArtworkType.AUDIO,
-                    ),
-                      title: Text(
-                      allDbsongs[index].songname!,
-                      style: GoogleFonts.kanit(color: colorwhite),
-                    ),
-                    subtitle: Text(allDbsongs[index].artist ?? "No Artist",
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.kanit(
-                            color: colorwhite.withOpacity(0.7), fontSize: 12)),
-                      trailing: Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  istaped = !istaped;
-                                });
-                              },
-                              icon: Icon(Icons.favorite,
-                                  color: (istaped)
-                                      ? const Color.fromARGB(255, 121, 121, 121)
-                                      : const Color.fromARGB(255, 255, 0, 0))),
-                          IconButton(
-                            onPressed: () {
-                              showOptions(context);
-                            },
-                            icon: const Icon(Icons.more_vert),
-                            color: colorwhite,
-                          ),
-                        ],
-                      ),
-                    ),
-                  )),
-            );
-          },
-        ),
+        
       ],
     );
   }

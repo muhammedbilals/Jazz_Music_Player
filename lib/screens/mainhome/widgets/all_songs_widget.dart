@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/dbfunctions.dart';
+import 'package:music_player/model/favourites.dart';
 import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/model/songmodel.dart';
@@ -28,6 +29,8 @@ List<Songs> allDbsongs = alldbsongs.values.toList();
 final OnAudioQuery _audioQuery = OnAudioQuery();
 final AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.withId('0');
 final songbox = SongBox.getInstance();
+  final box4 = favocuritesbox.getInstance();
+  List<favourites> favdb = box4.values.toList();
 
 class _AllSongsWidgetState extends State<AllSongsWidget> {
   bool istaped = true;
@@ -133,6 +136,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                               if (checkFavoriteStatus(
                                   songindex, BuildContext)) {
                                 addToFavourites(songindex, isalready);
+                                // addToFavorites1(songindex, favourites, context);
                               } else if (!checkFavoriteStatus(
                                   songindex, BuildContext)) {
                                 removefavourite(songindex);

@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/favourites.dart';
 import 'package:music_player/model/songmodel.dart';
@@ -63,4 +65,27 @@ bool checkFavoriteStatus(int index, BuildContext) {
       .where((element) => element.songname == value.songname)
       .isEmpty;
   return isAlreadyThere ? true : false;
+}
+addToFavorites1(int index, favourites value, BuildContext context) async {
+  final box4 = favocuritesbox.getInstance();
+  List<favourites> favdb = box4.values.toList();
+  bool isAlreadyThere =
+      favdb.where((element) => element.songname == value.songname).isEmpty;
+  if (isAlreadyThere == true) {
+    favdb.add(value);
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      duration: Duration(seconds: 1),
+      behavior: SnackBarBehavior.floating,
+      content: Text("Added to favorites"),
+    ));
+  } else {
+    int index =
+        favdb.indexWhere((element) => element.songname == value.songname);
+    box4.deleteAt(index);
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      duration: Duration(seconds: 1),
+      behavior: SnackBarBehavior.floating,
+      content: Text("Removed from favorites"),
+));
+}
 }
