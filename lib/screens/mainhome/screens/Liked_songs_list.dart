@@ -5,7 +5,6 @@ import 'package:hive/hive.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/favourites.dart';
 import 'package:music_player/model/recentlyplayed.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
@@ -43,23 +42,24 @@ class _LikedSongsListState extends State<LikedSongsList> {
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
-                          decoration: BoxDecoration(
-                              color: colorextralight,
-                              borderRadius: BorderRadius.circular(30)),
-                          width: 40,
-                          height: 40,
-                          child: IconButton(
-                            icon: const Padding(
-                              padding: EdgeInsets.only(left: 5.0),
-                              child: Icon(
-                                Icons.arrow_back_ios,
-                              ),
+                        decoration: BoxDecoration(
+                            color: colorextralight,
+                            borderRadius: BorderRadius.circular(30)),
+                        width: 40,
+                        height: 40,
+                        child: IconButton(
+                          icon: const Padding(
+                            padding: EdgeInsets.only(left: 5.0),
+                            child: Icon(
+                              Icons.arrow_back_ios,
                             ),
-                            color: colorblack,
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          )),
+                          ),
+                          color: colorblack,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -80,16 +80,17 @@ class _LikedSongsListState extends State<LikedSongsList> {
                     spacing: 10,
                     children: [
                       Container(
-                          width: 45,
-                          height: 45,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: colorextralight),
-                          child: const Icon(
-                            Icons.play_arrow,
-                            color: colordark,
-                            size: 30,
-                          )),
+                        width: 45,
+                        height: 45,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: colorextralight),
+                        child: const Icon(
+                          Icons.play_arrow,
+                          color: colordark,
+                          size: 30,
+                        ),
+                      ),
                     ],
                   ),
                 ),

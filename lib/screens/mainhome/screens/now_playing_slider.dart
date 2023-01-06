@@ -124,64 +124,65 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                               ],
                             ),
                             PlayerBuilder.isPlaying(
-                                player: audioPlayer,
-                                builder: ((context, isPlaying) {
-                                  return Padding(
-                                    padding:
-                                        EdgeInsets.only(right: vwidth * 0.01),
-                                    child: Wrap(
-                                      spacing: 10,
-                                      crossAxisAlignment:
-                                          WrapCrossAlignment.center,
-                                      children: [
-                                        Container(
-                                            height: 50,
-                                            width: 50,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                color: colordark),
-                                            child: IconButton(
-                                              icon: Icon(
-                                                (isPlaying)
-                                                    ? Icons.pause
-                                                    : Icons.play_arrow,
-                                                color: colorwhite,
-                                                size: 30,
-                                              ),
-                                              onPressed: () async {
-                                                await audioPlayer.playOrPause();
-
-                                                // playsong(value);
-                                                setState(() {
-                                                  isPlaying = !isPlaying;
-                                                });
-                                              },
-                                            )),
-                                        Container(
-                                          width: 35,
-                                          height: 35,
+                              player: audioPlayer,
+                              builder: ((context, isPlaying) {
+                                return Padding(
+                                  padding:
+                                      EdgeInsets.only(right: vwidth * 0.01),
+                                  child: Wrap(
+                                    spacing: 10,
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    children: [
+                                      Container(
+                                          height: 50,
+                                          width: 50,
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(30),
                                               color: colordark),
                                           child: IconButton(
-                                            onPressed: () async {
-                                              // skipMusic(audioPlayer, value,
-                                              //     allDbdongs);
-                                              await audioPlayer.next();
-                                            },
-                                            icon: const Icon(
-                                              Icons.skip_next,
+                                            icon: Icon(
+                                              (isPlaying)
+                                                  ? Icons.pause
+                                                  : Icons.play_arrow,
                                               color: colorwhite,
-                                              size: 20,
+                                              size: 30,
                                             ),
+                                            onPressed: () async {
+                                              await audioPlayer.playOrPause();
+
+                                              // playsong(value);
+                                              setState(() {
+                                                isPlaying = !isPlaying;
+                                              });
+                                            },
+                                          )),
+                                      Container(
+                                        width: 35,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            color: colordark),
+                                        child: IconButton(
+                                          onPressed: () async {
+                                            // skipMusic(audioPlayer, value,
+                                            //     allDbdongs);
+                                            await audioPlayer.next();
+                                          },
+                                          icon: const Icon(
+                                            Icons.skip_next,
+                                            color: colorwhite,
+                                            size: 20,
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  );
-                                }))
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }),
+                            )
                           ],
                         ),
                       ),

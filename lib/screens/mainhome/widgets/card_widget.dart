@@ -24,13 +24,13 @@ class CardWidget extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    double vwidth = MediaQuery.of(context).size.width;  
+    double vwidth = MediaQuery.of(context).size.width;
     return Padding(
-      padding:  EdgeInsets.all(vwidth*0.02),
+      padding: EdgeInsets.all(vwidth * 0.02),
       child: InkWell(
         onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: ((context) => screens[index])));
+          Navigator.push(context,
+              MaterialPageRoute(builder: ((context) => screens[index])));
         },
         child: Container(
           height: 55,
@@ -40,14 +40,20 @@ class CardWidget extends StatelessWidget {
           child: Row(
             children: [
               Padding(
-                padding:  EdgeInsets.only(left:vwidth* 0.02, right: vwidth* 0.02),
+                padding:
+                    EdgeInsets.only(left: vwidth * 0.02, right: vwidth * 0.02),
                 child: Icon(cardicon),
               ),
               Padding(
-                padding:  EdgeInsets.only(left: vwidth* 0.02, right: vwidth* 0.02),
-                child: Text(
-                  cardtext.toString(),
-                  style: GoogleFonts.kanit(fontSize: 20),
+                padding:
+                    EdgeInsets.only(left: vwidth * 0.02, right: vwidth * 0.02),
+                child: SizedBox(
+                  width: vwidth * 0.30,
+                  child: Text(
+                    cardtext.toString(),
+                    style: GoogleFonts.kanit(fontSize: 19),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               )
             ],
