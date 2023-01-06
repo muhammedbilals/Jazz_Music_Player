@@ -26,29 +26,31 @@ class PlaylistSlider extends StatelessWidget {
             height: 140,
             /////////////////////
             child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: playlist.length,
-                // physics: ClampingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: ((context, index) => Column(
-                      children: [
-                        SizedBox(
-                          height: 115,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.asset(Playlistimage[index])),
-                          ),
+              shrinkWrap: true,
+              itemCount: playlist.length,
+              // physics: ClampingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemBuilder: ((context, index) => Column(
+                    children: [
+                      SizedBox(
+                        height: 115,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(Playlistimage[index])),
                         ),
-                        Text(
-                          playlist[index],
-                          style: GoogleFonts.kanit(
-                              fontSize: 15,
-                              color: colorwhite.withOpacity(0.5)),
-                        )
-                      ],
-                    ))),
+                      ),
+                      Text(
+                        playlist[index],
+                        style: GoogleFonts.kanit(
+                          fontSize: 15,
+                          color: colorwhite.withOpacity(0.5),
+                        ),
+                      )
+                    ],
+                  )),
+            ),
           ),
         )
       ],

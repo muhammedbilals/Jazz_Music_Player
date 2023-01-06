@@ -183,11 +183,11 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                       },
                                       icon: (checkFavoriteStatus(
                                               playing.index, BuildContext))
-                                          ? Icon(
+                                          ? const Icon(
                                               Icons.favorite_border_outlined,
                                               color: colorwhite,
                                             )
-                                          : Icon(
+                                          : const Icon(
                                               Icons.favorite,
                                               color: colorwhite,
                                             )),
@@ -213,9 +213,9 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                           baseBarColor:
                                               Colors.white.withOpacity(0.5),
                                           progressBarColor:
-                                              Color.fromARGB(255, 136, 64, 64),
+                                              const Color.fromARGB(255, 136, 64, 64),
                                           thumbColor:
-                                              Color.fromARGB(255, 24, 14, 14),
+                                              const Color.fromARGB(255, 24, 14, 14),
                                           thumbRadius: 5,
                                           timeLabelPadding: 5,
                                           progress: position,
@@ -250,7 +250,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                           Icons.shuffle,
                                                           color: colorwhite,
                                                         )
-                                                      : Icon(Icons.shuffle_rounded,
+                                                      : const Icon(Icons.shuffle_rounded,
                                                           color: colorwhite)),
                                               Container(
                                                 width: 50,
@@ -294,8 +294,8 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                     );
                                                   },
                                                   icon: (isPlaying)
-                                                      ? Icon(Icons.pause)
-                                                      : Icon(
+                                                      ? const Icon(Icons.pause)
+                                                      : const Icon(
                                                           Icons.play_arrow,
                                                           color: colorblack,
                                                           size: 35,
@@ -343,7 +343,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                               .repeat_one_outlined,
                                                           color: colorwhite,
                                                         )
-                                                      : Icon(Icons.repeat,
+                                                      : const Icon(Icons.repeat,
                                                           color: colorwhite)),
                                             ],
                                           ),

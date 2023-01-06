@@ -13,7 +13,6 @@ class NowPlayingSlider extends StatefulWidget {
 
   static int? index = 0;
   static ValueNotifier<int> enteredvalue = ValueNotifier<int>(index!);
-
   List<Songs> dbsongs = box.values.toList();
 
   @override
@@ -21,7 +20,6 @@ class NowPlayingSlider extends StatefulWidget {
 }
 
 final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
-
 class _NowPlayingSliderState extends State<NowPlayingSlider> {
   // bool istaped = false;
 
@@ -74,7 +72,6 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                     child: GestureDetector(
                       onTap: () {
                         NowPlayingScreen.nowplayingindex.value = value;
-
                         Navigator.push(
                             context,
                             MaterialPageRoute(

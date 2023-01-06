@@ -146,10 +146,9 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                   istaped = !istaped;
                                 },
                               );
-
                               print(allDbsongs[songindex].songname!);
                             },
-                            icon: 
+                            icon:
                             Icon(Icons.favorite,
                                 color: (checkFavoriteStatus(
                                         songindex, BuildContext))
@@ -356,7 +355,7 @@ showPlaylistOptions(BuildContext context, int songindex) {
                                 // allDbsongs.add(playsong);
                                 // addToPlaylist(playsong, index);
                                 // Hive.box(playlistsongs.put(playlistsongs, playsong));
-                                // Navigator.pop(context);
+                                Navigator.pop(context);
                               },
                               title: Text(
                                 playlistsong[index].playlistname!,

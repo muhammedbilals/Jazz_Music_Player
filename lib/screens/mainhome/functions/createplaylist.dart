@@ -1,8 +1,6 @@
 import 'package:hive/hive.dart';
-import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/songmodel.dart';
-import 'package:music_player/screens/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 createplaylist(String name) async {
@@ -43,5 +41,3 @@ addToPlaylist(Songs song, int index) {
       playlistssongs: allDbsongs));
   print(playlistDB);
 }
-
-openPlaylist() {}
