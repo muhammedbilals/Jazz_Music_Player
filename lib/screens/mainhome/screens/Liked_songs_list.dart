@@ -23,6 +23,26 @@ class _LikedSongsListState extends State<LikedSongsList> {
   final box = favocuritesbox.getInstance();
   late List<favourites> favouritesongs2 = box.values.toList();
   bool isalready = true;
+  List<Audio> favsong = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    final List<favourites> favouritesongs = box.values.toList();
+    for (var item in favouritesongs) {
+      favsong.add(
+        Audio.file(
+          item.songurl.toString(),
+          metas: Metas(
+            artist: item.artist,
+            title: item.songname,
+            id: item.id.toString(),
+          ),
+        ),
+      );
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,10 +130,11 @@ class _LikedSongsListState extends State<LikedSongsList> {
                                 const EdgeInsets.only(bottom: 8.0, left: 5),
                             child: ListTile(
                                 onTap: () {
-                                  _audioPlayer.open(
-                                    Audio.file(favouritesongs[index].songurl!),
-                                    showNotification: true,
-                                  );
+                                  audioPlayer.open(
+                            Playlist(audios: favsong, startIndex: index),
+                            showNotification: true,
+                            headPhoneStrategy: HeadPhoneStrategy.pauseOnUnplug,
+                            loopMode: LoopMode.playlist);
                                 },
                                 leading: QueryArtworkWidget(
                                   keepOldArtwork: true,
