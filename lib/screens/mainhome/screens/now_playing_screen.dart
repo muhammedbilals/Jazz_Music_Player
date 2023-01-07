@@ -166,10 +166,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                       onPressed: () {
                                         if (checkFavoriteStatus(
                                             playing.index, BuildContext)) {
-                                          addToFavourites(
-                                              playing.index,
-                                              checkFavoriteStatus(
-                                                  playing.index, BuildContext));
+                                          addToFavourites(playing.index);
                                         } else if (!checkFavoriteStatus(
                                             playing.index, BuildContext)) {
                                           removefavourite(playing.index);
@@ -213,9 +210,10 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                           baseBarColor:
                                               Colors.white.withOpacity(0.5),
                                           progressBarColor:
-                                              const Color.fromARGB(255, 136, 64, 64),
-                                          thumbColor:
-                                              const Color.fromARGB(255, 24, 14, 14),
+                                              const Color.fromARGB(
+                                                  255, 136, 64, 64),
+                                          thumbColor: const Color.fromARGB(
+                                              255, 24, 14, 14),
                                           thumbRadius: 5,
                                           timeLabelPadding: 5,
                                           progress: position,
@@ -250,7 +248,8 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                           Icons.shuffle,
                                                           color: colorwhite,
                                                         )
-                                                      : const Icon(Icons.shuffle_rounded,
+                                                      : const Icon(
+                                                          Icons.shuffle_rounded,
                                                           color: colorwhite)),
                                               Container(
                                                 width: 50,
@@ -261,10 +260,10 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                       BorderRadius.circular(30),
                                                 ),
                                                 child: IconButton(
-                                                  onPressed: () {
+                                                  onPressed: () async{
                                                     // previousSong(_audioPlayer,
                                                     //     value1, allDbdongs);
-                                                    audioPlayer.previous();
+                                                   await audioPlayer.previous();
                                                   },
                                                   icon: const Icon(
                                                     Icons.skip_previous,
@@ -281,11 +280,11 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                       BorderRadius.circular(35),
                                                 ),
                                                 child: IconButton(
-                                                  onPressed: () {
+                                                  onPressed: () async{
                                                     if (isPlaying) {
-                                                      _audioPlayer.pause();
+                                                     await _audioPlayer.pause();
                                                     } else {
-                                                      _audioPlayer.play();
+                                                     await _audioPlayer.play();
                                                     }
                                                     setState(
                                                       () {
@@ -311,10 +310,10 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                       BorderRadius.circular(30),
                                                 ),
                                                 child: IconButton(
-                                                  onPressed: () {
+                                                  onPressed: () async{
                                                     // skipMusic(_audioPlayer,
                                                     //     value1, allDbdongs);
-                                                    audioPlayer.next();
+                                                   await audioPlayer.next();
                                                     setState(() {});
                                                   },
                                                   icon: const Icon(

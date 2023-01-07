@@ -41,6 +41,7 @@ class _LikedSongsListState extends State<LikedSongsList> {
         ),
       );
     }
+    setState(() {});
     super.initState();
   }
 
@@ -131,10 +132,12 @@ class _LikedSongsListState extends State<LikedSongsList> {
                             child: ListTile(
                                 onTap: () {
                                   audioPlayer.open(
-                            Playlist(audios: favsong, startIndex: index),
-                            showNotification: true,
-                            headPhoneStrategy: HeadPhoneStrategy.pauseOnUnplug,
-                            loopMode: LoopMode.playlist);
+                                      Playlist(
+                                          audios: favsong, startIndex: index),
+                                      showNotification: true,
+                                      headPhoneStrategy:
+                                          HeadPhoneStrategy.pauseOnUnplug,
+                                      loopMode: LoopMode.playlist);
                                 },
                                 leading: QueryArtworkWidget(
                                   keepOldArtwork: true,

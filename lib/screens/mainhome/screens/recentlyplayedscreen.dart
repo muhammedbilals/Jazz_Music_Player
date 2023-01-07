@@ -1,3 +1,4 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -5,6 +6,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
+import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
+import 'package:music_player/screens/mainhome/screens/playlist_list_screen.dart';
+import 'package:music_player/screens/mainhome/widgets/all_songs_widget.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class RecentlyPlayedScreen extends StatefulWidget {
@@ -15,8 +19,29 @@ class RecentlyPlayedScreen extends StatefulWidget {
 }
 
 class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
+  final _audioPlayer = AssetsAudioPlayer.withId('0');
   final List<RecentlyPlayed> recentplay = [];
   final box = RecentlyPlayedBox.getInstance();
+  List<Audio> rcentplay = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    final List<RecentlyPlayed> recentlyplayed = box.values.toList().reversed.toList();
+    for (var item in recentlyplayed) {
+      rcentplay.add(
+        Audio.file(
+          item.songurl.toString(),
+          metas: Metas(
+            artist: item.artist,
+            title: item.songname,
+            id: item.id.toString(),
+          ),
+        ),
+      );
+      setState(() {});
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +52,7 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
 
       super.initState();
     }
+
     double vwidth = MediaQuery.of(context).size.width;
     return Container(
       color: colordark,
@@ -66,11 +92,11 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
                 ),
                 ListTile(
                   title: Text(
-                    'Current',
+                    'Recently Played',
                     style: GoogleFonts.kanit(fontSize: 20, color: colorwhite),
                   ),
                   subtitle: Text(
-                    '120 Songs',
+                    '${rcentplay.length} Songs',
                     style: GoogleFonts.kanit(
                         fontSize: 14, color: colorwhite.withOpacity(0.7)),
                   ),
@@ -111,39 +137,46 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
                             trailing: Wrap(
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: [
-                               IconButton(
-                            onPressed: () {
-                              // if (checkFavoriteStatus(
-                              //     index, BuildContext)) {
-                              //   addToFavourites(index);
-                              //   // addToFavorites1(songindex, favourites, context);
-                              // } else if (!checkFavoriteStatus(
-                              //     index, BuildContext)) {
-                              //   removefavourite(index);
-                              // }
-                              // setState(
-                              //   () {
-                                 
-                              //   },
-                              // );
+                                // IconButton(
+                                //     onPressed: () {
+                                //       // if (checkFavoriteStatus(
+                                //       //     index, BuildContext)) {
+                                //       //   addToFavourites(index);
+                                //       //   // addToFavorites1(songindex, favourites, context);
+                                //       // } else if (!checkFavoriteStatus(
+                                //       //     index, BuildContext)) {
+                                //       //   removefavourite(index);
+                                //       // }
+                                //       // setState(
+                                //       //   () {
 
-                            
-                            },
-                            icon: 
-                            Icon(Icons.favorite,
-                                color: (checkFavoriteStatus(
-                                        index, BuildContext))
-                                    ? Color.fromARGB(255, 85, 85, 85)
-                                    : Color.fromARGB(255, 255, 255, 255))),
-                                IconButton(
-                                  onPressed: () {
-                                    showOptions(context);
-                                  },
-                                  icon: const Icon(Icons.more_vert),
-                                  color: colorwhite,
-                                ),
+                                //       //   },
+                                //       // );
+                                //     },
+                                //     icon: Icon(Icons.favorite,
+                                //         color: (checkFavoriteStatus(
+                                //                 index, BuildContext))
+                                //             ? Color.fromARGB(255, 85, 85, 85)
+                                //             : Color.fromARGB(
+                                //                 255, 255, 255, 255))),
+                                // IconButton(
+                                //   onPressed: () {
+                                //     showRecentOptions(context, index);
+                                //   },
+                                //   icon: const Icon(Icons.more_vert),
+                                //   color: colorwhite,
+                                // ),
                               ],
                             ),
+                            onTap: () {
+                              _audioPlayer.open(
+                                  Playlist(
+                                      audios: rcentplay, startIndex: index),
+                                  showNotification: true,
+                                  headPhoneStrategy:
+                                      HeadPhoneStrategy.pauseOnUnplug,
+                                  loopMode: LoopMode.playlist);
+                            },
                           ),
                         );
                       }),
@@ -153,88 +186,96 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
               ],
             ),
           ),
+          bottomSheet: NowPlayingSlider(),
         ),
       ),
     );
   }
+//   showRecentOptions(BuildContext context, int index) {
+//   double vwidth = MediaQuery.of(context).size.width;
+//   showDialog(
+//     context: context,
+//     builder: (context) => StatefulBuilder(
+//       builder: (context, setState) {
+//         return AlertDialog(
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(20.0),
+//           ),
+//           insetPadding: EdgeInsets.zero,
+//           contentPadding: EdgeInsets.zero,
+//           clipBehavior: Clip.antiAliasWithSaveLayer,
+//           backgroundColor: colorextralight,
+//           alignment: Alignment.bottomCenter,
+//           content: Container(
+//             height: 150,
+//             width: vwidth,
+//             child: Padding(
+//               padding: const EdgeInsets.only(left: 10.0),
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   TextButton.icon(
+//                       onPressed: () {
+//                         if (checkFavoriteStatus(index, BuildContext)) {
+//                           addToFavourites(index);
+//                         } else if (!checkFavoriteStatus(index, BuildContext)) {
+//                           removefavourite(index);
+//                         }
+//                         setState(() {});
 
-  showOptions(BuildContext context) {
-    double vwidth = MediaQuery.of(context).size.width;
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        insetPadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        backgroundColor: colorextralight,
-        alignment: Alignment.bottomCenter,
-        content: Container(
-          height: 250,
-          width: vwidth,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.favorite,
-                      color: colorblack,
-                    ),
-                    label: Text(
-                      'Add to Favourites',
-                      style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                    )),
-                TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.playlist_add,
-                      color: colorblack,
-                    ),
-                    label: Text(
-                      'Add to Playlist',
-                      style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                    )),
-                TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.share,
-                      color: colorblack,
-                    ),
-                    label: Text(
-                      'Share',
-                      style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                    )),
-                TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.shuffle,
-                      color: colorblack,
-                    ),
-                    label: Text(
-                      'Shuffle',
-                      style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                    )),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.repeat,
-                    color: colorblack,
-                  ),
-                  label: Text(
-                    'Repeat',
-                    style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+//                         Navigator.pop(context);
+//                       },
+//                       icon: (checkFavoriteStatus(index, context))
+//                           ? const Icon(
+//                               Icons.favorite_border_outlined,
+//                               color: colorblack,
+//                             )
+//                           : Icon(
+//                               Icons.favorite,
+//                               color: colorblack,
+//                             ),
+//                       label: (checkFavoriteStatus(index, context))
+//                           ? Text(
+//                               'Add to Favourites',
+//                               style: GoogleFonts.kanit(
+//                                   color: colorblack, fontSize: 17),
+//                             )
+//                           : Text(
+//                               'Remove from Favourites',
+//                               style: GoogleFonts.kanit(
+//                                   color: colorblack, fontSize: 17),
+//                             )),
+//                   TextButton.icon(
+//                       onPressed: () {
+
+//                       },
+//                       icon: const Icon(
+//                         Icons.playlist_add,
+//                         color: colorblack,
+//                       ),
+//                       label: Text(
+//                         'Add to Playlist',
+//                         style:
+//                             GoogleFonts.kanit(color: colorblack, fontSize: 17),
+//                       )),
+//                   TextButton.icon(
+//                     onPressed: () {},
+//                     icon: const Icon(
+//                       Icons.repeat,
+//                       color: colorblack,
+//                     ),
+//                     label: Text(
+//                       'Repeat',
+//                       style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         );
+//       },
+//     ),
+//   );
+// }
 }

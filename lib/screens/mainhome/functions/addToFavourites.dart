@@ -4,7 +4,7 @@ import 'package:music_player/model/favourites.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/splash.dart';
 
-addToFavourites(int index, bool isalready) async {
+addToFavourites(int index) async {
   List<Songs> dbsongs = box.values.toList();
   void initState() {
     // TODO: implement initState
@@ -13,11 +13,11 @@ addToFavourites(int index, bool isalready) async {
 
   List<favourites> favouritessongs = [];
   favouritessongs = favouritesdb.values.toList();
-
-  if (isalready) {
-    favouritessongs
+   bool isalready= favouritessongs
         .where((element) => element.songname == dbsongs[index].songname)
         .isEmpty;
+  if (isalready) {
+    
     favouritesdb.add(favourites(
         songname: dbsongs[index].songname,
         artist: dbsongs[index].artist,

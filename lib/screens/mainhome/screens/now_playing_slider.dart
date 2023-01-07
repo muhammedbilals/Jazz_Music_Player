@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/model/dbfunctions.dart';
+import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_screen.dart';
 import 'package:music_player/screens/splash.dart';
@@ -20,6 +22,7 @@ class NowPlayingSlider extends StatefulWidget {
 }
 
 final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
+
 class _NowPlayingSliderState extends State<NowPlayingSlider> {
   // bool istaped = false;
 
@@ -67,6 +70,8 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
               }
               return audioPlayer.builderCurrent(
                 builder: (context, playing) {
+                  RecentlyPlayed rsongs;
+                  Songs songs = allDbdongs[playing.index];
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: GestureDetector(
@@ -167,6 +172,14 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                                             // skipMusic(audioPlayer, value,
                                             //     allDbdongs);
                                             await audioPlayer.next();
+                                            // rsongs = RecentlyPlayed(
+                                            //     id: songs.id,
+                                            //     artist: songs.artist,
+                                            //     duration: songs.duration,
+                                            //     songname: songs.songname,
+                                            //     songurl: songs.songurl);
+
+                                            // updateRecentlyPlayed(rsongs);
                                           },
                                           icon: const Icon(
                                             Icons.skip_next,

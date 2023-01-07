@@ -19,7 +19,7 @@ openFavouritesDB() async {
   favouritesdb = await Hive.openBox<favourites>('favourites');
 }
 
-updateRecentlyPlayed(RecentlyPlayed value, index) {
+updateRecentlyPlayed(RecentlyPlayed value) {
   List<RecentlyPlayed> list = RecentlyPlayedBox.values.toList();
   bool isAlready =
       list.where((element) => element.songname == value.songname).isEmpty;

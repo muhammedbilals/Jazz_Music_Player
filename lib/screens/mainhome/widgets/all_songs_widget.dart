@@ -32,7 +32,7 @@ List<favourites> favdb = box4.values.toList();
 
 class _AllSongsWidgetState extends State<AllSongsWidget> {
   bool istaped = true;
-  bool isalready = true;
+  // bool isalready = true;
 
   List<Audio> convertAudios = [];
 
@@ -101,7 +101,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                             HeadPhoneStrategy.pauseOnUnplugPlayOnPlug,
                         showNotification: true,
                       );
-                       setState(() {});
+                      setState(() {});
                       rsongs = RecentlyPlayed(
                           id: songs.id,
                           artist: songs.artist,
@@ -109,10 +109,9 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                           songname: songs.songname,
                           songurl: songs.songurl);
                       NowPlayingSlider.enteredvalue.value = songindex;
-                      updateRecentlyPlayed(rsongs, songindex);
+                      updateRecentlyPlayed(rsongs);
                       print(songindex);
                       print(allDbsongs[songindex].songname!);
-                     
                     },
                     leading: QueryArtworkWidget(
                       keepOldArtwork: true,
@@ -135,7 +134,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                             onPressed: () {
                               if (checkFavoriteStatus(
                                   songindex, BuildContext)) {
-                                addToFavourites(songindex, isalready);
+                                addToFavourites(songindex);
                                 // addToFavorites1(songindex, favourites, context);
                               } else if (!checkFavoriteStatus(
                                   songindex, BuildContext)) {
@@ -148,8 +147,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                               );
                               print(allDbsongs[songindex].songname!);
                             },
-                            icon:
-                            Icon(Icons.favorite,
+                            icon: Icon(Icons.favorite,
                                 color: (checkFavoriteStatus(
                                         songindex, BuildContext))
                                     ? Color.fromARGB(255, 85, 85, 85)
@@ -170,118 +168,6 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
           }),
         )
       ],
-    );
-  }
-
-  showOptions(BuildContext context, int index) {
-    double vwidth = MediaQuery.of(context).size.width;
-    showDialog(
-      context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setState) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            insetPadding: EdgeInsets.zero,
-            contentPadding: EdgeInsets.zero,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            backgroundColor: colorextralight,
-            alignment: Alignment.bottomCenter,
-            content: Container(
-              height: 200,
-              width: vwidth,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextButton.icon(
-                        onPressed: () {
-                          if (checkFavoriteStatus(index, BuildContext)) {
-                            addToFavourites(index, isalready);
-                          } else if (!checkFavoriteStatus(
-                              index, BuildContext)) {
-                            removefavourite(index);
-                          }
-                          setState(() {});
-                          // setState(() {
-                          //   isalready = !isalready;
-                          // });
-                          // isalready = true;
-                          // if (checkFavoriteStatus(index, BuildContext) == true) {
-                          //   isalready == false;
-                          //   // addToFavourites(index, isalready);
-                          // }
-                          // Navigator.pop(context);
-                          // // if (checkFavoriteStatus(index, context) == false) {
-                          // //   removefavourite(index);
-                          // // }
-                          Navigator.pop(context);
-                        },
-                        icon: (checkFavoriteStatus(index, context))
-                            ? const Icon(
-                                Icons.favorite_border_outlined,
-                                color: colorblack,
-                              )
-                            : Icon(
-                                Icons.favorite,
-                                color: colorblack,
-                              ),
-                        label: (checkFavoriteStatus(index, context))
-                            ? Text(
-                                'Add to Favourites',
-                                style: GoogleFonts.kanit(
-                                    color: colorblack, fontSize: 17),
-                              )
-                            : Text(
-                                'Remove from Favourites',
-                                style: GoogleFonts.kanit(
-                                    color: colorblack, fontSize: 17),
-                              )),
-                    TextButton.icon(
-                        onPressed: () {
-                          showPlaylistOptions(context, index);
-                        },
-                        icon: const Icon(
-                          Icons.playlist_add,
-                          color: colorblack,
-                        ),
-                        label: Text(
-                          'Add to Playlist',
-                          style: GoogleFonts.kanit(
-                              color: colorblack, fontSize: 17),
-                        )),
-                    TextButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.shuffle,
-                          color: colorblack,
-                        ),
-                        label: Text(
-                          'Shuffle',
-                          style: GoogleFonts.kanit(
-                              color: colorblack, fontSize: 17),
-                        )),
-                    TextButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.repeat,
-                        color: colorblack,
-                      ),
-                      label: Text(
-                        'Repeat',
-                        style:
-                            GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-      ),
     );
   }
 }
@@ -368,6 +254,105 @@ showPlaylistOptions(BuildContext context, int songindex) {
                     )
                   ],
                 ),
+              ),
+            ),
+          ),
+        );
+      },
+    ),
+  );
+}
+
+showOptions(BuildContext context, int index) {
+  double vwidth = MediaQuery.of(context).size.width;
+  showDialog(
+    context: context,
+    builder: (context) => StatefulBuilder(
+      builder: (context, setState) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          insetPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          backgroundColor: colorextralight,
+          alignment: Alignment.bottomCenter,
+          content: Container(
+            height: 150,
+            width: vwidth,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextButton.icon(
+                      onPressed: () {
+                        if (checkFavoriteStatus(index, BuildContext)) {
+                          addToFavourites(index);
+                        } else if (!checkFavoriteStatus(index, BuildContext)) {
+                          removefavourite(index);
+                        }
+                        setState(() {});
+                        // setState(() {
+                        //   isalready = !isalready;
+                        // });
+                        // isalready = true;
+                        // if (checkFavoriteStatus(index, BuildContext) == true) {
+                        //   isalready == false;
+                        //   // addToFavourites(index, isalready);
+                        // }
+                        // Navigator.pop(context);
+                        // // if (checkFavoriteStatus(index, context) == false) {
+                        // //   removefavourite(index);
+                        // // }
+                        Navigator.pop(context);
+                      },
+                      icon: (checkFavoriteStatus(index, context))
+                          ? const Icon(
+                              Icons.favorite_border_outlined,
+                              color: colorblack,
+                            )
+                          : Icon(
+                              Icons.favorite,
+                              color: colorblack,
+                            ),
+                      label: (checkFavoriteStatus(index, context))
+                          ? Text(
+                              'Add to Favourites',
+                              style: GoogleFonts.kanit(
+                                  color: colorblack, fontSize: 17),
+                            )
+                          : Text(
+                              'Remove from Favourites',
+                              style: GoogleFonts.kanit(
+                                  color: colorblack, fontSize: 17),
+                            )),
+                  TextButton.icon(
+                      onPressed: () {
+                        showPlaylistOptions(context, index);
+                      },
+                      icon: const Icon(
+                        Icons.playlist_add,
+                        color: colorblack,
+                      ),
+                      label: Text(
+                        'Add to Playlist',
+                        style:
+                            GoogleFonts.kanit(color: colorblack, fontSize: 17),
+                      )),
+                  TextButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.repeat,
+                      color: colorblack,
+                    ),
+                    label: Text(
+                      'Repeat',
+                      style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
