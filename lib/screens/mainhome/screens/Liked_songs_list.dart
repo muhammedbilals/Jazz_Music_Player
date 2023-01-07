@@ -28,7 +28,8 @@ class _LikedSongsListState extends State<LikedSongsList> {
   @override
   void initState() {
     // TODO: implement initState
-    final List<favourites> favouritesongs = box.values.toList();
+    final List<favourites> favouritesongs =
+        box.values.toList().reversed.toList();
     for (var item in favouritesongs) {
       favsong.add(
         Audio.file(
@@ -105,10 +106,20 @@ class _LikedSongsListState extends State<LikedSongsList> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             color: colorextralight),
-                        child: const Icon(
-                          Icons.play_arrow,
-                          color: colordark,
-                          size: 30,
+                        child: IconButton(
+                          onPressed: () {
+                            audioPlayer.open(
+                                Playlist(audios: favsong, startIndex: 0),
+                                showNotification: true,
+                                headPhoneStrategy:
+                                    HeadPhoneStrategy.pauseOnUnplug,
+                                loopMode: LoopMode.playlist);
+                          },
+                          icon: Icon(
+                            Icons.play_arrow,
+                            color: colordark,
+                            size: 30,
+                          ),
                         ),
                       ),
                     ],
@@ -120,9 +131,9 @@ class _LikedSongsListState extends State<LikedSongsList> {
                   valueListenable: box.listenable(),
                   builder: (context, Box<favourites> favouriteDB, child) {
                     List<favourites> favouritesongs =
-                        favouriteDB.values.toList();
+                        favouriteDB.values.toList().reversed.toList();
                     return ListView.builder(
-                      reverse: true,
+                      // reverse: true,
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: favouritesongs.length,
@@ -138,6 +149,7 @@ class _LikedSongsListState extends State<LikedSongsList> {
                                       headPhoneStrategy:
                                           HeadPhoneStrategy.pauseOnUnplug,
                                       loopMode: LoopMode.playlist);
+                                  print(index);
                                 },
                                 leading: QueryArtworkWidget(
                                   keepOldArtwork: true,

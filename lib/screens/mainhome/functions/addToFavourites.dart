@@ -46,7 +46,7 @@ removefavourite(int index) async {
 }
 
 deletefavourite(int index) async {
-  await favouritesdb.deleteAt(index);
+  await favouritesdb.deleteAt(favouritesdb.length- index-1);
 }
 
 bool checkFavoriteStatus(int index, BuildContext) {

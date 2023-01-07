@@ -26,7 +26,8 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    final List<RecentlyPlayed> recentlyplayed = box.values.toList().reversed.toList();
+    final List<RecentlyPlayed> recentlyplayed =
+        box.values.toList().reversed.toList();
     for (var item in recentlyplayed) {
       rcentplay.add(
         Audio.file(
@@ -100,6 +101,27 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
                     style: GoogleFonts.kanit(
                         fontSize: 14, color: colorwhite.withOpacity(0.7)),
                   ),
+                  trailing: Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: colorextralight),
+                    child: IconButton(
+                      onPressed: () {
+                        _audioPlayer.open(
+                            Playlist(audios: rcentplay, startIndex: 0),
+                            showNotification: true,
+                            headPhoneStrategy: HeadPhoneStrategy.pauseOnUnplug,
+                            loopMode: LoopMode.playlist);
+                      },
+                      icon: Icon(
+                        Icons.play_arrow,
+                        color: colordark,
+                        size: 30,
+                      ),
+                    ),
+                  ),
                 ),
 
                 // Icon(Icons.play_arrow)
@@ -108,9 +130,9 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
                   valueListenable: box.listenable(),
                   builder: ((context, Box<RecentlyPlayed> RecentDB, child) {
                     List<RecentlyPlayed> Recentplayed =
-                        RecentDB.values.toList();
+                        RecentDB.values.toList().reversed.toList();
                     return ListView.builder(
-                      reverse: true,
+                      // reverse: true,
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: Recentplayed.length,

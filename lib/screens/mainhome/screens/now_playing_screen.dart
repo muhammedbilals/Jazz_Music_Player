@@ -163,31 +163,32 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                     ),
                                   ),
                                   IconButton(
-                                      onPressed: () {
-                                        if (checkFavoriteStatus(
-                                            playing.index, BuildContext)) {
-                                          addToFavourites(playing.index);
-                                        } else if (!checkFavoriteStatus(
-                                            playing.index, BuildContext)) {
-                                          removefavourite(playing.index);
-                                        }
-                                        setState(() {
-                                          checkFavoriteStatus(playing.index,
-                                                  BuildContext) ==
-                                              !checkFavoriteStatus(
-                                                  playing.index, BuildContext);
-                                        });
-                                      },
-                                      icon: (checkFavoriteStatus(
-                                              playing.index, BuildContext))
-                                          ? const Icon(
-                                              Icons.favorite_border_outlined,
-                                              color: colorwhite,
-                                            )
-                                          : const Icon(
-                                              Icons.favorite,
-                                              color: colorwhite,
-                                            )),
+                                    onPressed: () {
+                                      if (checkFavoriteStatus(
+                                          playing.index, BuildContext)) {
+                                        addToFavourites(playing.index);
+                                      } else if (!checkFavoriteStatus(
+                                          playing.index, BuildContext)) {
+                                        removefavourite(playing.index);
+                                      }
+                                      setState(() {
+                                        checkFavoriteStatus(
+                                                playing.index, BuildContext) ==
+                                            !checkFavoriteStatus(
+                                                playing.index, BuildContext);
+                                      });
+                                    },
+                                    icon: (checkFavoriteStatus(
+                                            playing.index, BuildContext))
+                                        ? const Icon(
+                                            Icons.favorite_border_outlined,
+                                            color: colorwhite,
+                                          )
+                                        : const Icon(
+                                            Icons.favorite,
+                                            color: colorwhite,
+                                          ),
+                                  ),
                                 ],
                               ),
                               const SizedBox(
@@ -260,10 +261,11 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                       BorderRadius.circular(30),
                                                 ),
                                                 child: IconButton(
-                                                  onPressed: () async{
+                                                  onPressed: () async {
                                                     // previousSong(_audioPlayer,
                                                     //     value1, allDbdongs);
-                                                   await audioPlayer.previous();
+                                                    await audioPlayer
+                                                        .previous();
                                                   },
                                                   icon: const Icon(
                                                     Icons.skip_previous,
@@ -280,11 +282,12 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                       BorderRadius.circular(35),
                                                 ),
                                                 child: IconButton(
-                                                  onPressed: () async{
+                                                  onPressed: () async {
                                                     if (isPlaying) {
-                                                     await _audioPlayer.pause();
+                                                      await _audioPlayer
+                                                          .pause();
                                                     } else {
-                                                     await _audioPlayer.play();
+                                                      await _audioPlayer.play();
                                                     }
                                                     setState(
                                                       () {
@@ -310,10 +313,10 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                       BorderRadius.circular(30),
                                                 ),
                                                 child: IconButton(
-                                                  onPressed: () async{
+                                                  onPressed: () async {
                                                     // skipMusic(_audioPlayer,
                                                     //     value1, allDbdongs);
-                                                   await audioPlayer.next();
+                                                    await audioPlayer.next();
                                                     setState(() {});
                                                   },
                                                   icon: const Icon(
