@@ -15,9 +15,12 @@ class SearchScreen extends StatefulWidget {
   @override
   State<SearchScreen> createState() => _SearchScreenState();
 }
-final AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.withId('0');
+
 
 class _SearchScreenState extends State<SearchScreen> {
+  final AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.withId('0');
+  final box = SongBox.getInstance();
+  late List<Songs>  dbSongs;
   @override
   void initState() {
     dbSongs = box.values.toList();
@@ -25,11 +28,12 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
   }
 
-  late List<Songs> dbSongs;
+  
   List<Audio> allSongs = [];
   final TextEditingController myController = TextEditingController();
   // List<Songs> allDbsongs = songbox.values.toList();
   late List<Songs> another = List.from(dbSongs);
+  
   
     bool istaped = true;
   final songbox = SongBox.getInstance();
@@ -87,6 +91,15 @@ class _SearchScreenState extends State<SearchScreen> {
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.kanit(
                             color: colorwhite.withOpacity(0.7), fontSize: 12)),
+                            onTap: () {
+                              _audioPlayer.open(
+                                      Playlist(
+                                          audios: allSongs, startIndex: index),
+                                      showNotification: true,
+                                      headPhoneStrategy:
+                                          HeadPhoneStrategy.pauseOnUnplug,
+                                      loopMode: LoopMode.playlist);
+                            },
                       trailing: Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [

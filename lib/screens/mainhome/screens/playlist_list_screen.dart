@@ -17,10 +17,9 @@ class PlayListScreen extends StatefulWidget {
 
 class _PlayListScreenState extends State<PlayListScreen> {
   final playlistbox = PlaylistSongsbox.getInstance();
-  late List<PlaylistSongs> playlistsong =
-                      playlistbox.values.toList();
+  late List<PlaylistSongs> playlistsong = playlistbox.values.toList();
   final List<PlaylistModel> playlistsong1 = [];
-  
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -103,11 +102,34 @@ class _PlayListScreenState extends State<PlayListScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: ((context) => PlaylistFullList(playindex: index,))));
+                                  builder: ((context) => PlaylistFullList(
+                                        playindex: index,
+                                      ))));
                         },
+                        leading: QueryArtworkWidget(
+                          keepOldArtwork: true,
+                          artworkBorder: BorderRadius.circular(10),
+                          id: playlistsong[index].playlistssongs![0].id!,
+                          type: ArtworkType.AUDIO,
+                          nullArtworkWidget: ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            child: Image.asset(
+                              'assets/images/music.jpeg',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                         title: Text(
                           playlistsong[index].playlistname!,
                           style: GoogleFonts.kanit(color: colorwhite),
+                        ),
+                        trailing: IconButton(
+                          onPressed: () {
+                            deletePlaylist(index);
+                          },
+                          icon: Icon(Icons.delete),
+                          color: colorwhite,
                         ),
                       );
                     }),

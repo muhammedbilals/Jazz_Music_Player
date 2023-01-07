@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/songmodel.dart';
+import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
+import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -19,7 +21,8 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
   Widget build(BuildContext context) {
     double vwidth = MediaQuery.of(context).size.width;
     final List<PlaylistModel> playlistsong1 = [];
-    final box = PlaylistSongsbox.getInstance();
+    final playbox = PlaylistSongsbox.getInstance();
+    List<PlaylistSongs> playlistsong = playbox.values.toList();
     final songbox = SongBox.getInstance();
     return Container(
       color: colordark,
@@ -59,11 +62,11 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                 ),
                 ListTile(
                   title: Text(
-                    'Fav Songs',
+                    playlistsong[widget.playindex!].playlistname!,
                     style: GoogleFonts.kanit(fontSize: 20, color: colorwhite),
                   ),
                   subtitle: Text(
-                    '20 Songs',
+                    '${playlistsong.length} Songs',
                     style: GoogleFonts.kanit(
                         fontSize: 14, color: colorwhite.withOpacity(0.7)),
                   ),
@@ -96,11 +99,11 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
 
                 // Icon(Icons.play_arrow)
                 ValueListenableBuilder<Box<PlaylistSongs>>(
-                  valueListenable: box.listenable(),
+                  valueListenable: playbox.listenable(),
                   builder: (context, Box<PlaylistSongs> playlistsongs, child) {
                     List<PlaylistSongs> playlistsong =
                         playlistsongs.values.toList();
-                        List<Songs> dbsongs = songbox.values.toList();
+                    List<Songs> dbsongs = songbox.values.toList();
                     List<Songs>? playsong =
                         playlistsong[widget.playindex!].playlistssongs;
                     print(playlistsong[widget.playindex!].playlistssongs);
@@ -114,17 +117,22 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                         shrinkWrap: true,
                         itemCount: playsong!.length,
                         itemBuilder: ((context, index) => ListTile(
-                              // leading: SizedBox(
-                              //   width: 50,
-                              //   height: 50,
-                              //   child: ClipRRect(
-                              //     child: Image.asset(
-                              //       playlistsong[index]
-                              //           .playlistssongs![index]
-                              //           .songurl!,
-                              //     ),
-                              //   ),
-                              // ),
+                              leading: QueryArtworkWidget(
+                                keepOldArtwork: true,
+                                artworkBorder: BorderRadius.circular(10),
+                                id: playlistsong[widget.playindex!]
+                                    .playlistssongs![index]
+                                    .id!,
+                                type: ArtworkType.AUDIO,
+                                nullArtworkWidget: ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  child: Image.asset(
+                                    'assets/images/music.jpeg',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
                               title: Text(
                                 playsong[index].songname!,
                                 // playlistsong[index]
@@ -132,37 +140,31 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                                 //     .songname!,
                                 style: GoogleFonts.kanit(color: colorwhite),
                               ),
-
-                              subtitle: Text(
-                                playsong[index].artist!,
+                              subtitle: Text(playsong[index].artist!,
                                   // playlistsong[index]
                                   //     .playlistssongs![index]
                                   //     .artist!,
                                   style: GoogleFonts.kanit(
                                       color: colorwhite.withOpacity(0.7),
                                       fontSize: 12)),
-                                      
                               trailing: Wrap(
                                 crossAxisAlignment: WrapCrossAlignment.center,
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.favorite),
-                                    color: Colors.red,
-                                  ),
-                                  IconButton(
                                     onPressed: () {
-                                      // showOptions(context);
+                                      showPlaylistSongOptions(context, index);
                                     },
                                     icon: const Icon(Icons.more_vert),
                                     color: colorwhite,
                                   ),
                                 ],
                               ),
+                              onTap: () {
+                                
+                              },
                             )),
                       );
                     }
-                    // print(playlistsongs);
                   },
                 ),
               ],
@@ -172,4 +174,93 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
       ),
     );
   }
+}
+
+showPlaylistSongOptions(BuildContext context, int index) {
+  double vwidth = MediaQuery.of(context).size.width;
+  showDialog(
+    context: context,
+    builder: (context) => StatefulBuilder(
+      builder: (context, setState) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          insetPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          backgroundColor: colorextralight,
+          alignment: Alignment.bottomCenter,
+          content: Container(
+            height: 50,
+            width: vwidth,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // TextButton.icon(
+                  //     onPressed: () {
+                  //       if (checkFavoriteStatus(index, BuildContext)) {
+                  //         addToFavourites(index);
+                  //       } else if (!checkFavoriteStatus(index, BuildContext)) {
+                  //         removefavourite(index);
+                  //       }
+                  //       setState(() {});
+
+                  //       Navigator.pop(context);
+                  //     },
+                  //     icon: (checkFavoriteStatus(index, context))
+                  //         ? const Icon(
+                  //             Icons.favorite_border_outlined,
+                  //             color: colorblack,
+                  //           )
+                  //         : Icon(
+                  //             Icons.favorite,
+                  //             color: colorblack,
+                  //           ),
+                  //     label: (checkFavoriteStatus(index, context))
+                  //         ? Text(
+                  //             'Add to Favourites',
+                  //             style: GoogleFonts.kanit(
+                  //                 color: colorblack, fontSize: 17),
+                  //           )
+                  //         : Text(
+                  //             'Remove from Favourites',
+                  //             style: GoogleFonts.kanit(
+                  //                 color: colorblack, fontSize: 17),
+                  //           )),
+                  TextButton.icon(
+                      onPressed: () {
+                        deleteFromPlaylist(index);
+                        // showPlaylistOptions(context, index);
+                      },
+                      icon: const Icon(
+                        Icons.playlist_remove,
+                        color: colorblack,
+                      ),
+                      label: Text(
+                        'Remove from Playlist',
+                        style:
+                            GoogleFonts.kanit(color: colorblack, fontSize: 17),
+                      )),
+                  // TextButton.icon(
+                  //   onPressed: () {},
+                  //   icon: const Icon(
+                  //     Icons.repeat,
+                  //     color: colorblack,
+                  //   ),
+                  //   label: Text(
+                  //     'Repeat',
+                  //     style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
+                  //   ),
+                  // ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    ),
+  );
 }

@@ -36,8 +36,24 @@ addToPlaylist(Songs song, int index) {
 
   List<PlaylistSongs> playlistDB = box1.values.toList();
 
-  box1.add(PlaylistSongs(
-      playlistname: 'playlistDB[index].playlistname',
-      playlistssongs: allDbsongs));
+ 
   print(playlistDB);
+}
+deletePlaylist(int index){
+  final box1 = PlaylistSongsbox.getInstance();
+  List<PlaylistModel> playlist = [];
+  List<Songs> songsplaylist = [];
+
+  List<PlaylistSongs> playlistDB = box1.values.toList();
+
+  box1.deleteAt(index);
+}
+deleteFromPlaylist(int index){
+    final box1 = PlaylistSongsbox.getInstance();
+  List<PlaylistModel> playlist = [];
+  List<Songs> songsplaylist = [];
+
+  List<PlaylistSongs> playlistDB = box1.values.toList();
+
+  box1.deleteAt(index);
 }
