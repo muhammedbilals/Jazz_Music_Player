@@ -108,7 +108,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                           return Column(
                             children: [
                               QueryArtworkWidget(
-                                size: 2000,
+                                size: 3000,
                                 quality: 100,
                                 artworkQuality: FilterQuality.high,
                                 artworkHeight: vheight * 0.44,

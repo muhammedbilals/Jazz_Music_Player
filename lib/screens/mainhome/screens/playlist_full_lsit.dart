@@ -116,14 +116,17 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                         shrinkWrap: true,
                         itemCount: playsong!.length,
                         itemBuilder: ((context, index) => ListTile(
-                              leading: QueryArtworkWidget(
+                              leading:
+                              playlistsong[widget.playindex!]
+                                    .playlistssongs!.isNotEmpty?
+                               QueryArtworkWidget(
                                 keepOldArtwork: true,
                                 artworkBorder: BorderRadius.circular(10),
                                 id: playlistsong[widget.playindex!]
                                     .playlistssongs![index]
                                     .id!,
-                                type: ArtworkType.AUDIO,
-                                nullArtworkWidget: ClipRRect(
+                                type: ArtworkType.AUDIO):
+                                ClipRRect(
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(10)),
                                   child: Image.asset(
@@ -131,7 +134,7 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                              ),
+                              
                               title: Text(
                                 playsong[index].songname!,
                                 // playlistsong[index]

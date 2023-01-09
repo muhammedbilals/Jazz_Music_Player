@@ -106,21 +106,24 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                         playindex: index,
                                       ))));
                         },
-                        leading: QueryArtworkWidget(
-                          keepOldArtwork: true,
-                          artworkBorder: BorderRadius.circular(10),
-                          
-                          id: playlistsong[index].playlistssongs![0].id ??playlistsong[index].playlistssongs![index].id!,
-                          type: ArtworkType.AUDIO,
-                          nullArtworkWidget: ClipRRect(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                            child: Image.asset(
-                              'assets/images/music.jpeg',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
+                        leading: playlistsong[index].playlistssongs!.isNotEmpty
+                            ? QueryArtworkWidget(
+                                keepOldArtwork: true,
+                                artworkBorder: BorderRadius.circular(10),
+                                id: playlistsong[index].playlistssongs![0].id!,
+                                type: ArtworkType.AUDIO)
+                            : SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  child: Image.asset(
+                                    'assets/images/music.jpeg',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
                         title: Text(
                           playlistsong[index].playlistname!,
                           style: GoogleFonts.kanit(color: colorwhite),

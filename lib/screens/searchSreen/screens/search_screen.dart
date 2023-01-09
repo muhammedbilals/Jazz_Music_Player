@@ -100,28 +100,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           HeadPhoneStrategy.pauseOnUnplug,
                                       loopMode: LoopMode.playlist);
                             },
-                      trailing: Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  istaped = !istaped;
-                                });
-                              },
-                              icon: Icon(Icons.favorite,
-                                  color: (istaped)
-                                      ? const Color.fromARGB(255, 121, 121, 121)
-                                      : const Color.fromARGB(255, 255, 0, 0))),
-                          IconButton(
-                            onPressed: () {
-                              // showOptions(context);
-                            },
-                            icon: const Icon(Icons.more_vert),
-                            color: colorwhite,
-                          ),
-                        ],
-                      ),
+                      
                     ),
                   )),
             )

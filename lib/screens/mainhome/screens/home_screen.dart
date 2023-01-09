@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:music_player/screens/mainhome/widgets/all_songs_widget.dart';
 import 'package:music_player/screens/mainhome/widgets/card_widget.dart';
 import 'package:music_player/screens/mainhome/widgets/playlist_slider_widget.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-class PlayerHome extends StatelessWidget {
+class PlayerHome extends StatefulWidget {
   PlayerHome({super.key});
+
+  @override
+  State<PlayerHome> createState() => _PlayerHomeState();
+}
+
+class _PlayerHomeState extends State<PlayerHome> {
   final box = SongBox.getInstance();
 
   @override
   Widget build(BuildContext context) {
+    final playlistbox = PlaylistSongsbox.getInstance();
+    late List<PlaylistSongs> playlistsong = playlistbox.values.toList();
+    bool isVisible = true;
+
     List<Songs> dbsongs = box.values.toList();
     double vwidth = MediaQuery.of(context).size.width;
     return Container(
@@ -83,18 +96,16 @@ class PlayerHome extends StatelessWidget {
                     ],
                   ),
 
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15.0, top: 5, bottom: 5),
-                        child: Text('Your Playlists',
-                            style: GoogleFonts.kanit(
-                                fontSize: 20, color: colorwhite)),
-                      )
-                    ],
+                  ValueListenableBuilder<Box<PlaylistSongs>>(
+                    valueListenable: playlistbox.listenable(),
+                    builder:
+                        (context, Box<PlaylistSongs> playlistsongs, child) {
+                      return playlistsongs.isNotEmpty
+                          ? Visibility(
+                              visible: isVisible, child: PlaylistSlider())
+                          : Text('');
+                    },
                   ),
-                  PlaylistSlider(),
                   Stack(
                     children: const [
                       AllSongsWidget(),
