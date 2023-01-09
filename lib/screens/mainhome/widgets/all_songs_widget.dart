@@ -5,6 +5,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/favourites.dart';
+import 'package:music_player/model/mostplayed.dart';
 import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/model/songmodel.dart';
@@ -12,6 +13,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
+import 'package:music_player/screens/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -29,6 +31,8 @@ final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
 final songbox = SongBox.getInstance();
 final box4 = favocuritesbox.getInstance();
 List<favourites> favdb = box4.values.toList();
+//  final box = MostplayedBox.getInstance();
+ final List<MostPlayed> mostplayedsong = mostbox.values.toList();
 
 class _AllSongsWidgetState extends State<AllSongsWidget> {
   bool istaped = true;
@@ -89,11 +93,13 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
               itemCount: allDbsongs.length,
               itemBuilder: ((context, songindex) {
                 RecentlyPlayed rsongs;
-                Songs songs = allDbsongs[songindex];
+                                      Songs songs = allDbsongs[songindex];
+                MostPlayed mostsong = mostplayedsong[songindex];
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 8.0, left: 5),
                   child: ListTile(
                     onTap: () {
+
                       audioPlayer.open(
                         // Audio.file(allDbsongs[songindex].songurl!),
                         Playlist(audios: convertAudios, startIndex: songindex),
@@ -110,6 +116,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                           songurl: songs.songurl);
                       NowPlayingSlider.enteredvalue.value = songindex;
                       updateRecentlyPlayed(rsongs);
+                      updatePlayedSongsCount(mostsong, songindex);
                       print(songindex);
                       print(allDbsongs[songindex].songname!);
                     },

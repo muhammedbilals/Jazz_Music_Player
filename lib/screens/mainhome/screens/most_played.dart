@@ -1,65 +1,43 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/model/mostplayed.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 
-class MostPlayed extends StatelessWidget {
-  MostPlayed({super.key});
-  List<String> songs = [
-    'Hans Zimmer - The Classics ',
-    'Dune sound track',
-    'evantually',
-    'Dark Knight Theme song',
-    'Gladiator Sound track',
-    'Top Gun: Maverick Soundtrack',
-    'There He Is Song The Amazing Spider-Man 2',
-    'Hans Zimmer - Interstellar',
-    'Hans Zimmer - The Classics ',
-    'Dune sound track',
-    'evantually',
-    'Dark Knight Theme song',
-    'Gladiator Sound track',
-    'Top Gun: Maverick Soundtrack',
-    'There He Is Song The Amazing Spider-Man 2',
-    'Hans Zimmer - Interstellar',
-  ];
+class MostPlayedScreen extends StatefulWidget {
+  MostPlayedScreen({super.key});
 
-  List<String> author = [
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-    'Hans Zimmer',
-  ];
+  @override
+  State<MostPlayedScreen> createState() => _MostPlayedScreenState();
+}
 
-  List<String> songimage = [
-    'assets/images/hanzimmer.jpg',
-    'assets/images/hanszimmer.jpg',
-    'assets/images/tame-impala-eventually-1400px_800.jpg',
-    'assets/images/TDKR_sdtrck_cover.jpg',
-    'assets/images/hanzimmer.jpg',
-    'assets/images/hanszimmer.jpg',
-    'assets/images/tame-impala-eventually-1400px_800.jpg',
-    'assets/images/TDKR_sdtrck_cover.jpg',
-    'assets/images/hanzimmer.jpg',
-    'assets/images/hanszimmer.jpg',
-    'assets/images/tame-impala-eventually-1400px_800.jpg',
-    'assets/images/TDKR_sdtrck_cover.jpg',
-    'assets/images/hanzimmer.jpg',
-    'assets/images/hanszimmer.jpg',
-    'assets/images/tame-impala-eventually-1400px_800.jpg',
-    'assets/images/TDKR_sdtrck_cover.jpg',
-  ];
+class _MostPlayedScreenState extends State<MostPlayedScreen> {
+  final box = MostplayedBox.getInstance();
+  List<Audio> songs = [];
+  @override
+  void initState() {
+    List<MostPlayed> songlist = box.values.toList();
+
+    int i = 0;
+    for (var item in songlist) {
+      if (item.count > 5) {
+        mostfinalsong.insert(i, item);
+        i++;
+      }
+    }
+    for (var items in mostfinalsong) {
+      songs.add(Audio.file(items.songurl,
+          metas: Metas(
+              title: items.songname,
+              artist: items.artist,
+              id: items.id.toString())));
+    }
+    super.initState();
+  }
+  List<MostPlayed> mostfinalsong = [];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -100,7 +78,7 @@ class MostPlayed extends StatelessWidget {
                   ),
                   ListTile(
                     title: Text(
-                      'Most Playes',
+                      'Most Played',
                       style: GoogleFonts.kanit(fontSize: 20, color: colorwhite),
                     ),
                     subtitle: Text(
@@ -133,46 +111,57 @@ class MostPlayed extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   // Icon(Icons.play_arrow)
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: songs.length,
-                    itemBuilder: ((context, index) => Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0, left: 5),
-                          child: ListTile(
-                            leading: ClipRRect(
-                                child: Image.asset(
-                              songimage[index],
+                  ValueListenableBuilder<Box<MostPlayed>>(
+                    valueListenable: box.listenable(),
+                    builder: (context, Box<MostPlayed> mostplayedDB, _) {
+                      // List<MostPlayed> mostplayedsongs =
+                      //     mostplayedDB.values.toList();
+                      return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: mostfinalsong.length,
+                        itemBuilder: ((context, index) => Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 8.0, left: 5),
+                              child: ListTile(
+                                leading: QueryArtworkWidget(
+                                  keepOldArtwork: true,
+                                  artworkBorder: BorderRadius.circular(10),
+                                  id: mostfinalsong[index].id,
+                                  type: ArtworkType.AUDIO,
+                                ),
+                                title: Text(
+                                  mostfinalsong[index].songname!,
+                                  style: GoogleFonts.kanit(color: colorwhite),
+                                ),
+                                subtitle: Text(
+                                    mostfinalsong[index].artist ?? "No Artist",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.kanit(
+                                        color: colorwhite.withOpacity(0.7),
+                                        fontSize: 12)),
+                                trailing: Wrap(
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(Icons.favorite),
+                                      color: Colors.red,
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        // showOptions(context);
+                                      },
+                                      icon: const Icon(Icons.more_vert),
+                                      color: colorwhite,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             )),
-                            title: Text(
-                              songs[index],
-                              style: GoogleFonts.kanit(color: colorwhite),
-                            ),
-                            subtitle: Text(author[index],
-                                style: GoogleFonts.kanit(
-                                    color: colorwhite.withOpacity(0.7),
-                                    fontSize: 12)),
-                            trailing: Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.favorite),
-                                  color: Colors.red,
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    // showOptions(context);
-                                  },
-                                  icon: const Icon(Icons.more_vert),
-                                  color: colorwhite,
-                                ),
-                              ],
-                            ),
-                          ),
-                        )),
+                      );
+                    },
                   ),
                 ],
               ),

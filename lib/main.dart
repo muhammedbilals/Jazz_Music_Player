@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/favourites.dart';
+import 'package:music_player/model/mostplayed.dart';
 import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/model/songmodel.dart';
@@ -19,8 +20,10 @@ Future main() async {
   Hive.registerAdapter(favouritesAdapter());
   openFavouritesDB();
   Hive.registerAdapter(PlaylistSongsAdapter());
-   await Hive.openBox<PlaylistSongs>('playlist');
-  
+  await Hive.openBox<PlaylistSongs>('playlist');
+  Hive.registerAdapter(MostPlayedAdapter());
+ final  mostplayedbox= await Hive.openBox<MostPlayed>('MostPlayed');
+  // openmostplayeddb();
   runApp(const MyApp());
 }
 

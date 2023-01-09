@@ -20,7 +20,7 @@ class CardWidget extends StatelessWidget {
     LikedSongsList(),
     PlayListScreen(),
     RecentlyPlayedScreen(),
-    MostPlayed(),
+    MostPlayedScreen(),
   ];
   @override
   Widget build(BuildContext context) {

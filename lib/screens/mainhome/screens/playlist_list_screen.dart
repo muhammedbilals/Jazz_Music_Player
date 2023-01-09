@@ -109,7 +109,8 @@ class _PlayListScreenState extends State<PlayListScreen> {
                         leading: QueryArtworkWidget(
                           keepOldArtwork: true,
                           artworkBorder: BorderRadius.circular(10),
-                          id: playlistsong[index].playlistssongs![0].id!,
+                          
+                          id: playlistsong[index].playlistssongs![0].id ??playlistsong[index].playlistssongs![index].id!,
                           type: ArtworkType.AUDIO,
                           nullArtworkWidget: ClipRRect(
                             borderRadius:

@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/songmodel.dart';
-import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
 import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:hive/hive.dart';
@@ -66,7 +65,7 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                     style: GoogleFonts.kanit(fontSize: 20, color: colorwhite),
                   ),
                   subtitle: Text(
-                    '${playlistsong.length} Songs',
+                    '${playlistsong[widget.playindex!].playlistssongs!.length} Songs',
                     style: GoogleFonts.kanit(
                         fontSize: 14, color: colorwhite.withOpacity(0.7)),
                   ),
@@ -159,9 +158,7 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                                   ),
                                 ],
                               ),
-                              onTap: () {
-                                
-                              },
+                              onTap: () {},
                             )),
                       );
                     }

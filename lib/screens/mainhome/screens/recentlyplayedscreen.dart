@@ -20,6 +20,7 @@ class RecentlyPlayedScreen extends StatefulWidget {
 
 class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
   final _audioPlayer = AssetsAudioPlayer.withId('0');
+  
   final List<RecentlyPlayed> recentplay = [];
   final box = RecentlyPlayedBox.getInstance();
   List<Audio> rcentplay = [];
