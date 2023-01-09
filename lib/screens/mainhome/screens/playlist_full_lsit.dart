@@ -1,9 +1,12 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
+import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
+import 'package:music_player/screens/mainhome/widgets/all_songs_widget.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -16,6 +19,23 @@ class PlaylistFullList extends StatefulWidget {
 }
 
 class _PlaylistFullListState extends State<PlaylistFullList> {
+  final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
+    List<Audio> convertAudios = [];
+    @override
+  void initState() {
+    // TODO: implement initState
+    final playbox = PlaylistSongsbox.getInstance();
+    List<PlaylistSongs> playlistsong = playbox.values.toList();
+    // List<Songs> dbsongs = songbox.values.toList();
+    for (var item in playlistsong[widget.playindex!].playlistssongs!) {
+      convertAudios.add(Audio.file(item.songurl!,
+          metas: Metas(
+              title: item.songname,
+              artist: item.artist,
+              id: item.id.toString())));
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     double vwidth = MediaQuery.of(context).size.width;
@@ -72,24 +92,26 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                   trailing: Wrap(
                     spacing: 10,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.all(6.0),
-                        child: Icon(
-                          Icons.shuffle,
-                          color: colorwhite,
-                          size: 30,
-                        ),
-                      ),
                       Container(
                         width: 45,
                         height: 45,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             color: colorextralight),
-                        child: const Icon(
-                          Icons.play_arrow,
+                        child:  IconButton(
+
+                         icon: Icon(Icons.play_arrow,size: 30,),
+                         onPressed: () {
+                           audioPlayer.open(
+                                  // Audio.file(allDbsongs[songindex].songurl!),
+                                  Playlist(audios: convertAudios, startIndex: 0),
+                                  headPhoneStrategy:
+                                      HeadPhoneStrategy.pauseOnUnplugPlayOnPlug,
+                                  showNotification: true,
+                                );
+                         },
                           color: colordark,
-                          size: 30,
+                          
                         ),
                       ),
                     ],
@@ -116,25 +138,24 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                         shrinkWrap: true,
                         itemCount: playsong!.length,
                         itemBuilder: ((context, index) => ListTile(
-                              leading:
-                              playlistsong[widget.playindex!]
-                                    .playlistssongs!.isNotEmpty?
-                               QueryArtworkWidget(
-                                keepOldArtwork: true,
-                                artworkBorder: BorderRadius.circular(10),
-                                id: playlistsong[widget.playindex!]
-                                    .playlistssongs![index]
-                                    .id!,
-                                type: ArtworkType.AUDIO):
-                                ClipRRect(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                  child: Image.asset(
-                                    'assets/images/music.jpeg',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              
+                              leading: playlistsong[widget.playindex!]
+                                      .playlistssongs!
+                                      .isNotEmpty
+                                  ? QueryArtworkWidget(
+                                      keepOldArtwork: true,
+                                      artworkBorder: BorderRadius.circular(10),
+                                      id: playlistsong[widget.playindex!]
+                                          .playlistssongs![index]
+                                          .id!,
+                                      type: ArtworkType.AUDIO)
+                                  : ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                      child: Image.asset(
+                                        'assets/images/music.jpeg',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
                               title: Text(
                                 playsong[index].songname!,
                                 // playlistsong[index]
@@ -161,7 +182,15 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                                   ),
                                 ],
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                audioPlayer.open(
+                                  // Audio.file(allDbsongs[songindex].songurl!),
+                                  Playlist(audios: convertAudios, startIndex: index),
+                                  headPhoneStrategy:
+                                      HeadPhoneStrategy.pauseOnUnplugPlayOnPlug,
+                                  showNotification: true,
+                                );
+                              },
                             )),
                       );
                     }
@@ -170,7 +199,9 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
               ],
             ),
           ),
+          bottomSheet: NowPlayingSlider(),
         ),
+        
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/songmodel.dart';
@@ -16,11 +17,10 @@ class SearchScreen extends StatefulWidget {
   State<SearchScreen> createState() => _SearchScreenState();
 }
 
-
 class _SearchScreenState extends State<SearchScreen> {
   final AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.withId('0');
   final box = SongBox.getInstance();
-  late List<Songs>  dbSongs;
+  late List<Songs> dbSongs;
   @override
   void initState() {
     dbSongs = box.values.toList();
@@ -28,16 +28,14 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
   }
 
-  
   List<Audio> allSongs = [];
   final TextEditingController myController = TextEditingController();
   // List<Songs> allDbsongs = songbox.values.toList();
   late List<Songs> another = List.from(dbSongs);
-  
-  
-    bool istaped = true;
+
+  bool istaped = true;
   final songbox = SongBox.getInstance();
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,48 +66,45 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   ),
                 ),
-               
-            
-             ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: another.length,
-              itemBuilder: ((context, index) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0, left: 5),
-                    child: ListTile(
-                      leading: QueryArtworkWidget(
-                      keepOldArtwork: true,
-                      artworkBorder: BorderRadius.circular(10),
-                      id: another[index].id!,
-                      type: ArtworkType.AUDIO,
-                    ),
-                      title: Text(
-                      another[index].songname!,
-                      style: GoogleFonts.kanit(color: colorwhite),
-                    ),
-                    subtitle: Text(another[index].artist ?? "No Artist",
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.kanit(
-                            color: colorwhite.withOpacity(0.7), fontSize: 12)),
-                            onTap: () {
-                              _audioPlayer.open(
-                                      Playlist(
-                                          audios: allSongs, startIndex: index),
-                                      showNotification: true,
-                                      headPhoneStrategy:
-                                          HeadPhoneStrategy.pauseOnUnplug,
-                                      loopMode: LoopMode.playlist);
-                            },
-                      
-                    ),
-                  )),
-            )
-          
-        
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: another.length,
+                  itemBuilder: ((context, index) => Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0, left: 5),
+                        child: ListTile(
+                          leading: QueryArtworkWidget(
+                            keepOldArtwork: true,
+                            artworkBorder: BorderRadius.circular(10),
+                            id: another[index].id!,
+                            type: ArtworkType.AUDIO,
+                          ),
+                          title: Text(
+                            another[index].songname!,
+                            style: GoogleFonts.kanit(color: colorwhite),
+                          ),
+                          subtitle: Text(another[index].artist ?? "No Artist",
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.kanit(
+                                  color: colorwhite.withOpacity(0.7),
+                                  fontSize: 12)),
+                          onTap: () {
+                            // updateList(another[index].songname!);
+                            // ClearSelectionEvent();
+                            _audioPlayer.open(
+                                Playlist(audios: allSongs, startIndex: index),
+                                showNotification: true,
+                                headPhoneStrategy:
+                                    HeadPhoneStrategy.pauseOnUnplug,
+                                loopMode: LoopMode.playlist);
+                          },
+                        ),
+                      )),
+                )
               ],
             ),
           ),
-          bottomSheet:  NowPlayingSlider(),
+          bottomSheet: NowPlayingSlider(),
         ),
       ),
     );
@@ -126,7 +121,7 @@ class _SearchScreenState extends State<SearchScreen> {
   //   });
   // }
 
-    void updateList(String value) {
+  void updateList(String value) {
     setState(() {
       another = dbSongs
           .where((element) =>

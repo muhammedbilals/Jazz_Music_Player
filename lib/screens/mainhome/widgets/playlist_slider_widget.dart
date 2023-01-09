@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -14,6 +15,7 @@ class PlaylistSlider extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final playbox = PlaylistSongsbox.getInstance();
+    
     return Column(
       children: [
         Row(
@@ -35,21 +37,21 @@ class PlaylistSlider extends StatelessWidget {
               builder: (context, Box<PlaylistSongs> playlistbox, child) {
                 List<PlaylistSongs> playlistsong = playlistbox.values.toList();
                 return ListView.builder(
-                  
+                  dragStartBehavior: DragStartBehavior.start,
                   shrinkWrap: true,
                   itemCount: playlistsong.length,
                   // physics: ClampingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: ((context, index) => InkWell(
-                    onTap: () {
-                      Navigator.push(
+                        onTap: () {
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: ((context) => PlaylistFullList(
                                         playindex: index,
                                       ))));
-                    },
-                    child: Column(
+                        },
+                        child: Column(
                           children: [
                             playlistsong[index].playlistssongs!.isNotEmpty
                                 ? Padding(
@@ -88,7 +90,7 @@ class PlaylistSlider extends StatelessWidget {
                             ),
                           ],
                         ),
-                  )),
+                      )),
                 );
               },
             ),
