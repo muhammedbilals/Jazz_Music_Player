@@ -20,7 +20,7 @@ class RecentlyPlayedScreen extends StatefulWidget {
 
 class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
   final _audioPlayer = AssetsAudioPlayer.withId('0');
-  
+
   final List<RecentlyPlayed> recentplay = [];
   final box = RecentlyPlayedBox.getInstance();
   List<Audio> rcentplay = [];
@@ -132,78 +132,88 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
                   builder: ((context, Box<RecentlyPlayed> RecentDB, child) {
                     List<RecentlyPlayed> Recentplayed =
                         RecentDB.values.toList().reversed.toList();
-                    return ListView.builder(
-                      // reverse: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: Recentplayed.length,
-                      itemBuilder: ((context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0, left: 5),
-                          child: ListTile(
-                            leading: QueryArtworkWidget(
-                              keepOldArtwork: true,
-                              artworkBorder: BorderRadius.circular(10),
-                              id: Recentplayed[index].id!,
-                              type: ArtworkType.AUDIO,
-                            ),
-                            title: Text(
-                              Recentplayed[index].songname!,
+                    return Recentplayed.isNotEmpty
+                        ? (ListView.builder(
+                            // reverse: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: Recentplayed.length,
+                            itemBuilder: ((context, index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.only(bottom: 8.0, left: 5),
+                                child: ListTile(
+                                  leading: QueryArtworkWidget(
+                                    keepOldArtwork: true,
+                                    artworkBorder: BorderRadius.circular(10),
+                                    id: Recentplayed[index].id!,
+                                    type: ArtworkType.AUDIO,
+                                  ),
+                                  title: Text(
+                                    Recentplayed[index].songname!,
+                                    style: GoogleFonts.kanit(color: colorwhite),
+                                  ),
+                                  subtitle: Text(
+                                      Recentplayed[index].artist ?? "No Artist",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.kanit(
+                                          color: colorwhite.withOpacity(0.7),
+                                          fontSize: 12)),
+                                  trailing: Wrap(
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    children: [
+                                      // IconButton(
+                                      //     onPressed: () {
+                                      //       // if (checkFavoriteStatus(
+                                      //       //     index, BuildContext)) {
+                                      //       //   addToFavourites(index);
+                                      //       //   // addToFavorites1(songindex, favourites, context);
+                                      //       // } else if (!checkFavoriteStatus(
+                                      //       //     index, BuildContext)) {
+                                      //       //   removefavourite(index);
+                                      //       // }
+                                      //       // setState(
+                                      //       //   () {
+
+                                      //       //   },
+                                      //       // );
+                                      //     },
+                                      //     icon: Icon(Icons.favorite,
+                                      //         color: (checkFavoriteStatus(
+                                      //                 index, BuildContext))
+                                      //             ? Color.fromARGB(255, 85, 85, 85)
+                                      //             : Color.fromARGB(
+                                      //                 255, 255, 255, 255))),
+                                      // IconButton(
+                                      //   onPressed: () {
+                                      //     showRecentOptions(context, index);
+                                      //   },
+                                      //   icon: const Icon(Icons.more_vert),
+                                      //   color: colorwhite,
+                                      // ),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    _audioPlayer.open(
+                                        Playlist(
+                                            audios: rcentplay,
+                                            startIndex: index),
+                                        showNotification: true,
+                                        headPhoneStrategy:
+                                            HeadPhoneStrategy.pauseOnUnplug,
+                                        loopMode: LoopMode.playlist);
+                                  },
+                                ),
+                              );
+                            }),
+                          ))
+                        : Center(
+                            child: Text(
+                              "You Have't played any songs",
                               style: GoogleFonts.kanit(color: colorwhite),
                             ),
-                            subtitle: Text(
-                                Recentplayed[index].artist ?? "No Artist",
-                                overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.kanit(
-                                    color: colorwhite.withOpacity(0.7),
-                                    fontSize: 12)),
-                            trailing: Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                // IconButton(
-                                //     onPressed: () {
-                                //       // if (checkFavoriteStatus(
-                                //       //     index, BuildContext)) {
-                                //       //   addToFavourites(index);
-                                //       //   // addToFavorites1(songindex, favourites, context);
-                                //       // } else if (!checkFavoriteStatus(
-                                //       //     index, BuildContext)) {
-                                //       //   removefavourite(index);
-                                //       // }
-                                //       // setState(
-                                //       //   () {
-
-                                //       //   },
-                                //       // );
-                                //     },
-                                //     icon: Icon(Icons.favorite,
-                                //         color: (checkFavoriteStatus(
-                                //                 index, BuildContext))
-                                //             ? Color.fromARGB(255, 85, 85, 85)
-                                //             : Color.fromARGB(
-                                //                 255, 255, 255, 255))),
-                                // IconButton(
-                                //   onPressed: () {
-                                //     showRecentOptions(context, index);
-                                //   },
-                                //   icon: const Icon(Icons.more_vert),
-                                //   color: colorwhite,
-                                // ),
-                              ],
-                            ),
-                            onTap: () {
-                              _audioPlayer.open(
-                                  Playlist(
-                                      audios: rcentplay, startIndex: index),
-                                  showNotification: true,
-                                  headPhoneStrategy:
-                                      HeadPhoneStrategy.pauseOnUnplug,
-                                  loopMode: LoopMode.playlist);
-                            },
-                          ),
-                        );
-                      }),
-                    );
+                          );
                   }),
                 ),
               ],

@@ -127,54 +127,67 @@ class _LikedSongsListState extends State<LikedSongsList> {
                 ),
 
                 // Icon(Icons.play_arrow)
+
                 ValueListenableBuilder<Box<favourites>>(
                   valueListenable: box.listenable(),
                   builder: (context, Box<favourites> favouriteDB, child) {
                     List<favourites> favouritesongs =
                         favouriteDB.values.toList().reversed.toList();
-                    return ListView.builder(
-                      // reverse: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: favouritesongs.length,
-                      itemBuilder: ((context, index) => Padding(
-                            padding:
-                                const EdgeInsets.only(bottom: 8.0, left: 5),
-                            child: ListTile(
-                                onTap: () {
-                                  audioPlayer.open(
-                                      Playlist(
-                                          audios: favsong, startIndex: index),
-                                      showNotification: true,
-                                      headPhoneStrategy:
-                                          HeadPhoneStrategy.pauseOnUnplug,
-                                      loopMode: LoopMode.playlist);
-                                  print(index);
-                                },
-                                leading: QueryArtworkWidget(
-                                  keepOldArtwork: true,
-                                  artworkBorder: BorderRadius.circular(10),
-                                  id: favouritesongs[index].id!,
-                                  type: ArtworkType.AUDIO,
-                                ),
-                                title: Text(
-                                  favouritesongs[index].songname!,
-                                  style: GoogleFonts.kanit(color: colorwhite),
-                                ),
-                                subtitle: Text(
-                                    favouritesongs[index].artist ?? "No Artist",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.kanit(
-                                        color: colorwhite.withOpacity(0.7),
-                                        fontSize: 12)),
-                                trailing: IconButton(
-                                    onPressed: () {
-                                      deletefavourite(index);
-                                    },
-                                    icon: const Icon(Icons.favorite),
-                                    color: Colors.white)),
-                          )),
-                    );
+                    return favouritesongs.isNotEmpty
+                        ? (ListView.builder(
+                            // reverse: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: favouritesongs.length,
+                            itemBuilder: ((context, index) => Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 8.0, left: 5),
+                                  child: ListTile(
+                                      onTap: () {
+                                        audioPlayer.open(
+                                            Playlist(
+                                                audios: favsong,
+                                                startIndex: index),
+                                            showNotification: true,
+                                            headPhoneStrategy:
+                                                HeadPhoneStrategy.pauseOnUnplug,
+                                            loopMode: LoopMode.playlist);
+                                        print(index);
+                                      },
+                                      leading: QueryArtworkWidget(
+                                        keepOldArtwork: true,
+                                        artworkBorder:
+                                            BorderRadius.circular(10),
+                                        id: favouritesongs[index].id!,
+                                        type: ArtworkType.AUDIO,
+                                      ),
+                                      title: Text(
+                                        favouritesongs[index].songname!,
+                                        style: GoogleFonts.kanit(
+                                            color: colorwhite),
+                                      ),
+                                      subtitle: Text(
+                                          favouritesongs[index].artist ??
+                                              "No Artist",
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.kanit(
+                                              color:
+                                                  colorwhite.withOpacity(0.7),
+                                              fontSize: 12)),
+                                      trailing: IconButton(
+                                          onPressed: () {
+                                            deletefavourite(index);
+                                          },
+                                          icon: const Icon(Icons.favorite),
+                                          color: Colors.white)),
+                                )),
+                          ))
+                        : Center(
+                            child: Text(
+                              "You haven't Liked any songs!",
+                              style: GoogleFonts.kanit(color: colorwhite),
+                            ),
+                          );
                   },
                 ),
               ],

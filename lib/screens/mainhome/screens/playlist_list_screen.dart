@@ -93,51 +93,62 @@ class _PlayListScreenState extends State<PlayListScreen> {
                 builder: (context, Box<PlaylistSongs> playlistsongs, child) {
                   List<PlaylistSongs> playlistsong =
                       playlistsongs.values.toList();
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: playlistsong.length,
-                    itemBuilder: ((context, index) {
-                      return ListTile(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: ((context) => PlaylistFullList(
-                                        playindex: index,
-                                      ))));
-                        },
-                        leading: playlistsong[index].playlistssongs!.isNotEmpty
-                            ? QueryArtworkWidget(
-                                keepOldArtwork: true,
-                                artworkBorder: BorderRadius.circular(10),
-                                id: playlistsong[index].playlistssongs![0].id!,
-                                type: ArtworkType.AUDIO)
-                            : SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: ClipRRect(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                  child: Image.asset(
-                                    'assets/images/music.jpeg',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                  return playlistsong.isNotEmpty
+                      ? (ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: playlistsong.length,
+                          itemBuilder: ((context, index) {
+                            return ListTile(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) => PlaylistFullList(
+                                              playindex: index,
+                                            ))));
+                              },
+                              leading: playlistsong[index]
+                                      .playlistssongs!
+                                      .isNotEmpty
+                                  ? QueryArtworkWidget(
+                                      keepOldArtwork: true,
+                                      artworkBorder: BorderRadius.circular(10),
+                                      id: playlistsong[index]
+                                          .playlistssongs![0]
+                                          .id!,
+                                      type: ArtworkType.AUDIO)
+                                  : SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10)),
+                                        child: Image.asset(
+                                          'assets/images/music.jpeg',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                              title: Text(
+                                playlistsong[index].playlistname!,
+                                style: GoogleFonts.kanit(color: colorwhite),
                               ),
-                        title: Text(
-                          playlistsong[index].playlistname!,
-                          style: GoogleFonts.kanit(color: colorwhite),
-                        ),
-                        trailing: IconButton(
-                          onPressed: () {
-                            deletePlaylist(index);
-                          },
-                          icon: Icon(Icons.delete),
-                          color: colorwhite,
-                        ),
-                      );
-                    }),
-                  );
+                              trailing: IconButton(
+                                onPressed: () {
+                                  deletePlaylist(index);
+                                },
+                                icon: Icon(Icons.delete),
+                                color: colorwhite,
+                              ),
+                            );
+                          }),
+                        ))
+                      : Center(
+                          child: Text(
+                            "You haven't created any playlist!",
+                            style: GoogleFonts.kanit(color: colorwhite),
+                          ),
+                        );
                 },
               )
             ],

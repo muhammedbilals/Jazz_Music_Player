@@ -92,24 +92,26 @@ class _MostPlayedScreenState extends State<MostPlayedScreen> {
                   trailing: Wrap(
                     spacing: 10,
                     children: [
-                      
                       Container(
                         width: 45,
                         height: 45,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             color: colorextralight),
-                        child:  IconButton(
-                         icon: Icon(Icons.play_arrow,size: 30,),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.play_arrow,
+                            size: 30,
+                          ),
                           color: colordark,
                           onPressed: () {
                             audioPlayer.open(
-                                  // Audio.file(allDbsongs[songindex].songurl!),
-                                  Playlist(audios: songs, startIndex: 0),
-                                  headPhoneStrategy:
-                                      HeadPhoneStrategy.pauseOnUnplugPlayOnPlug,
-                                  showNotification: true,
-                                );
+                              // Audio.file(allDbsongs[songindex].songurl!),
+                              Playlist(audios: songs, startIndex: 0),
+                              headPhoneStrategy:
+                                  HeadPhoneStrategy.pauseOnUnplugPlayOnPlug,
+                              showNotification: true,
+                            );
                           },
                         ),
                       ),
@@ -119,45 +121,54 @@ class _MostPlayedScreenState extends State<MostPlayedScreen> {
                 // Icon(Icons.play_arrow)
                 ValueListenableBuilder<Box<MostPlayed>>(
                   valueListenable: box.listenable(),
-                  builder: (context, Box<MostPlayed> mostplayedDB, _) {
-                    // List<MostPlayed> mostplayedsongs =
-                    //     mostplayedDB.values.toList();
-                    return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: mostfinalsong.length,
-                      itemBuilder: ((context, index) => Padding(
-                            padding:
-                                const EdgeInsets.only(bottom: 8.0, left: 5),
-                            child: ListTile(
-                              onTap: () {
-                                audioPlayer.open(
-                                  // Audio.file(allDbsongs[songindex].songurl!),
-                                  Playlist(audios: songs, startIndex: index),
-                                  headPhoneStrategy:
-                                      HeadPhoneStrategy.pauseOnUnplugPlayOnPlug,
-                                  showNotification: true,
-                                );
-                              },
-                              leading: QueryArtworkWidget(
-                                keepOldArtwork: true,
-                                artworkBorder: BorderRadius.circular(10),
-                                id: mostfinalsong[index].id,
-                                type: ArtworkType.AUDIO,
-                              ),
-                              title: Text(
-                                mostfinalsong[index].songname,
-                                style: GoogleFonts.kanit(color: colorwhite),
-                              ),
-                              subtitle: Text(mostfinalsong[index].artist,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.kanit(
-                                      color: colorwhite.withOpacity(0.7),
-                                      fontSize: 12)),
-                              
+                  builder: (context, Box<MostPlayed> mostplayedDB, child) {
+                    List<MostPlayed> mostplayedsongs =
+                        mostplayedDB.values.toList();
+
+                    return mostfinalsong.isNotEmpty
+                        ? (ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: mostfinalsong.length,
+                            itemBuilder: ((context, index) => Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 8.0, left: 5),
+                                  child: ListTile(
+                                    onTap: () {
+                                      audioPlayer.open(
+                                        // Audio.file(allDbsongs[songindex].songurl!),
+                                        Playlist(
+                                            audios: songs, startIndex: index),
+                                        headPhoneStrategy: HeadPhoneStrategy
+                                            .pauseOnUnplugPlayOnPlug,
+                                        showNotification: true,
+                                      );
+                                    },
+                                    leading: QueryArtworkWidget(
+                                      keepOldArtwork: true,
+                                      artworkBorder: BorderRadius.circular(10),
+                                      id: mostfinalsong[index].id,
+                                      type: ArtworkType.AUDIO,
+                                    ),
+                                    title: Text(
+                                      mostfinalsong[index].songname,
+                                      style:
+                                          GoogleFonts.kanit(color: colorwhite),
+                                    ),
+                                    subtitle: Text(mostfinalsong[index].artist,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.kanit(
+                                            color: colorwhite.withOpacity(0.7),
+                                            fontSize: 12)),
+                                  ),
+                                )),
+                          ))
+                        : Center(
+                            child: Text(
+                              "Your most played songs will appear here!",
+                              style: GoogleFonts.kanit(color: colorwhite),
                             ),
-                          )),
-                    );
+                          );
                   },
                 ),
               ],
