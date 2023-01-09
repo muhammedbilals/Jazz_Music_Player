@@ -32,7 +32,7 @@ final songbox = SongBox.getInstance();
 final box4 = favocuritesbox.getInstance();
 List<favourites> favdb = box4.values.toList();
 //  final box = MostplayedBox.getInstance();
- final List<MostPlayed> mostplayedsong = mostbox.values.toList();
+final List<MostPlayed> mostplayedsong = mostbox.values.toList();
 
 class _AllSongsWidgetState extends State<AllSongsWidget> {
   bool istaped = true;
@@ -93,13 +93,12 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
               itemCount: allDbsongs.length,
               itemBuilder: ((context, songindex) {
                 RecentlyPlayed rsongs;
-                                      Songs songs = allDbsongs[songindex];
+                Songs songs = allDbsongs[songindex];
                 MostPlayed mostsong = mostplayedsong[songindex];
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 8.0, left: 5),
                   child: ListTile(
                     onTap: () {
-
                       audioPlayer.open(
                         // Audio.file(allDbsongs[songindex].songurl!),
                         Playlist(audios: convertAudios, startIndex: songindex),
@@ -142,7 +141,23 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                               if (checkFavoriteStatus(
                                   songindex, BuildContext)) {
                                 addToFavourites(songindex);
+                                final snackbar = SnackBar(
+                                  content: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Added to Favourites',
+                                      style: GoogleFonts.kanit(
+                                          color: colordark, fontSize: 15),
+                                    ),
+                                  ),
+                                  backgroundColor: colorextralight,
+                                  dismissDirection: DismissDirection.down,
+                                  elevation: 10,
+                                  padding: EdgeInsets.only(top: 10, bottom: 15),
+                                );
                                 // addToFavorites1(songindex, favourites, context);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackbar);
                               } else if (!checkFavoriteStatus(
                                   songindex, BuildContext)) {
                                 removefavourite(songindex);
