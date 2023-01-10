@@ -4,13 +4,6 @@ import 'package:music_player/model/mostplayed.dart';
 import 'package:music_player/model/recentlyplayed.dart';
 
 
-// Future<Box> openHiveBox(String boxName) async {
-//     if (!kIsWeb && !Hive.isBoxOpen(boxName))
-//       Hive.init((await getApplicationDocumentsDirectory()).path);
-
-//     return await Hive.openBox(boxName);
-// }
-
 late Box<RecentlyPlayed> RecentlyPlayedBox;
 openrecentlyplayeddb() async {
   RecentlyPlayedBox = await Hive.openBox("recentlyplayed");
