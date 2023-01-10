@@ -11,8 +11,13 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class PlaylistFullList extends StatefulWidget {
-  PlaylistFullList({super.key, required int this.playindex});
+  PlaylistFullList({
+    super.key,
+    required int this.playindex,
+    required this.playlistname,
+  });
   int? playindex;
+  String? playlistname;
   @override
   State<PlaylistFullList> createState() => _PlaylistFullListState();
 }
@@ -125,7 +130,7 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                         (context, Box<PlaylistSongs> playlistsongs, child) {
                       List<PlaylistSongs> playlistsong =
                           playlistsongs.values.toList();
-                      List<Songs> dbsongs = songbox.values.toList();
+                      // List<Songs> dbsongs = songbox.values.toList();
                       List<Songs>? playsong =
                           playlistsong[widget.playindex!].playlistssongs;
 
@@ -175,9 +180,30 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                                           WrapCrossAlignment.center,
                                       children: [
                                         IconButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        playsong.removeAt(index);
+                                                        playlistsong.removeAt(
+                                                            widget.playindex!);
+                                                        playbox.putAt(
+                                                            widget.playindex!,
+                                                            PlaylistSongs(
+                                                                playlistname: widget
+                                                                    .playlistname!,
+                                                                playlistssongs:
+                                                                    playsong));
+                                                      });
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.delete,
+                                                      color: Colors.red,
+                                                      size: 25,
+                                                    ),
+                                   ),
+                                        IconButton(
                                           onPressed: () {
-                                            showPlaylistSongOptions(
-                                                context, index);
+                                            showPlaylistSongOptions(context,
+                                                index, widget.playlistname!);
                                           },
                                           icon: const Icon(Icons.more_vert),
                                           color: colorwhite,
@@ -212,93 +238,80 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
       ),
     );
   }
-}
 
-showPlaylistSongOptions(BuildContext context, int index) {
-  double vwidth = MediaQuery.of(context).size.width;
-  showDialog(
-    context: context,
-    builder: (context) => StatefulBuilder(
-      builder: (context, setState) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          insetPadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          backgroundColor: colorextralight,
-          alignment: Alignment.bottomCenter,
-          content: Container(
-            height: 50,
-            width: vwidth,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // TextButton.icon(
-                  //     onPressed: () {
-                  //       if (checkFavoriteStatus(index, BuildContext)) {
-                  //         addToFavourites(index);
-                  //       } else if (!checkFavoriteStatus(index, BuildContext)) {
-                  //         removefavourite(index);
-                  //       }
-                  //       setState(() {});
-
-                  //       Navigator.pop(context);
-                  //     },
-                  //     icon: (checkFavoriteStatus(index, context))
-                  //         ? const Icon(
-                  //             Icons.favorite_border_outlined,
-                  //             color: colorblack,
-                  //           )
-                  //         : Icon(
-                  //             Icons.favorite,
-                  //             color: colorblack,
-                  //           ),
-                  //     label: (checkFavoriteStatus(index, context))
-                  //         ? Text(
-                  //             'Add to Favourites',
-                  //             style: GoogleFonts.kanit(
-                  //                 color: colorblack, fontSize: 17),
-                  //           )
-                  //         : Text(
-                  //             'Remove from Favourites',
-                  //             style: GoogleFonts.kanit(
-                  //                 color: colorblack, fontSize: 17),
-                  //           )),
-                  TextButton.icon(
-                      onPressed: () {
-                        deleteFromPlaylist(index);
-                        // showPlaylistOptions(context, index);
-                      },
-                      icon: const Icon(
-                        Icons.playlist_remove,
-                        color: colorblack,
-                      ),
-                      label: Text(
-                        'Remove from Playlist',
-                        style:
-                            GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                      )),
-                  // TextButton.icon(
-                  //   onPressed: () {},
-                  //   icon: const Icon(
-                  //     Icons.repeat,
-                  //     color: colorblack,
-                  //   ),
-                  //   label: Text(
-                  //     'Repeat',
-                  //     style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                  //   ),
-                  // ),
-                ],
+  showPlaylistSongOptions(
+      BuildContext context, int index, String playlistname) {
+    final playbox = PlaylistSongsbox.getInstance();
+    final songbox = SongBox.getInstance();
+    List<PlaylistSongs> playlistsong = playbox.values.toList();
+    List<Songs> dbsongs = songbox.values.toList();
+    List<Songs>? playsong = playlistsong[widget.playindex!].playlistssongs;
+    double vwidth = MediaQuery.of(context).size.width;
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            insetPadding: EdgeInsets.zero,
+            contentPadding: EdgeInsets.zero,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            backgroundColor: colorextralight,
+            alignment: Alignment.bottomCenter,
+            content: Container(
+              height: 50,
+              width: vwidth,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                   
+                    TextButton.icon(
+                        onPressed: () {
+                          setState(() {
+                            dbsongs.removeAt(index);
+                            playlistsong.removeAt(index);
+                            playbox.putAt(
+                                widget.playindex!,
+                                PlaylistSongs(
+                                    playlistname: playlistname,
+                                    playlistssongs: playsong));
+                            Navigator.pop(context);
+                          });
+                          setState(() {});
+                          // deleteFromPlaylist(index);
+                          // showPlaylistOptions(context, index);
+                        },
+                        icon: const Icon(
+                          Icons.playlist_remove,
+                          color: colorblack,
+                        ),
+                        label: Text(
+                          'Remove from Playlist',
+                          style: GoogleFonts.kanit(
+                              color: colorblack, fontSize: 17),
+                        )),
+                    // TextButton.icon(
+                    //   onPressed: () {},
+                    //   icon: const Icon(
+                    //     Icons.repeat,
+                    //     color: colorblack,
+                    //   ),
+                    //   label: Text(
+                    //     'Repeat',
+                    //     style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
-    ),
-  );
+          );
+        },
+      ),
+    );
+  }
 }

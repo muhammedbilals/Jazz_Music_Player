@@ -15,7 +15,7 @@ class PlaylistSlider extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final playbox = PlaylistSongsbox.getInstance();
-    
+
     return Column(
       children: [
         Row(
@@ -48,8 +48,9 @@ class PlaylistSlider extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: ((context) => PlaylistFullList(
-                                        playindex: index,
-                                      ))));
+                                      playindex: index,
+                                      playlistname:
+                                          playlistsong[index].playlistname))));
                         },
                         child: Column(
                           children: [

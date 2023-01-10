@@ -104,7 +104,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: ((context) => PlaylistFullList(
-                                              playindex: index,
+                                              playindex: index,playlistname:  playlistsong[index].playlistname
                                             ))));
                               },
                               leading: playlistsong[index]
