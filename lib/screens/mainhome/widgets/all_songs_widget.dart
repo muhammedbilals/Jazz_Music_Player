@@ -56,6 +56,8 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double vwidth = MediaQuery.of(context).size.width;
+    double vheight = MediaQuery.of(context).size.height;
     @override
     void dispose() {
       audioPlayer.dispose();
@@ -120,10 +122,20 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                       print(allDbsongs[songindex].songname!);
                     },
                     leading: QueryArtworkWidget(
+                      artworkHeight: vheight * 0.06,
+                      artworkWidth: vheight * 0.06,
                       keepOldArtwork: true,
                       artworkBorder: BorderRadius.circular(10),
                       id: allDbsongs[songindex].id!,
                       type: ArtworkType.AUDIO,
+                      nullArtworkWidget: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          'assets/images/music.jpeg',
+                          height: vheight * 0.06,
+                          width: vheight * 0.06,
+                        ),
+                      ),
                     ),
                     title: Text(
                       allDbsongs[songindex].songname!,

@@ -55,7 +55,8 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
       super.initState();
     }
 
-    double vwidth = MediaQuery.of(context).size.width;
+        double vwidth = MediaQuery.of(context).size.width;
+    double vheight = MediaQuery.of(context).size.height;
     return Container(
       color: colordark,
       child: SafeArea(
@@ -148,6 +149,14 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
                                     artworkBorder: BorderRadius.circular(10),
                                     id: Recentplayed[index].id!,
                                     type: ArtworkType.AUDIO,
+                                    nullArtworkWidget: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          'assets/images/music.jpeg',
+                          height: vheight * 0.06,
+                          width: vheight * 0.06,
+                        ),
+                      ),
                                   ),
                                   title: Text(
                                     Recentplayed[index].songname!,

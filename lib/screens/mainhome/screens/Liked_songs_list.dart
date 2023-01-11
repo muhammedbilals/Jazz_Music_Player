@@ -48,7 +48,9 @@ class _LikedSongsListState extends State<LikedSongsList> {
 
   @override
   Widget build(BuildContext context) {
-    double vwidth = MediaQuery.of(context).size.width;
+        double vwidth = MediaQuery.of(context).size.width;
+    double vheight = MediaQuery.of(context).size.height;
+
 
     return Container(
       color: colordark,
@@ -160,6 +162,14 @@ class _LikedSongsListState extends State<LikedSongsList> {
                                             BorderRadius.circular(10),
                                         id: favouritesongs[index].id!,
                                         type: ArtworkType.AUDIO,
+                                        nullArtworkWidget: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          'assets/images/music.jpeg',
+                          height: vheight * 0.06,
+                          width: vheight * 0.06,
+                        ),
+                      ),
                                       ),
                                       title: Text(
                                         favouritesongs[index].songname!,

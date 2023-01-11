@@ -14,6 +14,8 @@ class PlaylistSlider extends StatelessWidget {
   PlaylistSlider({super.key});
 
   Widget build(BuildContext context) {
+            double vwidth = MediaQuery.of(context).size.width;
+    double vheight = MediaQuery.of(context).size.height;
     final playbox = PlaylistSongsbox.getInstance();
 
     return Column(
@@ -67,7 +69,18 @@ class PlaylistSlider extends StatelessWidget {
                                           id: playlistsong[index]
                                               .playlistssongs![0]
                                               .id!,
-                                          type: ArtworkType.AUDIO),
+                                          type: ArtworkType.AUDIO,
+                                          nullArtworkWidget: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          'assets/images/music.jpeg',
+                          height: vheight * 0.06,
+                          width: vheight * 0.06,
+                        ),
+                      ),
+                                          
+                                          ),
+                                          
                                     ),
                                   )
                                 : Padding(

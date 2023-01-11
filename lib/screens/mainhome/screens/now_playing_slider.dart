@@ -100,6 +100,14 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                               artworkBorder: BorderRadius.circular(10),
                               id: int.parse(playing.audio.audio.metas.id!),
                               type: ArtworkType.AUDIO,
+                              // nullArtworkWidget: ClipRRect(
+                              //     borderRadius: BorderRadius.circular(10),
+                              //     child: Image.asset(
+                              //       'assets/images/music.jpeg',
+                              //       height: vheight * 0.16,
+                              //       width: vheight * 0.16,
+                              //     ),
+                              //   ),
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,

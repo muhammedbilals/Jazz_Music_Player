@@ -38,6 +38,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+            double vwidth = MediaQuery.of(context).size.width;
+    double vheight = MediaQuery.of(context).size.height;
     return Container(
       color: colordark,
       child: SafeArea(
@@ -78,6 +80,14 @@ class _SearchScreenState extends State<SearchScreen> {
                             artworkBorder: BorderRadius.circular(10),
                             id: another[index].id!,
                             type: ArtworkType.AUDIO,
+                            nullArtworkWidget: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          'assets/images/music.jpeg',
+                          height: vheight * 0.06,
+                          width: vheight * 0.06,
+                        ),
+                      ),
                           ),
                           title: Text(
                             another[index].songname!,

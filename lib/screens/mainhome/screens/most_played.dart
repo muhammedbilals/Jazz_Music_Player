@@ -43,6 +43,8 @@ class _MostPlayedScreenState extends State<MostPlayedScreen> {
   List<MostPlayed> mostfinalsong = [];
   @override
   Widget build(BuildContext context) {
+    double vwidth = MediaQuery.of(context).size.width;
+    double vheight = MediaQuery.of(context).size.height;
     return Container(
       color: colordark,
       child: SafeArea(
@@ -145,10 +147,20 @@ class _MostPlayedScreenState extends State<MostPlayedScreen> {
                                       );
                                     },
                                     leading: QueryArtworkWidget(
+                                      artworkHeight: vheight * 0.06,
+                                      artworkWidth: vheight * 0.06,
                                       keepOldArtwork: true,
                                       artworkBorder: BorderRadius.circular(10),
                                       id: mostfinalsong[index].id,
                                       type: ArtworkType.AUDIO,
+                                      nullArtworkWidget: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.asset(
+                                          'assets/images/music.jpeg',
+                                          height: vheight * 0.06,
+                                          width: vheight * 0.06,
+                                        ),
+                                      ),
                                     ),
                                     title: Text(
                                       mostfinalsong[index].songname,

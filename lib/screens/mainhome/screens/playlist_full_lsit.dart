@@ -43,7 +43,8 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
 
   @override
   Widget build(BuildContext context) {
-    double vwidth = MediaQuery.of(context).size.width;
+        double vwidth = MediaQuery.of(context).size.width;
+    double vheight = MediaQuery.of(context).size.height;
     final List<PlaylistModel> playlistsong1 = [];
     final playbox = PlaylistSongsbox.getInstance();
     List<PlaylistSongs> playlistsong = playbox.values.toList();
@@ -150,7 +151,16 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                                             id: playlistsong[widget.playindex!]
                                                 .playlistssongs![index]
                                                 .id!,
-                                            type: ArtworkType.AUDIO)
+                                            type: ArtworkType.AUDIO,
+                                                nullArtworkWidget: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          'assets/images/music.jpeg',
+                          height: vheight * 0.06,
+                          width: vheight * 0.06,
+                        ),
+                      ),
+                                            )
                                         : ClipRRect(
                                             borderRadius:
                                                 const BorderRadius.all(

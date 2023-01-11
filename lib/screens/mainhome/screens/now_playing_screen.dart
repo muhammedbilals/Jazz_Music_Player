@@ -45,6 +45,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
         backgroundColor: colordark,
         body: SingleChildScrollView(
           child: Column(
+            
             children: [
               const SizedBox(
                 height: 10,
@@ -77,6 +78,26 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                     child: Text(
                       'Now Playing',
                       style: GoogleFonts.kanit(fontSize: 35, color: colorwhite),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: colorextralight,
+                          borderRadius: BorderRadius.circular(30)),
+                      width: 40,
+                      height: 40,
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.expand_more,
+                          color: colorblack,
+                          size: 25,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -117,6 +138,14 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                 artworkFit: BoxFit.cover,
                                 id: int.parse(playing.audio.audio.metas.id!),
                                 type: ArtworkType.AUDIO,
+                                nullArtworkWidget: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset(
+                                    'assets/images/music.jpeg',
+                                    height: vheight * 0.44,
+                                    width: vheight * 0.44,
+                                  ),
+                                ),
                               ),
                               const SizedBox(
                                 height: 10,

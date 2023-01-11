@@ -22,6 +22,8 @@ class _PlayListScreenState extends State<PlayListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double vwidth = MediaQuery.of(context).size.width;
+    double vheight = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         backgroundColor: colordark,
@@ -104,8 +106,9 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: ((context) => PlaylistFullList(
-                                              playindex: index,playlistname:  playlistsong[index].playlistname
-                                            ))));
+                                            playindex: index,
+                                            playlistname: playlistsong[index]
+                                                .playlistname))));
                               },
                               leading: playlistsong[index]
                                       .playlistssongs!
@@ -116,7 +119,16 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                       id: playlistsong[index]
                                           .playlistssongs![0]
                                           .id!,
-                                      type: ArtworkType.AUDIO)
+                                      type: ArtworkType.AUDIO,
+                                      nullArtworkWidget: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.asset(
+                                          'assets/images/music.jpeg',
+                                          height: vheight * 0.06,
+                                          width: vheight * 0.06,
+                                        ),
+                                      ),
+                                    )
                                   : SizedBox(
                                       width: 50,
                                       height: 50,
