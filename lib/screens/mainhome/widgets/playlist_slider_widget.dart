@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,7 @@ class PlaylistSlider extends StatelessWidget {
   PlaylistSlider({super.key});
 
   Widget build(BuildContext context) {
-            double vwidth = MediaQuery.of(context).size.width;
+    double vwidth = MediaQuery.of(context).size.width;
     double vheight = MediaQuery.of(context).size.height;
     final playbox = PlaylistSongsbox.getInstance();
 
@@ -38,31 +40,35 @@ class PlaylistSlider extends StatelessWidget {
               valueListenable: playbox.listenable(),
               builder: (context, Box<PlaylistSongs> playlistbox, child) {
                 List<PlaylistSongs> playlistsong = playlistbox.values.toList();
-                return ListView.builder(
-                  dragStartBehavior: DragStartBehavior.start,
-                  shrinkWrap: true,
-                  itemCount: playlistsong.length,
-                  // physics: ClampingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: ((context, index) => InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: ((context) => PlaylistFullList(
-                                      playindex: index,
-                                      playlistname:
-                                          playlistsong[index].playlistname))));
-                        },
-                        child: Column(
-                          children: [
-                            playlistsong[index].playlistssongs!.isNotEmpty
-                                ? Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: SizedBox(
-                                      width: 115,
-                                      height: 115,
-                                      child: QueryArtworkWidget(
+                return Align(
+                  alignment: Alignment.centerLeft,
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount:
+                            (Orientation == Orientation.portrait) ? 1 : 1),
+                    shrinkWrap: true,
+                    itemCount: playlistsong.length,
+                    // physics: ClampingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: ((context, index) => InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => PlaylistFullList(
+                                        playindex: index,
+                                        playlistname: playlistsong[index]
+                                            .playlistname))));
+                          },
+                          child: Column(
+                            children: [
+                              playlistsong[index].playlistssongs!.isNotEmpty
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: SizedBox(
+                                        width: 115,
+                                        height: 115,
+                                        child: QueryArtworkWidget(
                                           keepOldArtwork: true,
                                           artworkBorder:
                                               BorderRadius.circular(10),
@@ -71,40 +77,40 @@ class PlaylistSlider extends StatelessWidget {
                                               .id!,
                                           type: ArtworkType.AUDIO,
                                           nullArtworkWidget: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          'assets/images/music.jpeg',
-                          height: vheight * 0.06,
-                          width: vheight * 0.06,
-                        ),
-                      ),
-                                          
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: Image.asset(
+                                              'assets/images/music.jpeg',
+                                              height: vheight * 0.06,
+                                              width: vheight * 0.06,
+                                            ),
                                           ),
-                                          
-                                    ),
-                                  )
-                                : Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: SizedBox(
-                                      width: 115,
-                                      height: 115,
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(10)),
-                                        child: Image.asset(
-                                          'assets/images/music.jpeg',
-                                          fit: BoxFit.fitHeight,
+                                        ),
+                                      ),
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: SizedBox(
+                                        width: 115,
+                                        height: 115,
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(10)),
+                                          child: Image.asset(
+                                            'assets/images/music.jpeg',
+                                            fit: BoxFit.fitHeight,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                            Text(
-                              playlistsong[index].playlistname!,
-                              style: GoogleFonts.kanit(color: colorwhite),
-                            ),
-                          ],
-                        ),
-                      )),
+                              Text(
+                                playlistsong[index].playlistname!,
+                                style: GoogleFonts.kanit(color: colorwhite),
+                              ),
+                            ],
+                          ),
+                        )),
+                  ),
                 );
               },
             ),

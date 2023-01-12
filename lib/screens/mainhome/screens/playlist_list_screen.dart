@@ -97,6 +97,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
                       playlistsongs.values.toList();
                   return playlistsong.isNotEmpty
                       ? (ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: playlistsong.length,
                           itemBuilder: ((context, index) {
@@ -149,7 +150,8 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                 children: [
                                   IconButton(
                                     onPressed: () {
-                                      deletePlaylist(index);
+                                      showPlaylistDeleteConfirmation(
+                                          context, index);
                                     },
                                     icon: Icon(Icons.delete),
                                     color: colorwhite,
@@ -355,6 +357,7 @@ showPlaylistEditOption(BuildContext context, int index) {
                       child: TextFormField(
                         controller: textEditmyController,
                         decoration: InputDecoration(
+                          icon: Icon(Icons.abc),
                           border: InputBorder.none,
                           fillColor: colorlightdark,
                           label: Padding(
@@ -414,13 +417,98 @@ showPlaylistEditOption(BuildContext context, int index) {
                           color: colorblack,
                         ),
                         onPressed: () {
-                          editPlaylist(textEditmyController.text,index);
+                          editPlaylist(textEditmyController.text, index);
                           Navigator.pop(context);
                         },
                         label: Text(
                           'Done',
                           style: GoogleFonts.kanit(
                               fontSize: 20, color: colorblack),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+showPlaylistDeleteConfirmation(BuildContext context, int index) {
+  double vwidth = MediaQuery.of(context).size.width;
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      insetPadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.zero,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      backgroundColor: colorextralight,
+      alignment: Alignment.bottomCenter,
+      content: Container(
+        height: 150,
+        width: vwidth,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Center(
+                  child: Text(
+                    'Are You Sure?',
+                    style: GoogleFonts.kanit(fontSize: 25, color: colorblack),
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextButton.icon(
+                      icon: const Icon(
+                        Icons.close,
+                        color: colorblack,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      label: Text(
+                        'Cancel',
+                        style:
+                            GoogleFonts.kanit(fontSize: 20, color: colorblack),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      width: vwidth * 0.35,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: colorlight,
+                      ),
+                      child: TextButton.icon(
+                        icon: const Icon(
+                          Icons.done,
+                          color: colorwhite,
+                        ),
+                        onPressed: () {
+                          deletePlaylist(index);
+                          Navigator.pop(context);
+                        },
+                        label: Text(
+                          'Yes',
+                          style: GoogleFonts.kanit(
+                              fontSize: 20, color: colorwhite),
                         ),
                       ),
                     ),

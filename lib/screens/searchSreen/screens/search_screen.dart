@@ -1,14 +1,10 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
-import 'package:music_player/screens/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});

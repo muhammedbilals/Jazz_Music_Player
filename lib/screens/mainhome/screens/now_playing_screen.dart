@@ -68,7 +68,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
           ),
           centerTitle: true,
           title: Padding(
-            padding: EdgeInsets.only(left: vwidth * 0.17),
+            padding: EdgeInsets.only(left: vwidth * 0.05),
             child: Text(
               'Now Playing',
               style: GoogleFonts.kanit(fontSize: 35, color: colorwhite),

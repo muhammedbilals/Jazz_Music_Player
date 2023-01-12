@@ -240,6 +240,7 @@ showPlaylistOptions(BuildContext context, int songindex) {
                         List<PlaylistSongs> playlistsong =
                             playlistsongs.values.toList();
                         return ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: playlistsong.length,
                           itemBuilder: ((context, index) {
