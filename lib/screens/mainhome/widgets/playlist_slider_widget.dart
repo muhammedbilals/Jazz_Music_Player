@@ -7,7 +7,7 @@ import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/mostplayed.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/model/playlistmodel.dart';
-import 'package:music_player/screens/mainhome/screens/playlist_full_lsit.dart';
+import 'package:music_player/screens/mainhome/screens/playlist_full_list.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class PlaylistSlider extends StatelessWidget {

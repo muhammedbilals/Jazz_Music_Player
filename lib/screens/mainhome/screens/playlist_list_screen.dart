@@ -5,7 +5,7 @@ import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:music_player/screens/mainhome/screens/playlist_full_lsit.dart';
+import 'package:music_player/screens/mainhome/screens/playlist_full_list.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class PlayListScreen extends StatefulWidget {

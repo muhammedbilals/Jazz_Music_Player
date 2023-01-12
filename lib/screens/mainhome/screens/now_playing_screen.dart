@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
+import 'package:music_player/screens/mainhome/screens/playlist_list_screen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class NowPlayingScreen extends StatefulWidget {
@@ -42,77 +44,80 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: colordark,
+          elevation: 0,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Container(
+              decoration:
+                  BoxDecoration(color: colorextralight, shape: BoxShape.circle),
+              width: 100,
+              height: 40,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.expand_more,
+                  color: colorblack,
+                  size: 25,
+                ),
+              ),
+            ),
+          ),
+          centerTitle: true,
+          title: Padding(
+            padding: EdgeInsets.only(left: vwidth * 0.17),
+            child: Text(
+              'Now Playing',
+              style: GoogleFonts.kanit(fontSize: 35, color: colorwhite),
+            ),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: audioPlayer.builderCurrent(
+                builder: (context, playing) {
+                  return Container(
+                    decoration: BoxDecoration(
+                        color: colorextralight, shape: BoxShape.circle),
+                    width: 40,
+                    height: 40,
+                    child: IconButton(
+                      onPressed: () {
+                        showPlaylistOptions(context,playing.index);
+                      },
+                      icon: const Icon(
+                        Icons.more_vert,
+                        color: colorblack,
+                        size: 25,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
         backgroundColor: colordark,
         body: SingleChildScrollView(
           child: Column(
-            
             children: [
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: colorextralight,
-                          borderRadius: BorderRadius.circular(30)),
-                      width: 40,
-                      height: 40,
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(
-                          Icons.expand_more,
-                          color: colorblack,
-                          size: 25,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: vwidth * 0.17),
-                    child: Text(
-                      'Now Playing',
-                      style: GoogleFonts.kanit(fontSize: 35, color: colorwhite),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: colorextralight,
-                          borderRadius: BorderRadius.circular(30)),
-                      width: 40,
-                      height: 40,
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(
-                          Icons.expand_more,
-                          color: colorblack,
-                          size: 25,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              
               const SizedBox(
                 height: 30,
               ),
               ValueListenableBuilder(
                 valueListenable: NowPlayingScreen.nowplayingindex,
-                builder: (BuildContext context, int value1, child) {
+                builder: (BuildContext context, int playing, child) {
                   return ValueListenableBuilder<Box<Songs>>(
                     valueListenable: box.listenable(),
                     builder: ((context, Box<Songs> allsongbox, child) {
                       List<Songs> allDbdongs = allsongbox.values.toList();
-
                       if (allDbdongs.isEmpty) {
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -398,28 +403,78 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
       ),
     );
   }
-}
-//   void skipMusic(AssetsAudioPlayer assetsAudioPlayer, int index,
-//       List<Songs> dbsongs) async {
-//     _audioPlayer.open(
-//       Audio.file(dbsongs[index + 1].songurl!),
-//     );
-//     // await _audioPlayer.next();
-//     setState(() {
-//       NowPlayingScreen.nowplayingindex.value++;
-//     });
-//     await _audioPlayer.stop();
-//   }
 
-//   void previousSong(AssetsAudioPlayer assetsAudioPlayer, int index,
-//       List<Songs> dbsongs) async {
-//     _audioPlayer.open(
-//       Audio.file(dbsongs[index - 1].songurl!),
-//     );
-//     // await _audioPlayer.next();
-//     setState(() {
-//       NowPlayingScreen.nowplayingindex.value--;
-//     });
-//     await _audioPlayer.stop();
-//   }
-// }
+  showPlaylistOptions(BuildContext context,int songindex) {
+    final playbox = PlaylistSongsbox.getInstance();
+    double vwidth = MediaQuery.of(context).size.width;
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        insetPadding: EdgeInsets.zero,
+        contentPadding: EdgeInsets.zero,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        backgroundColor: colorextralight,
+        alignment: Alignment.bottomCenter,
+        content: Container(
+            height: 250,
+            width: vwidth,
+           
+                child: ValueListenableBuilder<Box<PlaylistSongs>>(
+                  valueListenable: playbox.listenable(),
+                  builder: (context, Box<PlaylistSongs> playlistsongs, child) {
+                    List<PlaylistSongs> playlistsong =
+                        playlistsongs.values.toList();
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: playlistsong.length,
+                      itemBuilder: ((context, index) {
+                        return ListTile(
+                          onTap: () {
+                            PlaylistSongs? playsongs =
+                                playlistsongs.getAt(index);
+                            List<Songs> playsongdb = playsongs!.playlistssongs!;
+                            List<Songs> songdb = box.values.toList();
+                            bool isAlreadyAdded = playsongdb.any((element) =>
+                                element.id == songdb[songindex].id);
+                            if (!isAlreadyAdded) {
+                              playsongdb.add(
+                                Songs(
+                                  songname: songdb[songindex].songname,
+                                  artist: songdb[songindex].artist,
+                                  duration: songdb[songindex].duration,
+                                  songurl: songdb[songindex].songurl,
+                                  id: songdb[songindex].id,
+                                ),
+                              );
+                            }
+                            playlistsongs.putAt(
+                                index,
+                                PlaylistSongs(
+                                    playlistname:
+                                        playlistsong[index].playlistname,
+                                    playlistssongs: playsongdb));
+                            print(
+                                'song added to${playlistsong[index].playlistname}');
+                            // allDbsongs.add(playsong);
+                            // addToPlaylist(playsong, index);
+                            // Hive.box(playlistsongs.put(playlistsongs, playsong));
+                            Navigator.pop(context);
+                          },
+                          title: Text(
+                            playlistsong[index].playlistname!,
+                            style: GoogleFonts.kanit(color: colorblack),
+                          ),
+                        );
+                      }),
+                    );
+                  },
+                )
+        )
+            
+      ),
+    );
+  }
+}

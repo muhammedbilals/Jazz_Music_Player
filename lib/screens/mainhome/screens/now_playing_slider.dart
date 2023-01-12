@@ -76,7 +76,7 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                     padding: const EdgeInsets.all(10.0),
                     child: GestureDetector(
                       onTap: () {
-                        NowPlayingScreen.nowplayingindex.value = value;
+                        
                         Navigator.push(
                             context,
                             MaterialPageRoute(

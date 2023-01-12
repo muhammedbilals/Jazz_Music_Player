@@ -4,10 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/songmodel.dart';
-import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class PlaylistFullList extends StatefulWidget {
@@ -43,12 +41,10 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
 
   @override
   Widget build(BuildContext context) {
-        double vwidth = MediaQuery.of(context).size.width;
+    double vwidth = MediaQuery.of(context).size.width;
     double vheight = MediaQuery.of(context).size.height;
-    final List<PlaylistModel> playlistsong1 = [];
     final playbox = PlaylistSongsbox.getInstance();
     List<PlaylistSongs> playlistsong = playbox.values.toList();
-    final songbox = SongBox.getInstance();
     return Container(
       color: colordark,
       child: SafeArea(
@@ -105,7 +101,7 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                             borderRadius: BorderRadius.circular(30),
                             color: colorextralight),
                         child: IconButton(
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.play_arrow,
                             size: 30,
                           ),
@@ -152,15 +148,16 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                                                 .playlistssongs![index]
                                                 .id!,
                                             type: ArtworkType.AUDIO,
-                                                nullArtworkWidget: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          'assets/images/music.jpeg',
-                          height: vheight * 0.06,
-                          width: vheight * 0.06,
-                        ),
-                      ),
-                                            )
+                                            nullArtworkWidget: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.asset(
+                                                'assets/images/music.jpeg',
+                                                height: vheight * 0.06,
+                                                width: vheight * 0.06,
+                                              ),
+                                            ),
+                                          )
                                         : ClipRRect(
                                             borderRadius:
                                                 const BorderRadius.all(
@@ -190,26 +187,37 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                                           WrapCrossAlignment.center,
                                       children: [
                                         IconButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        playsong.removeAt(index);
-                                                        playlistsong.removeAt(
-                                                            widget.playindex!);
-                                                        playbox.putAt(
-                                                            widget.playindex!,
-                                                            PlaylistSongs(
-                                                                playlistname: widget
-                                                                    .playlistname!,
-                                                                playlistssongs:
-                                                                    playsong));
-                                                      });
-                                                    },
-                                                    icon: const Icon(
-                                                      Icons.delete,
-                                                      color: Colors.red,
-                                                      size: 25,
-                                                    ),
-                                   ),
+                                          onPressed: () {
+                                            setState(() {
+                                              playsong.removeAt(index);
+                                              playlistsong
+                                                  .removeAt(widget.playindex!);
+                                              playbox.putAt(
+                                                  widget.playindex!,
+                                                  PlaylistSongs(
+                                                      playlistname:
+                                                          widget.playlistname!,
+                                                      playlistssongs:
+                                                          playsong));
+                                            });
+
+                                            for (var item in playlistsong[
+                                                    widget.playindex!]
+                                                .playlistssongs!) {
+                                              convertAudios.add(Audio.file(
+                                                  item.songurl!,
+                                                  metas: Metas(
+                                                      title: item.songname,
+                                                      artist: item.artist,
+                                                      id: item.id.toString())));
+                                            }
+                                          },
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                            size: 25,
+                                          ),
+                                        ),
                                         IconButton(
                                           onPressed: () {
                                             showPlaylistSongOptions(context,
@@ -278,7 +286,6 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                   
                     TextButton.icon(
                         onPressed: () {
                           setState(() {

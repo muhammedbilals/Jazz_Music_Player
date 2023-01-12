@@ -4,15 +4,8 @@ import 'package:music_player/colors/colors.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
-  List<IconData> icon = [
-    Icons.notifications,
-    Icons.share,
-    Icons.shield,
-    Icons.gavel,
-    Icons.info
-  ];
+  List<IconData> icon = [Icons.share, Icons.shield, Icons.gavel, Icons.info];
   List profilelist = [
-    'Notifications',
     'Share',
     'Privacy Policy',
     'Terms & conditions',
@@ -48,8 +41,8 @@ class ProfilePage extends StatelessWidget {
                         ),
                         title: Text(
                           profilelist[index],
-                          style:
-                              GoogleFonts.kanit(color: colorwhite, fontSize: 20),
+                          style: GoogleFonts.kanit(
+                              color: colorwhite, fontSize: 20),
                         ),
                       ),
                     )),
