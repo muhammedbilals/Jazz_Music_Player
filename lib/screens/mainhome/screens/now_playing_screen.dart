@@ -80,16 +80,16 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
               child: audioPlayer.builderCurrent(
                 builder: (context, playing) {
                   return Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: colorextralight, shape: BoxShape.circle),
                     width: 40,
                     height: 40,
                     child: IconButton(
                       onPressed: () {
-                        showPlaylistOptions(context,playing.index);
+                        showPlaylistOptions(context, playing.index);
                       },
                       icon: const Icon(
-                        Icons.more_vert,
+                        Icons.playlist_add,
                         color: colorblack,
                         size: 25,
                       ),
@@ -107,7 +107,6 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
               const SizedBox(
                 height: 10,
               ),
-              
               const SizedBox(
                 height: 30,
               ),
@@ -266,123 +265,121 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                   PlayerBuilder.isPlaying(
                                     player: _audioPlayer,
                                     builder: ((context, isPlaying) {
-                                      return Container(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(15.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              IconButton(
-                                                  onPressed: () {
-                                                    setState(() {});
-                                                    audioPlayer.toggleShuffle();
-                                                  },
-                                                  icon: (isShuffleOn)
-                                                      ? const Icon(
-                                                          Icons.shuffle,
-                                                          color: colorwhite,
-                                                        )
-                                                      : const Icon(
-                                                          Icons.shuffle_rounded,
-                                                          color: colorwhite)),
-                                              Container(
-                                                width: 50,
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                  color: colorextralight,
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                ),
-                                                child: IconButton(
-                                                  onPressed: () async {
-                                                    // previousSong(_audioPlayer,
-                                                    //     value1, allDbdongs);
-                                                    await audioPlayer
-                                                        .previous();
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.skip_previous,
-                                                    color: colorblack,
-                                                  ),
+                                      return Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            IconButton(
+                                                onPressed: () {
+                                                  setState(() {});
+                                                  audioPlayer.toggleShuffle();
+                                                },
+                                                icon: (isShuffleOn)
+                                                    ? const Icon(
+                                                        Icons.shuffle,
+                                                        color: colorwhite,
+                                                      )
+                                                    : const Icon(
+                                                        Icons.shuffle_rounded,
+                                                        color: colorwhite)),
+                                            Container(
+                                              width: 50,
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                color: colorextralight,
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                              ),
+                                              child: IconButton(
+                                                onPressed: () async {
+                                                  // previousSong(_audioPlayer,
+                                                  //     value1, allDbdongs);
+                                                  await audioPlayer.previous();
+                                                },
+                                                icon: const Icon(
+                                                  Icons.skip_previous,
+                                                  color: colorblack,
                                                 ),
                                               ),
-                                              Container(
-                                                width: 70,
-                                                height: 70,
-                                                decoration: BoxDecoration(
-                                                  color: colorextralight,
-                                                  borderRadius:
-                                                      BorderRadius.circular(35),
+                                            ),
+                                            Container(
+                                              width: 70,
+                                              height: 70,
+                                              decoration: BoxDecoration(
+                                                color: colorextralight,
+                                                borderRadius:
+                                                    BorderRadius.circular(35),
+                                              ),
+                                              child: IconButton(
+                                                onPressed: () async {
+                                                  if (isPlaying) {
+                                                    await _audioPlayer.pause();
+                                                  } else {
+                                                    await _audioPlayer.play();
+                                                  }
+                                                  setState(
+                                                    () {
+                                                      isPlaying = !isPlaying;
+                                                    },
+                                                  );
+                                                },
+                                                icon: (isPlaying)
+                                                    ? const Icon(Icons.pause)
+                                                    : const Icon(
+                                                        Icons.play_arrow,
+                                                        color: colorblack,
+                                                        size: 35,
+                                                      ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 50,
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                color: colorextralight,
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                              ),
+                                              child: IconButton(
+                                                onPressed: () async {
+                                                  // skipMusic(_audioPlayer,
+                                                  //     value1, allDbdongs);
+                                                  await audioPlayer.next();
+                                                  setState(() {});
+                                                },
+                                                icon: const Icon(
+                                                  Icons.skip_next,
+                                                  color: colorblack,
                                                 ),
-                                                child: IconButton(
-                                                  onPressed: () async {
-                                                    if (isPlaying) {
-                                                      await _audioPlayer
-                                                          .pause();
+                                              ),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                setState(
+                                                  () {
+                                                    if (isRepeat) {
+                                                      audioPlayer.setLoopMode(
+                                                          LoopMode.none);
+                                                      isRepeat = false;
                                                     } else {
-                                                      await _audioPlayer.play();
+                                                      audioPlayer.setLoopMode(
+                                                          LoopMode.single);
+                                                      isRepeat = true;
                                                     }
-                                                    setState(
-                                                      () {
-                                                        isPlaying = !isPlaying;
-                                                      },
-                                                    );
                                                   },
-                                                  icon: (isPlaying)
-                                                      ? const Icon(Icons.pause)
-                                                      : const Icon(
-                                                          Icons.play_arrow,
-                                                          color: colorblack,
-                                                          size: 35,
-                                                        ),
-                                                ),
-                                              ),
-                                              Container(
-                                                width: 50,
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                  color: colorextralight,
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                ),
-                                                child: IconButton(
-                                                  onPressed: () async {
-                                                    // skipMusic(_audioPlayer,
-                                                    //     value1, allDbdongs);
-                                                    await audioPlayer.next();
-                                                    setState(() {});
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.skip_next,
-                                                    color: colorblack,
-                                                  ),
-                                                ),
-                                              ),
-                                              IconButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      if (isRepeat) {
-                                                        audioPlayer.setLoopMode(
-                                                            LoopMode.none);
-                                                        isRepeat = false;
-                                                      } else {
-                                                        audioPlayer.setLoopMode(
-                                                            LoopMode.single);
-                                                        isRepeat = true;
-                                                      }
-                                                    });
-                                                  },
-                                                  icon: (isRepeat)
-                                                      ? const Icon(
-                                                          Icons
-                                                              .repeat_one_outlined,
-                                                          color: colorwhite,
-                                                        )
-                                                      : const Icon(Icons.repeat,
-                                                          color: colorwhite)),
-                                            ],
-                                          ),
+                                                );
+                                              },
+                                              icon: (isRepeat)
+                                                  ? const Icon(
+                                                      Icons.repeat_one_outlined,
+                                                      color: colorwhite,
+                                                    )
+                                                  : const Icon(Icons.repeat,
+                                                      color: colorwhite),
+                                            ),
+                                          ],
                                         ),
                                       );
                                     }),
@@ -404,77 +401,72 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
     );
   }
 
-  showPlaylistOptions(BuildContext context,int songindex) {
+  showPlaylistOptions(BuildContext context, int songindex) {
     final playbox = PlaylistSongsbox.getInstance();
     double vwidth = MediaQuery.of(context).size.width;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        insetPadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        backgroundColor: colorextralight,
-        alignment: Alignment.bottomCenter,
-        content: Container(
-            height: 250,
-            width: vwidth,
-           
-                child: ValueListenableBuilder<Box<PlaylistSongs>>(
-                  valueListenable: playbox.listenable(),
-                  builder: (context, Box<PlaylistSongs> playlistsongs, child) {
-                    List<PlaylistSongs> playlistsong =
-                        playlistsongs.values.toList();
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: playlistsong.length,
-                      itemBuilder: ((context, index) {
-                        return ListTile(
-                          onTap: () {
-                            PlaylistSongs? playsongs =
-                                playlistsongs.getAt(index);
-                            List<Songs> playsongdb = playsongs!.playlistssongs!;
-                            List<Songs> songdb = box.values.toList();
-                            bool isAlreadyAdded = playsongdb.any((element) =>
-                                element.id == songdb[songindex].id);
-                            if (!isAlreadyAdded) {
-                              playsongdb.add(
-                                Songs(
-                                  songname: songdb[songindex].songname,
-                                  artist: songdb[songindex].artist,
-                                  duration: songdb[songindex].duration,
-                                  songurl: songdb[songindex].songurl,
-                                  id: songdb[songindex].id,
-                                ),
-                              );
-                            }
-                            playlistsongs.putAt(
-                                index,
-                                PlaylistSongs(
-                                    playlistname:
-                                        playlistsong[index].playlistname,
-                                    playlistssongs: playsongdb));
-                            print(
-                                'song added to${playlistsong[index].playlistname}');
-                            // allDbsongs.add(playsong);
-                            // addToPlaylist(playsong, index);
-                            // Hive.box(playlistsongs.put(playlistsongs, playsong));
-                            Navigator.pop(context);
-                          },
-                          title: Text(
-                            playlistsong[index].playlistname!,
-                            style: GoogleFonts.kanit(color: colorblack),
-                          ),
-                        );
-                      }),
-                    );
-                  },
-                )
-        )
-            
-      ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          insetPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          backgroundColor: colorextralight,
+          alignment: Alignment.bottomCenter,
+          content: Container(
+              height: 250,
+              width: vwidth,
+              child: ValueListenableBuilder<Box<PlaylistSongs>>(
+                valueListenable: playbox.listenable(),
+                builder: (context, Box<PlaylistSongs> playlistsongs, child) {
+                  List<PlaylistSongs> playlistsong =
+                      playlistsongs.values.toList();
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: playlistsong.length,
+                    itemBuilder: ((context, index) {
+                      return ListTile(
+                        onTap: () {
+                          PlaylistSongs? playsongs = playlistsongs.getAt(index);
+                          List<Songs> playsongdb = playsongs!.playlistssongs!;
+                          List<Songs> songdb = box.values.toList();
+                          bool isAlreadyAdded = playsongdb.any(
+                              (element) => element.id == songdb[songindex].id);
+                          if (!isAlreadyAdded) {
+                            playsongdb.add(
+                              Songs(
+                                songname: songdb[songindex].songname,
+                                artist: songdb[songindex].artist,
+                                duration: songdb[songindex].duration,
+                                songurl: songdb[songindex].songurl,
+                                id: songdb[songindex].id,
+                              ),
+                            );
+                          }
+                          playlistsongs.putAt(
+                              index,
+                              PlaylistSongs(
+                                  playlistname:
+                                      playlistsong[index].playlistname,
+                                  playlistssongs: playsongdb));
+                          print(
+                              'song added to${playlistsong[index].playlistname}');
+                          // allDbsongs.add(playsong);
+                          // addToPlaylist(playsong, index);
+                          // Hive.box(playlistsongs.put(playlistsongs, playsong));
+                          Navigator.pop(context);
+                        },
+                        title: Text(
+                          playlistsong[index].playlistname!,
+                          style: GoogleFonts.kanit(color: colorblack),
+                        ),
+                      );
+                    }),
+                  );
+                },
+              ))),
     );
   }
 }

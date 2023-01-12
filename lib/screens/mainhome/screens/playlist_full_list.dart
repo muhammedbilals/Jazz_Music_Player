@@ -201,16 +201,16 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                                                           playsong));
                                             });
 
-                                            for (var item in playlistsong[
-                                                    widget.playindex!]
-                                                .playlistssongs!) {
-                                              convertAudios.add(Audio.file(
-                                                  item.songurl!,
-                                                  metas: Metas(
-                                                      title: item.songname,
-                                                      artist: item.artist,
-                                                      id: item.id.toString())));
-                                            }
+                                            // for (var item in playlistsong[
+                                            //         widget.playindex!]
+                                            //     .playlistssongs!) {
+                                            //   convertAudios.add(Audio.file(
+                                            //       item.songurl!,
+                                            //       metas: Metas(
+                                            //           title: item.songname,
+                                            //           artist: item.artist,
+                                            //           id: item.id.toString())));
+                                            // }
                                           },
                                           icon: const Icon(
                                             Icons.delete,
@@ -218,14 +218,14 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                                             size: 25,
                                           ),
                                         ),
-                                        IconButton(
-                                          onPressed: () {
-                                            showPlaylistSongOptions(context,
-                                                index, widget.playlistname!);
-                                          },
-                                          icon: const Icon(Icons.more_vert),
-                                          color: colorwhite,
-                                        ),
+                                        // IconButton(
+                                        //   onPressed: () {
+                                        //     showPlaylistSongOptions(context,
+                                        //         index, widget.playlistname!);
+                                        //   },
+                                        //   icon: const Icon(Icons.more_vert),
+                                        //   color: colorwhite,
+                                        // ),
                                       ],
                                     ),
                                     onTap: () {

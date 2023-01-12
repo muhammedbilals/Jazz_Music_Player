@@ -76,7 +76,6 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                     padding: const EdgeInsets.all(10.0),
                     child: GestureDetector(
                       onTap: () {
-                        
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -114,7 +113,7 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  width: vwidth * 0.5,
+                                  width: vwidth * 0.4,
                                   child: Text(
                                     // allDbdongs[value].songname!,
                                     audioPlayer.getCurrentAudioTitle,
@@ -123,7 +122,7 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: vwidth * 0.5,
+                                  width: vwidth * 0.4,
                                   child: Text(
                                     // allDbdongs[value].artist ?? "No Artist",
                                     audioPlayer.getCurrentAudioArtist,
@@ -144,6 +143,26 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                                     crossAxisAlignment:
                                         WrapCrossAlignment.center,
                                     children: [
+                                      Container(
+                                        width: 35,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            color: colordark),
+                                        child: IconButton(
+                                          onPressed: () async {
+                                            
+                                            await audioPlayer.previous();
+                                            
+                                          },
+                                          icon: const Icon(
+                                            Icons.skip_previous,
+                                            color: colorwhite,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      ),
                                       Container(
                                           height: 50,
                                           width: 50,

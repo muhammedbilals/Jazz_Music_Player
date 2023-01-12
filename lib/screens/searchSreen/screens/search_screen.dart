@@ -24,7 +24,14 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     dbSongs = box.values.toList();
-
+for (var item in dbSongs) {
+      allSongs.add(Audio.file(item.songurl!,
+          metas: Metas(
+              title: item.songname,
+              artist: item.artist,
+              id: item.id.toString())));
+    }
+    
     super.initState();
   }
 
