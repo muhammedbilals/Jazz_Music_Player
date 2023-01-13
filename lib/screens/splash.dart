@@ -71,7 +71,8 @@ class _PlayerSplashState extends State<PlayerSplash> {
     return Scaffold(
       body: Center(
         child: Container(
-          child: Image.asset('assets/images/icons8-music 2.png'),
+          width: 150,
+          child: Image.asset('assets/images/musiclogo.png'),
         ),
       ),
       backgroundColor: colordark,

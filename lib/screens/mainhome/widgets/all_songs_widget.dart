@@ -114,7 +114,8 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                           artist: songs.artist,
                           duration: songs.duration,
                           songname: songs.songname,
-                          songurl: songs.songurl);
+                          songurl: songs.songurl,
+                          index: songindex);
                       NowPlayingSlider.enteredvalue.value = songindex;
                       updateRecentlyPlayed(rsongs);
                       updatePlayedSongsCount(mostsong, songindex);

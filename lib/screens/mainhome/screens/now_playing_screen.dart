@@ -8,7 +8,6 @@ import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
-import 'package:music_player/screens/mainhome/screens/playlist_list_screen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class NowPlayingScreen extends StatefulWidget {
@@ -199,6 +198,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                     onPressed: () {
                                       if (checkFavoriteStatus(
                                           playing.index, BuildContext)) {
+                                            
                                         addToFavourites(playing.index);
                                       } else if (!checkFavoriteStatus(
                                           playing.index, BuildContext)) {

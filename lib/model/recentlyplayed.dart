@@ -13,13 +13,17 @@ class RecentlyPlayed {
   String? songurl;
   @HiveField(4)
   int? id;
+  @HiveField(5)
+  int? index;
   RecentlyPlayed(
       {this.songname,
       this.artist,
       this.duration,
       this.songurl,
-      required this.id});
+      required this.id,
+      required this.index});
 }
+
 String boxname2 = 'RecentlyPlayed';
 
 class RecentlyPlayedBox {
