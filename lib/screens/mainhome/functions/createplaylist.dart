@@ -69,10 +69,6 @@ addToPlaylist(Songs song, int index) {
 
 deletePlaylist(int index) {
   final box1 = PlaylistSongsbox.getInstance();
-  List<PlaylistModel> playlist = [];
-  List<Songs> songsplaylist = [];
-
-  List<PlaylistSongs> playlistDB = box1.values.toList();
 
   box1.deleteAt(index);
 }

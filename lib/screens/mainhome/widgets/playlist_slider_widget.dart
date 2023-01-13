@@ -31,89 +31,88 @@ class PlaylistSlider extends StatelessWidget {
             )
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 150,
-            /////////////////////
-            child: ValueListenableBuilder<Box<PlaylistSongs>>(
-              valueListenable: playbox.listenable(),
-              builder: (context, Box<PlaylistSongs> playlistbox, child) {
-                List<PlaylistSongs> playlistsong = playlistbox.values.toList();
-                return Align(
-                  alignment: Alignment.centerLeft,
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount:
-                            (Orientation == Orientation.portrait) ? 1 : 1),
-                    shrinkWrap: true,
-                    itemCount: playlistsong.length,
-                    // physics: ClampingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: ((context, index) => InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) => PlaylistFullList(
-                                        playindex: index,
-                                        playlistname: playlistsong[index]
-                                            .playlistname))));
-                          },
-                          child: Column(
-                            children: [
-                              playlistsong[index].playlistssongs!.isNotEmpty
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: SizedBox(
-                                        width: 115,
-                                        height: 115,
-                                        child: QueryArtworkWidget(
-                                          keepOldArtwork: true,
-                                          artworkBorder:
+        SizedBox(
+          height: 150,
+          /////////////////////
+          child: ValueListenableBuilder<Box<PlaylistSongs>>(
+            valueListenable: playbox.listenable(),
+            builder: (context, Box<PlaylistSongs> playlistbox, child) {
+              List<PlaylistSongs> playlistsong = playlistbox.values.toList();
+              return Align(
+                alignment: Alignment.centerLeft,
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount:
+                          (Orientation == Orientation.portrait) ? 1 : 1),
+                  shrinkWrap: true,
+                  itemCount: playlistsong.length,
+                  // physics: ClampingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: ((context, index) => GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: ((context) => PlaylistFullList(
+                                  playindex: index,
+                                  playlistname:
+                                      playlistsong[index].playlistname)),
+                            ),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            playlistsong[index].playlistssongs!.isNotEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top:4.0,bottom: 4.0),
+                                    child: SizedBox(
+                                      width: 115,
+                                      height: 115,
+                                      child: QueryArtworkWidget(
+                                        keepOldArtwork: true,
+                                        artworkBorder:
+                                            BorderRadius.circular(10),
+                                        id: playlistsong[index]
+                                            .playlistssongs![0]
+                                            .id!,
+                                        type: ArtworkType.AUDIO,
+                                        nullArtworkWidget: ClipRRect(
+                                          borderRadius:
                                               BorderRadius.circular(10),
-                                          id: playlistsong[index]
-                                              .playlistssongs![0]
-                                              .id!,
-                                          type: ArtworkType.AUDIO,
-                                          nullArtworkWidget: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Image.asset(
-                                              'assets/images/music.jpeg',
-                                              height: vheight * 0.06,
-                                              width: vheight * 0.06,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : Padding(
-                                      padding: const EdgeInsets.all(3.0),
-                                      child: SizedBox(
-                                        width: 115,
-                                        height: 115,
-                                        child: ClipRRect(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(10)),
                                           child: Image.asset(
                                             'assets/images/music.jpeg',
-                                            fit: BoxFit.fitHeight,
+                                            height: vheight * 0.06,
+                                            width: vheight * 0.06,
                                           ),
                                         ),
                                       ),
                                     ),
-                              Text(
-                                playlistsong[index].playlistname!,
-                                style: GoogleFonts.kanit(color: colorwhite),
-                              ),
-                            ],
-                          ),
-                        )),
-                  ),
-                );
-              },
-            ),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.only(top:4.0,bottom: 4.0),
+                                    child: SizedBox(
+                                      width: 115,
+                                      height: 115,
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10)),
+                                        child: Image.asset(
+                                          'assets/images/music.jpeg',
+                                          fit: BoxFit.fitHeight,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                            Text(
+                              playlistsong[index].playlistname!,
+                              style: GoogleFonts.kanit(color: colorwhite),
+                            ),
+                          ],
+                        ),
+                      )),
+                ),
+              );
+            },
           ),
         )
       ],

@@ -168,10 +168,12 @@ class _PlayListScreenState extends State<PlayListScreen> {
                             );
                           }),
                         ))
-                      : Center(
+                      : Padding(
+                          padding: EdgeInsets.only(top: vheight * 0.3),
                           child: Text(
                             "You haven't created any playlist!",
-                            style: GoogleFonts.kanit(color: colorwhite),
+                            style: GoogleFonts.kanit(
+                                color: colorwhite, fontSize: 15),
                           ),
                         );
                 },

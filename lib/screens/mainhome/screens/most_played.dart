@@ -175,12 +175,13 @@ class _MostPlayedScreenState extends State<MostPlayedScreen> {
                                   ),
                                 )),
                           ))
-                        : Center(
-                            child: Text(
-                              "Your most played songs will appear here!",
-                              style: GoogleFonts.kanit(color: colorwhite),
-                            ),
-                          );
+                        : Padding(
+                          padding: EdgeInsets.only(top: vheight * 0.3),
+                          child: Text(
+                            "Your most played songs will appear here!",
+                            style: GoogleFonts.kanit(color: colorwhite),
+                          ),
+                        );
                   },
                 ),
               ],

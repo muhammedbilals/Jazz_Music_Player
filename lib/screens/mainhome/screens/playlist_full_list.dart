@@ -241,12 +241,13 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                                     },
                                   )),
                             ))
-                          : Center(
-                              child: Text(
-                                "Please add a song!",
-                                style: GoogleFonts.kanit(color: colorwhite),
-                              ),
-                            );
+                          : Padding(
+                            padding: EdgeInsets.only(top: vheight * 0.3),
+                            child: Text(
+                              "Please add a song!",
+                              style: GoogleFonts.kanit(color: colorwhite),
+                            ),
+                          );
                     }),
               ],
             ),

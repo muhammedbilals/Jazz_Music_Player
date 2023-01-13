@@ -27,10 +27,14 @@ class CardWidget extends StatelessWidget {
     double vwidth = MediaQuery.of(context).size.width;
     return Padding(
       padding: EdgeInsets.all(vwidth * 0.02),
-      child: InkWell(
+      child: GestureDetector(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => screens[index])));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: ((context) => screens[index]),
+            ),
+          );
         },
         child: Container(
           height: 55,

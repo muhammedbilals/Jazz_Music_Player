@@ -189,9 +189,9 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                     : Color.fromARGB(255, 255, 255, 255))),
                         IconButton(
                           onPressed: () {
-                            showOptions(context, songindex);
+                            showPlaylistOptions(context, songindex);
                           },
-                          icon: const Icon(Icons.more_vert),
+                          icon: const Icon(Icons.playlist_add),
                           color: colorwhite,
                         ),
                       ],
@@ -377,17 +377,7 @@ showOptions(BuildContext context, int index) {
                         style:
                             GoogleFonts.kanit(color: colorblack, fontSize: 17),
                       )),
-                  TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.repeat,
-                      color: colorblack,
-                    ),
-                    label: Text(
-                      'Repeat',
-                      style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                    ),
-                  ),
+                
                 ],
               ),
             ),

@@ -152,9 +152,7 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                                             color: colordark),
                                         child: IconButton(
                                           onPressed: () async {
-                                            
                                             await audioPlayer.previous();
-                                            
                                           },
                                           icon: const Icon(
                                             Icons.skip_previous,

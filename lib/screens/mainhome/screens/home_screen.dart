@@ -7,7 +7,6 @@ import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:music_player/screens/mainhome/widgets/all_songs_widget.dart';
 import 'package:music_player/screens/mainhome/widgets/card_widget.dart';
 import 'package:music_player/screens/mainhome/widgets/playlist_slider_widget.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class PlayerHome extends StatefulWidget {
@@ -23,11 +22,8 @@ class _PlayerHomeState extends State<PlayerHome> {
   @override
   Widget build(BuildContext context) {
     final playlistbox = PlaylistSongsbox.getInstance();
-    late List<PlaylistSongs> playlistsong = playlistbox.values.toList();
     bool isVisible = true;
 
-    List<Songs> dbsongs = box.values.toList();
-    double vwidth = MediaQuery.of(context).size.width;
     return Container(
       color: colordark,
       child: SafeArea(
@@ -48,14 +44,13 @@ class _PlayerHomeState extends State<PlayerHome> {
                       Padding(
                         padding: const EdgeInsets.only(left: 15.0),
                         child: Text(
-                          'Hello, Bilal',
+                          'Hello!',
                           style: GoogleFonts.kanit(
                               fontSize: 40, color: colorwhite),
                         ),
                       ),
                     ],
                   ),
-
                   Row(
                     children: [
                       Padding(

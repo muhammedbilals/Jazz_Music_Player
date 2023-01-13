@@ -6,10 +6,6 @@ import 'package:music_player/screens/splash.dart';
 
 addToFavourites(int index) async {
   List<Songs> dbsongs = box.values.toList();
-  void initState() {
-    // TODO: implement initState
-    List<Songs> dbsongs = box.values.toList();
-  }
 
   List<favourites> favouritessongs = [];
   favouritessongs = favouritesdb.values.toList();
