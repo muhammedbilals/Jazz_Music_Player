@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screens/mainhome/screens/playlist_full_list.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -22,7 +21,6 @@ class _PlayListScreenState extends State<PlayListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double vwidth = MediaQuery.of(context).size.width;
     double vheight = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
@@ -150,18 +148,18 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                 children: [
                                   IconButton(
                                     onPressed: () {
-                                      showPlaylistDeleteConfirmation(
-                                          context, index);
-                                    },
-                                    icon: Icon(Icons.delete),
-                                    color: colorwhite,
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
                                       showPlaylistEditOption(context, index);
                                     },
                                     icon: Icon(Icons.edit),
                                     color: colorwhite,
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      showPlaylistDeleteConfirmation(
+                                          context, index);
+                                    },
+                                    icon: Icon(Icons.delete),
+                                    color: Colors.red,
                                   ),
                                 ],
                               ),

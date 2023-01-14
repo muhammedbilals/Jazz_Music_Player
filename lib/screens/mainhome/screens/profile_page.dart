@@ -4,9 +4,9 @@ import 'package:music_player/colors/colors.dart';
 import 'package:music_player/screens/mainhome/widgets/popup.dart';
 import 'package:share_plus/share_plus.dart';
 
+// ignore: must_be_immutable
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
-  List<IconData> icon = [Icons.share, Icons.shield, Icons.gavel, Icons.info];
 
   @override
   Widget build(BuildContext context) {

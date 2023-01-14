@@ -1,12 +1,6 @@
-import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
 import 'package:music_player/colors/colors.dart';
-import 'package:music_player/model/mostplayed.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/screens/mainhome/screens/playlist_full_list.dart';
@@ -16,7 +10,6 @@ class PlaylistSlider extends StatelessWidget {
   PlaylistSlider({super.key});
 
   Widget build(BuildContext context) {
-    double vwidth = MediaQuery.of(context).size.width;
     double vheight = MediaQuery.of(context).size.height;
     final playbox = PlaylistSongsbox.getInstance();
 
@@ -46,7 +39,6 @@ class PlaylistSlider extends StatelessWidget {
                           (Orientation == Orientation.portrait) ? 1 : 1),
                   shrinkWrap: true,
                   itemCount: playlistsong.length,
-                  // physics: ClampingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: ((context, index) => GestureDetector(
                         onTap: () {

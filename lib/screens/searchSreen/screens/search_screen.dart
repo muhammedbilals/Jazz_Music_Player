@@ -20,20 +20,19 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     dbSongs = box.values.toList();
-for (var item in dbSongs) {
+    for (var item in dbSongs) {
       allSongs.add(Audio.file(item.songurl!,
           metas: Metas(
               title: item.songname,
               artist: item.artist,
               id: item.id.toString())));
     }
-    
+
     super.initState();
   }
 
   List<Audio> allSongs = [];
   final TextEditingController myController = TextEditingController();
-  // List<Songs> allDbsongs = songbox.values.toList();
   late List<Songs> another = List.from(dbSongs);
 
   bool istaped = true;
@@ -41,7 +40,7 @@ for (var item in dbSongs) {
 
   @override
   Widget build(BuildContext context) {
-            double vwidth = MediaQuery.of(context).size.width;
+    double vwidth = MediaQuery.of(context).size.width;
     double vheight = MediaQuery.of(context).size.height;
     return Container(
       color: colordark,
@@ -84,13 +83,13 @@ for (var item in dbSongs) {
                             id: another[index].id!,
                             type: ArtworkType.AUDIO,
                             nullArtworkWidget: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          'assets/images/music.jpeg',
-                          height: vheight * 0.06,
-                          width: vheight * 0.06,
-                        ),
-                      ),
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                'assets/images/music.jpeg',
+                                height: vheight * 0.06,
+                                width: vheight * 0.06,
+                              ),
+                            ),
                           ),
                           title: Text(
                             another[index].songname!,
@@ -102,8 +101,6 @@ for (var item in dbSongs) {
                                   color: colorwhite.withOpacity(0.7),
                                   fontSize: 12)),
                           onTap: () {
-                            // updateList(another[index].songname!);
-                            // ClearSelectionEvent();
                             _audioPlayer.open(
                                 Playlist(audios: allSongs, startIndex: index),
                                 showNotification: true,
@@ -123,36 +120,27 @@ for (var item in dbSongs) {
     );
   }
 
-  // searchSong(String searchWord) {
-  //   final suggestions = allDbsongs.where((allsongs) {
-  //     final songtitle = allsongs.songname!.toLowerCase();
-  //     final input = searchWord.toLowerCase();
-  //     return songtitle.contains(input);
-  //   }).toList();
-  //   setState(() {
-  //     allDbsongs = suggestions;
-  //   });
-  // }
-
   void updateList(String value) {
-    setState(() {
-      another = dbSongs
-          .where((element) =>
-              element.songname!.toLowerCase().contains(value.toLowerCase()))
-          .toList();
-      allSongs.clear();
-      for (var item in another) {
-        allSongs.add(
-          Audio.file(
-            item.songurl.toString(),
-            metas: Metas(
-              artist: item.artist,
-              title: item.songname,
-              id: item.id.toString(),
+    setState(
+      () {
+        another = dbSongs
+            .where((element) =>
+                element.songname!.toLowerCase().contains(value.toLowerCase()))
+            .toList();
+        allSongs.clear();
+        for (var item in another) {
+          allSongs.add(
+            Audio.file(
+              item.songurl.toString(),
+              metas: Metas(
+                artist: item.artist,
+                title: item.songname,
+                id: item.id.toString(),
+              ),
             ),
-          ),
-        );
-      }
-    });
+          );
+        }
+      },
+    );
   }
 }

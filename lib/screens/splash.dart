@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:music_player/colors/colors.dart';
-import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/bottom_navigation.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-
 import '../model/mostplayed.dart';
 
 class PlayerSplash extends StatefulWidget {

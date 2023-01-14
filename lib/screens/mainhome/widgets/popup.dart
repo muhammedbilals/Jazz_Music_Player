@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -39,21 +38,22 @@ class settingmenupopup extends StatelessWidget {
                     );
                   })),
           TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Container(
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                )),
-                alignment: Alignment.center,
-                height: 50,
-                width: double.infinity,
-                child: const Text(
-                  'OK',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ))
+            onPressed: () => Navigator.of(context).pop(),
+            child: Container(
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              )),
+              alignment: Alignment.center,
+              height: 50,
+              width: double.infinity,
+              child: const Text(
+                'OK',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          )
         ],
       ),
     );

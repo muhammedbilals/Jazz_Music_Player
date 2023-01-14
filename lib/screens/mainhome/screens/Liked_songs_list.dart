@@ -26,7 +26,6 @@ class _LikedSongsListState extends State<LikedSongsList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     final List<favourites> favouritesongs =
         box.values.toList().reversed.toList();
     for (var item in favouritesongs) {
@@ -47,7 +46,6 @@ class _LikedSongsListState extends State<LikedSongsList> {
 
   @override
   Widget build(BuildContext context) {
-    double vwidth = MediaQuery.of(context).size.width;
     double vheight = MediaQuery.of(context).size.height;
 
     return Container(
@@ -125,9 +123,6 @@ class _LikedSongsListState extends State<LikedSongsList> {
                     ],
                   ),
                 ),
-
-                // Icon(Icons.play_arrow)
-
                 ValueListenableBuilder<Box<favourites>>(
                   valueListenable: box.listenable(),
                   builder: (context, Box<favourites> favouriteDB, child) {
@@ -185,7 +180,7 @@ class _LikedSongsListState extends State<LikedSongsList> {
                                               fontSize: 12)),
                                       trailing: IconButton(
                                           onPressed: () {
-                                            deletefavourite(index,context);
+                                            deletefavourite(index, context);
                                           },
                                           icon: const Icon(Icons.favorite),
                                           color: Colors.white)),
@@ -205,103 +200,6 @@ class _LikedSongsListState extends State<LikedSongsList> {
           ),
           bottomSheet: NowPlayingSlider(),
         ),
-      ),
-    );
-  }
-
-  showOptions(BuildContext context, int index) {
-    double vwidth = MediaQuery.of(context).size.width;
-    showDialog(
-      context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setState) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            insetPadding: EdgeInsets.zero,
-            contentPadding: EdgeInsets.zero,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            backgroundColor: colorextralight,
-            alignment: Alignment.bottomCenter,
-            content: Container(
-              height: 250,
-              width: vwidth,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextButton.icon(
-                        onPressed: () {
-                          deletefavourite(index,context);
-                          setState(
-                            () {
-                              isalready = !isalready;
-                            },
-                          );
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(
-                          Icons.favorite,
-                          color: colorblack,
-                        ),
-                        label: Text(
-                          'Remove from Favourites',
-                          style: GoogleFonts.kanit(
-                              color: colorblack, fontSize: 17),
-                        )),
-                    TextButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.playlist_add,
-                          color: colorblack,
-                        ),
-                        label: Text(
-                          'Add to Playlist',
-                          style: GoogleFonts.kanit(
-                              color: colorblack, fontSize: 17),
-                        )),
-                    TextButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.share,
-                          color: colorblack,
-                        ),
-                        label: Text(
-                          'Share',
-                          style: GoogleFonts.kanit(
-                              color: colorblack, fontSize: 17),
-                        )),
-                    TextButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.shuffle,
-                          color: colorblack,
-                        ),
-                        label: Text(
-                          'Shuffle',
-                          style: GoogleFonts.kanit(
-                              color: colorblack, fontSize: 17),
-                        )),
-                    TextButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.repeat,
-                        color: colorblack,
-                      ),
-                      label: Text(
-                        'Repeat',
-                        style:
-                            GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
       ),
     );
   }

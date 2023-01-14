@@ -8,6 +8,7 @@ import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+// ignore: must_be_immutable
 class PlaylistFullList extends StatefulWidget {
   PlaylistFullList({
     super.key,
@@ -25,10 +26,8 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
   List<Audio> convertAudios = [];
   @override
   void initState() {
-    // TODO: implement initState
     final playbox = PlaylistSongsbox.getInstance();
     List<PlaylistSongs> playlistsong = playbox.values.toList();
-    // List<Songs> dbsongs = songbox.values.toList();
     for (var item in playlistsong[widget.playindex!].playlistssongs!) {
       convertAudios.add(Audio.file(item.songurl!,
           metas: Metas(
@@ -41,7 +40,6 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
 
   @override
   Widget build(BuildContext context) {
-    double vwidth = MediaQuery.of(context).size.width;
     double vheight = MediaQuery.of(context).size.height;
     final playbox = PlaylistSongsbox.getInstance();
     List<PlaylistSongs> playlistsong = playbox.values.toList();
@@ -107,7 +105,6 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                           ),
                           onPressed: () {
                             audioPlayer.open(
-                              // Audio.file(allDbsongs[songindex].songurl!),
                               Playlist(audios: convertAudios, startIndex: 0),
                               headPhoneStrategy:
                                   HeadPhoneStrategy.pauseOnUnplugPlayOnPlug,
@@ -120,75 +117,65 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                     ],
                   ),
                 ),
-                // Icon(Icons.play_arrow)
                 ValueListenableBuilder<Box<PlaylistSongs>>(
-                    valueListenable: playbox.listenable(),
-                    builder:
-                        (context, Box<PlaylistSongs> playlistsongs, child) {
-                      List<PlaylistSongs> playlistsong =
-                          playlistsongs.values.toList();
-                      // List<Songs> dbsongs = songbox.values.toList();
-                      List<Songs>? playsong =
-                          playlistsong[widget.playindex!].playlistssongs;
+                  valueListenable: playbox.listenable(),
+                  builder: (context, Box<PlaylistSongs> playlistsongs, child) {
+                    List<PlaylistSongs> playlistsong =
+                        playlistsongs.values.toList();
+                    List<Songs>? playsong =
+                        playlistsong[widget.playindex!].playlistssongs;
 
-                      return playsong!.isNotEmpty
-                          ? (ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: playsong.length,
-                              itemBuilder: ((context, index) => ListTile(
-                                    leading: playlistsong[widget.playindex!]
-                                            .playlistssongs!
-                                            .isNotEmpty
-                                        ? QueryArtworkWidget(
-                                            keepOldArtwork: true,
-                                            artworkBorder:
-                                                BorderRadius.circular(10),
-                                            id: playlistsong[widget.playindex!]
-                                                .playlistssongs![index]
-                                                .id!,
-                                            type: ArtworkType.AUDIO,
-                                            nullArtworkWidget: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: Image.asset(
-                                                'assets/images/music.jpeg',
-                                                height: vheight * 0.06,
-                                                width: vheight * 0.06,
-                                              ),
-                                            ),
-                                          )
-                                        : ClipRRect(
+                    return playsong!.isNotEmpty
+                        ? (ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: playsong.length,
+                            itemBuilder: ((context, index) => ListTile(
+                                  leading: playlistsong[widget.playindex!]
+                                          .playlistssongs!
+                                          .isNotEmpty
+                                      ? QueryArtworkWidget(
+                                          keepOldArtwork: true,
+                                          artworkBorder:
+                                              BorderRadius.circular(10),
+                                          id: playlistsong[widget.playindex!]
+                                              .playlistssongs![index]
+                                              .id!,
+                                          type: ArtworkType.AUDIO,
+                                          nullArtworkWidget: ClipRRect(
                                             borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(10)),
+                                                BorderRadius.circular(10),
                                             child: Image.asset(
                                               'assets/images/music.jpeg',
-                                              fit: BoxFit.cover,
+                                              height: vheight * 0.06,
+                                              width: vheight * 0.06,
                                             ),
                                           ),
-                                    title: Text(
-                                      playsong[index].songname!,
-                                      // playlistsong[index]
-                                      //     .playlistssongs![index]
-                                      //     .songname!,
-                                      style:
-                                          GoogleFonts.kanit(color: colorwhite),
-                                    ),
-                                    subtitle: Text(playsong[index].artist!,
-                                        // playlistsong[index]
-                                        //     .playlistssongs![index]
-                                        //     .artist!,
-                                        style: GoogleFonts.kanit(
-                                            color: colorwhite.withOpacity(0.7),
-                                            fontSize: 12)),
-                                    trailing: Wrap(
-                                      crossAxisAlignment:
-                                          WrapCrossAlignment.center,
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            setState(() {
+                                        )
+                                      : ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(10)),
+                                          child: Image.asset(
+                                            'assets/images/music.jpeg',
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                  title: Text(
+                                    playsong[index].songname!,
+                                    style: GoogleFonts.kanit(color: colorwhite),
+                                  ),
+                                  subtitle: Text(playsong[index].artist!,
+                                      style: GoogleFonts.kanit(
+                                          color: colorwhite.withOpacity(0.7),
+                                          fontSize: 12)),
+                                  trailing: Wrap(
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          setState(
+                                            () {
                                               playsong.removeAt(index);
                                               playlistsong
                                                   .removeAt(widget.playindex!);
@@ -199,144 +186,58 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                                                           widget.playlistname!,
                                                       playlistssongs:
                                                           playsong));
-                                            });
-
-                                            // for (var item in playlistsong[
-                                            //         widget.playindex!]
-                                            //     .playlistssongs!) {
-                                            //   convertAudios.add(Audio.file(
-                                            //       item.songurl!,
-                                            //       metas: Metas(
-                                            //           title: item.songname,
-                                            //           artist: item.artist,
-                                            //           id: item.id.toString())));
-                                            // }
-                                            Navigator.pushReplacement(
-    context,
-    PageRouteBuilder(
-      pageBuilder: (context, animation1, animation2) => PlaylistFullList(playindex: widget.playindex!,playlistname: widget.playlistname),
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-    ),
-  );
-                                          },
-                                          icon: const Icon(
-                                            Icons.delete,
-                                            color: Colors.red,
-                                            size: 25,
-                                          ),
+                                            },
+                                          );
+                                          Navigator.pushReplacement(
+                                            context,
+                                            PageRouteBuilder(
+                                              pageBuilder: (context, animation1,
+                                                      animation2) =>
+                                                  PlaylistFullList(
+                                                      playindex:
+                                                          widget.playindex!,
+                                                      playlistname:
+                                                          widget.playlistname),
+                                              transitionDuration: Duration.zero,
+                                              reverseTransitionDuration:
+                                                  Duration.zero,
+                                            ),
+                                          );
+                                        },
+                                        icon: const Icon(
+                                          Icons.delete,
+                                          color: Colors.red,
+                                          size: 25,
                                         ),
-                                        // IconButton(
-                                        //   onPressed: () {
-                                        //     showPlaylistSongOptions(context,
-                                        //         index, widget.playlistname!);
-                                        //   },
-                                        //   icon: const Icon(Icons.more_vert),
-                                        //   color: colorwhite,
-                                        // ),
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      audioPlayer.open(
-                                        // Audio.file(allDbsongs[songindex].songurl!),
-                                        Playlist(
-                                            audios: convertAudios,
-                                            startIndex: index),
-                                        headPhoneStrategy: HeadPhoneStrategy
-                                            .pauseOnUnplugPlayOnPlug,
-                                        showNotification: true,
-                                      );
-                                    },
-                                  )),
-                            ))
-                          : Padding(
+                                      ),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    audioPlayer.open(
+                                      Playlist(
+                                          audios: convertAudios,
+                                          startIndex: index),
+                                      headPhoneStrategy: HeadPhoneStrategy
+                                          .pauseOnUnplugPlayOnPlug,
+                                      showNotification: true,
+                                    );
+                                  },
+                                )),
+                          ))
+                        : Padding(
                             padding: EdgeInsets.only(top: vheight * 0.3),
                             child: Text(
                               "Please add a song!",
                               style: GoogleFonts.kanit(color: colorwhite),
                             ),
                           );
-                    }),
+                  },
+                ),
               ],
             ),
           ),
           bottomSheet: NowPlayingSlider(),
         ),
-      ),
-    );
-  }
-
-  showPlaylistSongOptions(
-      BuildContext context, int index, String playlistname) {
-    final playbox = PlaylistSongsbox.getInstance();
-    final songbox = SongBox.getInstance();
-    List<PlaylistSongs> playlistsong = playbox.values.toList();
-    List<Songs> dbsongs = songbox.values.toList();
-    List<Songs>? playsong = playlistsong[widget.playindex!].playlistssongs;
-    double vwidth = MediaQuery.of(context).size.width;
-    showDialog(
-      context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setState) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            insetPadding: EdgeInsets.zero,
-            contentPadding: EdgeInsets.zero,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            backgroundColor: colorextralight,
-            alignment: Alignment.bottomCenter,
-            content: Container(
-              height: 50,
-              width: vwidth,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextButton.icon(
-                        onPressed: () {
-                          setState(() {
-                            dbsongs.removeAt(index);
-                            playlistsong.removeAt(index);
-                            playbox.putAt(
-                                widget.playindex!,
-                                PlaylistSongs(
-                                    playlistname: playlistname,
-                                    playlistssongs: playsong));
-                            Navigator.pop(context);
-                          });
-                          setState(() {});
-                          // deleteFromPlaylist(index);
-                          // showPlaylistOptions(context, index);
-                        },
-                        icon: const Icon(
-                          Icons.playlist_remove,
-                          color: colorblack,
-                        ),
-                        label: Text(
-                          'Remove from Playlist',
-                          style: GoogleFonts.kanit(
-                              color: colorblack, fontSize: 17),
-                        )),
-                    // TextButton.icon(
-                    //   onPressed: () {},
-                    //   icon: const Icon(
-                    //     Icons.repeat,
-                    //     color: colorblack,
-                    //   ),
-                    //   label: Text(
-                    //     'Repeat',
-                    //     style: GoogleFonts.kanit(color: colorblack, fontSize: 17),
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
       ),
     );
   }

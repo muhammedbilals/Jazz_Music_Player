@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:music_player/screens/bottom_navigation.dart';
 
 class PlayerLogin extends StatelessWidget {
   const PlayerLogin({super.key});
@@ -22,3 +21,4 @@ class PlayerLogin extends StatelessWidget {
     );
   }
 }
+// will impliment later

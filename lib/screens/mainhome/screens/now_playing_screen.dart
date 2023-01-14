@@ -9,6 +9,7 @@ import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
+// ignore: must_be_immutable
 class NowPlayingScreen extends StatefulWidget {
   NowPlayingScreen({super.key});
 
@@ -32,13 +33,6 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
     double vheight = MediaQuery.of(context).size.height;
     Duration duration = Duration.zero;
     Duration position = Duration.zero;
-
-    void initState() {
-      // TODO: implement initState
-      List<Songs> dbsongs = box.values.toList();
-
-      super.initState();
-    }
 
     return SafeArea(
       child: Scaffold(
@@ -114,13 +108,13 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                   return ValueListenableBuilder<Box<Songs>>(
                     valueListenable: box.listenable(),
                     builder: ((context, Box<Songs> allsongbox, child) {
-                      List<Songs> allDbdongs = allsongbox.values.toList();
-                      if (allDbdongs.isEmpty) {
+                      List<Songs> allsongs = allsongbox.values.toList();
+                      if (allsongs.isEmpty) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
-                      if (allDbdongs == null) {
+                      if (allsongs == null) {
                         print('no songs');
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -197,18 +191,19 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                     onPressed: () {
                                       if (checkFavoriteStatus(
                                           playing.index, BuildContext)) {
-                                            
                                         addToFavourites(playing.index);
                                       } else if (!checkFavoriteStatus(
                                           playing.index, BuildContext)) {
                                         removefavourite(playing.index);
                                       }
-                                      setState(() {
-                                        checkFavoriteStatus(
-                                                playing.index, BuildContext) ==
-                                            !checkFavoriteStatus(
-                                                playing.index, BuildContext);
-                                      });
+                                      setState(
+                                        () {
+                                          checkFavoriteStatus(playing.index,
+                                                  BuildContext) ==
+                                              !checkFavoriteStatus(
+                                                  playing.index, BuildContext);
+                                        },
+                                      );
                                     },
                                     icon: (checkFavoriteStatus(
                                             playing.index, BuildContext))
@@ -406,66 +401,61 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          insetPadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          backgroundColor: colorextralight,
-          alignment: Alignment.bottomCenter,
-          content: Container(
-              height: 250,
-              width: vwidth,
-              child: ValueListenableBuilder<Box<PlaylistSongs>>(
-                valueListenable: playbox.listenable(),
-                builder: (context, Box<PlaylistSongs> playlistsongs, child) {
-                  List<PlaylistSongs> playlistsong =
-                      playlistsongs.values.toList();
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: playlistsong.length,
-                    itemBuilder: ((context, index) {
-                      return ListTile(
-                        onTap: () {
-                          PlaylistSongs? playsongs = playlistsongs.getAt(index);
-                          List<Songs> playsongdb = playsongs!.playlistssongs!;
-                          List<Songs> songdb = box.values.toList();
-                          bool isAlreadyAdded = playsongdb.any(
-                              (element) => element.id == songdb[songindex].id);
-                          if (!isAlreadyAdded) {
-                            playsongdb.add(
-                              Songs(
-                                songname: songdb[songindex].songname,
-                                artist: songdb[songindex].artist,
-                                duration: songdb[songindex].duration,
-                                songurl: songdb[songindex].songurl,
-                                id: songdb[songindex].id,
-                              ),
-                            );
-                          }
-                          playlistsongs.putAt(
-                              index,
-                              PlaylistSongs(
-                                  playlistname:
-                                      playlistsong[index].playlistname,
-                                  playlistssongs: playsongdb));
-                          print(
-                              'song added to${playlistsong[index].playlistname}');
-                          // allDbsongs.add(playsong);
-                          // addToPlaylist(playsong, index);
-                          // Hive.box(playlistsongs.put(playlistsongs, playsong));
-                          Navigator.pop(context);
-                        },
-                        title: Text(
-                          playlistsong[index].playlistname!,
-                          style: GoogleFonts.kanit(color: colorblack),
-                        ),
-                      );
-                    }),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        insetPadding: EdgeInsets.zero,
+        contentPadding: EdgeInsets.zero,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        backgroundColor: colorextralight,
+        alignment: Alignment.bottomCenter,
+        content: Container(
+          height: 250,
+          width: vwidth,
+          child: ValueListenableBuilder<Box<PlaylistSongs>>(
+            valueListenable: playbox.listenable(),
+            builder: (context, Box<PlaylistSongs> playlistsongs, child) {
+              List<PlaylistSongs> playlistsong = playlistsongs.values.toList();
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: playlistsong.length,
+                itemBuilder: ((context, index) {
+                  return ListTile(
+                    onTap: () {
+                      PlaylistSongs? playsongs = playlistsongs.getAt(index);
+                      List<Songs> playsongdb = playsongs!.playlistssongs!;
+                      List<Songs> songdb = box.values.toList();
+                      bool isAlreadyAdded = playsongdb
+                          .any((element) => element.id == songdb[songindex].id);
+                      if (!isAlreadyAdded) {
+                        playsongdb.add(
+                          Songs(
+                            songname: songdb[songindex].songname,
+                            artist: songdb[songindex].artist,
+                            duration: songdb[songindex].duration,
+                            songurl: songdb[songindex].songurl,
+                            id: songdb[songindex].id,
+                          ),
+                        );
+                      }
+                      playlistsongs.putAt(
+                          index,
+                          PlaylistSongs(
+                              playlistname: playlistsong[index].playlistname,
+                              playlistssongs: playsongdb));
+                      Navigator.pop(context);
+                    },
+                    title: Text(
+                      playlistsong[index].playlistname!,
+                      style: GoogleFonts.kanit(color: colorblack),
+                    ),
                   );
-                },
-              ))),
+                }),
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }

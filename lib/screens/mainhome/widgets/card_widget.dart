@@ -6,6 +6,7 @@ import 'package:music_player/screens/mainhome/screens/recentlyplayedscreen.dart'
 import 'package:music_player/screens/mainhome/screens/most_played.dart';
 import 'package:music_player/screens/mainhome/screens/playlist_list_screen.dart';
 
+// ignore: must_be_immutable
 class CardWidget extends StatelessWidget {
   CardWidget(
       {super.key,

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/mostplayed.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -43,7 +42,6 @@ class _MostPlayedScreenState extends State<MostPlayedScreen> {
   List<MostPlayed> mostfinalsong = [];
   @override
   Widget build(BuildContext context) {
-    double vwidth = MediaQuery.of(context).size.width;
     double vheight = MediaQuery.of(context).size.height;
     return Container(
       color: colordark,
@@ -58,23 +56,24 @@ class _MostPlayedScreenState extends State<MostPlayedScreen> {
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
-                          decoration: BoxDecoration(
-                              color: colorextralight,
-                              borderRadius: BorderRadius.circular(30)),
-                          width: 40,
-                          height: 40,
-                          child: IconButton(
-                            icon: const Padding(
-                              padding: EdgeInsets.only(left: 5.0),
-                              child: Icon(
-                                Icons.arrow_back_ios,
-                              ),
+                        decoration: BoxDecoration(
+                            color: colorextralight,
+                            borderRadius: BorderRadius.circular(30)),
+                        width: 40,
+                        height: 40,
+                        child: IconButton(
+                          icon: const Padding(
+                            padding: EdgeInsets.only(left: 5.0),
+                            child: Icon(
+                              Icons.arrow_back_ios,
                             ),
-                            color: colorblack,
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          )),
+                          ),
+                          color: colorblack,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -120,7 +119,6 @@ class _MostPlayedScreenState extends State<MostPlayedScreen> {
                     ],
                   ),
                 ),
-                // Icon(Icons.play_arrow)
                 ValueListenableBuilder<Box<MostPlayed>>(
                   valueListenable: box.listenable(),
                   builder: (context, Box<MostPlayed> mostplayedDB, child) {
@@ -138,7 +136,6 @@ class _MostPlayedScreenState extends State<MostPlayedScreen> {
                                   child: ListTile(
                                     onTap: () {
                                       audioPlayer.open(
-                                        // Audio.file(allDbsongs[songindex].songurl!),
                                         Playlist(
                                             audios: songs, startIndex: index),
                                         headPhoneStrategy: HeadPhoneStrategy
@@ -176,12 +173,12 @@ class _MostPlayedScreenState extends State<MostPlayedScreen> {
                                 )),
                           ))
                         : Padding(
-                          padding: EdgeInsets.only(top: vheight * 0.3),
-                          child: Text(
-                            "Your most played songs will appear here!",
-                            style: GoogleFonts.kanit(color: colorwhite),
-                          ),
-                        );
+                            padding: EdgeInsets.only(top: vheight * 0.3),
+                            child: Text(
+                              "Your most played songs will appear here!",
+                              style: GoogleFonts.kanit(color: colorwhite),
+                            ),
+                          );
                   },
                 ),
               ],
