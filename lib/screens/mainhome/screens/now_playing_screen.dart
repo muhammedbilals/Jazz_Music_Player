@@ -115,7 +115,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                         );
                       }
                       if (allsongs == null) {
-                        print('no songs');
+                        // print('no songs');
                         return const Center(
                           child: CircularProgressIndicator(),
                         );

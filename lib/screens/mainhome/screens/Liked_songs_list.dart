@@ -147,7 +147,7 @@ class _LikedSongsListState extends State<LikedSongsList> {
                                             headPhoneStrategy:
                                                 HeadPhoneStrategy.pauseOnUnplug,
                                             loopMode: LoopMode.playlist);
-                                        print(index);
+                                        // print(index);
                                       },
                                       leading: QueryArtworkWidget(
                                         keepOldArtwork: true,

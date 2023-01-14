@@ -29,7 +29,7 @@ updateRecentlyPlayed(RecentlyPlayed value) {
         list.indexWhere((element) => element.songname == value.songname);
     RecentlyPlayedBox.deleteAt(index);
     RecentlyPlayedBox.add(value);
-    print(value.songname);
+    // print(value.songname);
   }
 }
 

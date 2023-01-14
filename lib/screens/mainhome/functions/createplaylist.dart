@@ -7,7 +7,7 @@ createplaylist(String name) async {
   List<Songs> songsplaylist = [];
 
   box1.add(PlaylistSongs(playlistname: name, playlistssongs: songsplaylist));
-  print(name);
+  // print(name);
 }
 
 editPlaylist(String name, index) async {
