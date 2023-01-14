@@ -185,6 +185,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
 }
 
 showPlaylistOptions(BuildContext context) {
+  double vheight = MediaQuery.of(context).size.height;
   final myController = TextEditingController();
   double vwidth = MediaQuery.of(context).size.width;
   showDialog(
@@ -203,108 +204,110 @@ showPlaylistOptions(BuildContext context) {
         width: vwidth,
         child: Padding(
           padding: const EdgeInsets.only(left: 10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Center(
-                  child: Text(
-                    'Create Playlist',
-                    style: GoogleFonts.kanit(fontSize: 25, color: colorblack),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Center(
+                    child: Text(
+                      'Create Playlist',
+                      style: GoogleFonts.kanit(fontSize: 25, color: colorblack),
+                    ),
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Container(
-                      width: vwidth * 0.90,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: colorlight,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          cursorColor: colordark,
-                          controller: myController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            label: Padding(
-                              padding: const EdgeInsets.only(left: 10.0),
-                              child: Text(
-                                'Enter Playlist Name:',
-                                style: GoogleFonts.kanit(
-                                    fontSize: 20,
-                                    color: colorblack.withOpacity(0.5)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Container(
+                        width: vwidth * 0.90,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: colorlight,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            cursorColor: colordark,
+                            controller: myController,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              label: Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Text(
+                                  'Enter Playlist Name:',
+                                  style: GoogleFonts.kanit(
+                                      fontSize: 20,
+                                      color: colorblack.withOpacity(0.5)),
+                                ),
                               ),
+                              // alignLabelWithHint: true,
                             ),
-                            // alignLabelWithHint: true,
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      width: vwidth * 0.43,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: colorlight,
-                      ),
-                      child: TextButton.icon(
-                        icon: const Icon(
-                          Icons.close,
-                          color: colorblack,
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Container(
+                        width: vwidth * 0.40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: colorlight,
                         ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        label: Text(
-                          'Cancel',
-                          style: GoogleFonts.kanit(
-                              fontSize: 20, color: colorblack),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      width: vwidth * 0.43,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: colorlight,
-                      ),
-                      child: TextButton.icon(
-                        icon: const Icon(
-                          Icons.done,
-                          color: colorblack,
-                        ),
-                        onPressed: () {
-                          createplaylist(myController.text);
-                          Navigator.pop(context);
-                        },
-                        label: Text(
-                          'Done',
-                          style: GoogleFonts.kanit(
-                              fontSize: 20, color: colorblack),
+                        child: TextButton.icon(
+                          icon: const Icon(
+                            Icons.close,
+                            color: colorblack,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          label: Text(
+                            'Cancel',
+                            style: GoogleFonts.kanit(
+                                fontSize: 20, color: colorblack),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Container(
+                        width: vwidth * 0.43,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: colorlight,
+                        ),
+                        child: TextButton.icon(
+                          icon: const Icon(
+                            Icons.done,
+                            color: colorblack,
+                          ),
+                          onPressed: () {
+                            createplaylist(myController.text);
+                            Navigator.pop(context);
+                          },
+                          label: Text(
+                            'Done',
+                            style: GoogleFonts.kanit(
+                                fontSize: 20, color: colorblack),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -409,7 +412,7 @@ showPlaylistEditOption(BuildContext context, int index) {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Container(
-                      width: vwidth * 0.43,
+                      width: vwidth * 0.40,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: colorlight,
@@ -459,66 +462,68 @@ showPlaylistDeleteConfirmation(BuildContext context, int index) {
         width: vwidth,
         child: Padding(
           padding: const EdgeInsets.only(left: 10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Center(
-                  child: Text(
-                    'Are You Sure?',
-                    style: GoogleFonts.kanit(fontSize: 25, color: colorblack),
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: TextButton.icon(
-                      icon: const Icon(
-                        Icons.close,
-                        color: colorblack,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      label: Text(
-                        'Cancel',
-                        style:
-                            GoogleFonts.kanit(fontSize: 20, color: colorblack),
-                      ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Center(
+                    child: Text(
+                      'Are You Sure?',
+                      style: GoogleFonts.kanit(fontSize: 25, color: colorblack),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      width: vwidth * 0.35,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: colorlight,
-                      ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
                       child: TextButton.icon(
                         icon: const Icon(
-                          Icons.done,
-                          color: colorwhite,
+                          Icons.close,
+                          color: colorblack,
                         ),
                         onPressed: () {
-                          deletePlaylist(index);
                           Navigator.pop(context);
                         },
                         label: Text(
-                          'Yes',
+                          'Cancel',
                           style: GoogleFonts.kanit(
-                              fontSize: 20, color: colorwhite),
+                              fontSize: 20, color: colorblack),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Container(
+                        width: vwidth * 0.35,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: colorlight,
+                        ),
+                        child: TextButton.icon(
+                          icon: const Icon(
+                            Icons.done,
+                            color: colorwhite,
+                          ),
+                          onPressed: () {
+                            deletePlaylist(index);
+                            Navigator.pop(context);
+                          },
+                          label: Text(
+                            'Yes',
+                            style: GoogleFonts.kanit(
+                                fontSize: 20, color: colorwhite),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

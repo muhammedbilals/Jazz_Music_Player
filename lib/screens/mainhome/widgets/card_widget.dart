@@ -53,7 +53,7 @@ class CardWidget extends StatelessWidget {
                 padding:
                     EdgeInsets.only(left: vwidth * 0.02, right: vwidth * 0.02),
                 child: SizedBox(
-                  width: vwidth * 0.30,
+                  width: vwidth * 0.27,
                   child: Text(
                     cardtext.toString(),
                     style: GoogleFonts.kanit(fontSize: 19),
