@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/favourites.dart';
 import 'package:music_player/model/songmodel.dart';
+import 'package:music_player/screens/mainhome/screens/Liked_songs_list.dart';
 import 'package:music_player/screens/splash.dart';
 
 addToFavourites(int index) async {
@@ -9,11 +10,10 @@ addToFavourites(int index) async {
 
   List<favourites> favouritessongs = [];
   favouritessongs = favouritesdb.values.toList();
-   bool isalready= favouritessongs
-        .where((element) => element.songname == dbsongs[index].songname)
-        .isEmpty;
+  bool isalready = favouritessongs
+      .where((element) => element.songname == dbsongs[index].songname)
+      .isEmpty;
   if (isalready) {
-    
     favouritesdb.add(favourites(
         songname: dbsongs[index].songname,
         artist: dbsongs[index].artist,
@@ -41,8 +41,16 @@ removefavourite(int index) async {
   await favouritesdb.deleteAt(currentindex);
 }
 
-deletefavourite(int index) async {
-  await favouritesdb.deleteAt(favouritesdb.length- index-1);
+deletefavourite(int index, BuildContext context) async {
+  await favouritesdb.deleteAt(favouritesdb.length - index - 1);
+  Navigator.pushReplacement(
+    context,
+    PageRouteBuilder(
+      pageBuilder: (context, animation1, animation2) => LikedSongsList(),
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+    ),
+  );
 }
 
 bool checkFavoriteStatus(int index, BuildContext) {
@@ -61,6 +69,7 @@ bool checkFavoriteStatus(int index, BuildContext) {
       .isEmpty;
   return isAlreadyThere ? true : false;
 }
+
 addToFavorites1(int index, favourites value, BuildContext context) async {
   final box4 = favocuritesbox.getInstance();
   List<favourites> favdb = box4.values.toList();
@@ -81,6 +90,6 @@ addToFavorites1(int index, favourites value, BuildContext context) async {
       duration: Duration(seconds: 1),
       behavior: SnackBarBehavior.floating,
       content: Text("Removed from favorites"),
-));
-}
+    ));
+  }
 }

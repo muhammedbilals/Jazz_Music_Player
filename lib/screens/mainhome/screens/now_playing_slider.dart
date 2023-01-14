@@ -21,9 +21,10 @@ class NowPlayingSlider extends StatefulWidget {
   State<NowPlayingSlider> createState() => _NowPlayingSliderState();
 }
 
-final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
+
 
 class _NowPlayingSliderState extends State<NowPlayingSlider> {
+  final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
   // bool istaped = false;
 
   List<Songs> dbsongs = box.values.toList();
@@ -197,6 +198,7 @@ class _NowPlayingSliderState extends State<NowPlayingSlider> {
                                             // skipMusic(audioPlayer, value,
                                             //     allDbdongs);
                                             await audioPlayer.next();
+                                            
                                             // rsongs = RecentlyPlayed(
                                             //     id: songs.id,
                                             //     artist: songs.artist,

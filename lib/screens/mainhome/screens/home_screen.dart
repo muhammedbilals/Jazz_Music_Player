@@ -23,16 +23,11 @@ class _PlayerHomeState extends State<PlayerHome> {
   Widget build(BuildContext context) {
     final playlistbox = PlaylistSongsbox.getInstance();
     bool isVisible = true;
-
     return Container(
       color: colordark,
       child: SafeArea(
         child: Scaffold(
           backgroundColor: colordark,
-          // body: Container(
-          //   decoration: BoxDecoration(
-          //     image: DecorationImage(image: AssetImage('assets/images/gulf livery.jpg'),fit: BoxFit.cover)
-          //   ),
           body: ScrollConfiguration(
             behavior: MyBehavior(),
             child: SingleChildScrollView(
@@ -106,7 +101,6 @@ class _PlayerHomeState extends State<PlayerHome> {
                       AllSongsWidget(),
                     ],
                   ),
-                  // Expanded(child: AllSongsWidget())
                 ],
               ),
             ),

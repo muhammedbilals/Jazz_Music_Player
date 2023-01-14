@@ -228,21 +228,24 @@ showPlaylistOptions(BuildContext context) {
                         borderRadius: BorderRadius.circular(15),
                         color: colorlight,
                       ),
-                      child: TextFormField(
-                        controller: myController,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          fillColor: colorlightdark,
-                          label: Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
-                            child: Text(
-                              'Enter Playlist Name:',
-                              style: GoogleFonts.kanit(
-                                  fontSize: 20,
-                                  color: colorblack.withOpacity(0.5)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          cursorColor: colordark,
+                          controller: myController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            label: Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: Text(
+                                'Enter Playlist Name:',
+                                style: GoogleFonts.kanit(
+                                    fontSize: 20,
+                                    color: colorblack.withOpacity(0.5)),
+                              ),
                             ),
+                            // alignLabelWithHint: true,
                           ),
-                          // alignLabelWithHint: true,
                         ),
                       ),
                     ),

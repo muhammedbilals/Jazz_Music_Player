@@ -7,7 +7,6 @@ import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
-import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class NowPlayingScreen extends StatefulWidget {
@@ -76,7 +75,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
           actions: [
             Padding(
               padding: const EdgeInsets.only(left: 15),
-              child: audioPlayer.builderCurrent(
+              child: _audioPlayer.builderCurrent(
                 builder: (context, playing) {
                   return Container(
                     decoration: const BoxDecoration(
@@ -274,7 +273,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                             IconButton(
                                                 onPressed: () {
                                                   setState(() {});
-                                                  audioPlayer.toggleShuffle();
+                                                  _audioPlayer.toggleShuffle();
                                                 },
                                                 icon: (isShuffleOn)
                                                     ? const Icon(
@@ -296,7 +295,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                 onPressed: () async {
                                                   // previousSong(_audioPlayer,
                                                   //     value1, allDbdongs);
-                                                  await audioPlayer.previous();
+                                                  await _audioPlayer.previous();
                                                 },
                                                 icon: const Icon(
                                                   Icons.skip_previous,
@@ -346,7 +345,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                 onPressed: () async {
                                                   // skipMusic(_audioPlayer,
                                                   //     value1, allDbdongs);
-                                                  await audioPlayer.next();
+                                                  await _audioPlayer.next();
                                                   setState(() {});
                                                 },
                                                 icon: const Icon(
@@ -360,11 +359,11 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                 setState(
                                                   () {
                                                     if (isRepeat) {
-                                                      audioPlayer.setLoopMode(
+                                                      _audioPlayer.setLoopMode(
                                                           LoopMode.none);
                                                       isRepeat = false;
                                                     } else {
-                                                      audioPlayer.setLoopMode(
+                                                      _audioPlayer.setLoopMode(
                                                           LoopMode.single);
                                                       isRepeat = true;
                                                     }

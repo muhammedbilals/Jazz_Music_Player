@@ -1,7 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/model/favourites.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -109,7 +108,7 @@ class _LikedSongsListState extends State<LikedSongsList> {
                             color: colorextralight),
                         child: IconButton(
                           onPressed: () {
-                            audioPlayer.open(
+                            _audioPlayer.open(
                                 Playlist(audios: favsong, startIndex: 0),
                                 showNotification: true,
                                 headPhoneStrategy:
@@ -145,7 +144,7 @@ class _LikedSongsListState extends State<LikedSongsList> {
                                       bottom: 8.0, left: 5),
                                   child: ListTile(
                                       onTap: () {
-                                        audioPlayer.open(
+                                        _audioPlayer.open(
                                             Playlist(
                                                 audios: favsong,
                                                 startIndex: index),
@@ -186,7 +185,7 @@ class _LikedSongsListState extends State<LikedSongsList> {
                                               fontSize: 12)),
                                       trailing: IconButton(
                                           onPressed: () {
-                                            deletefavourite(index);
+                                            deletefavourite(index,context);
                                           },
                                           icon: const Icon(Icons.favorite),
                                           color: Colors.white)),
@@ -235,7 +234,7 @@ class _LikedSongsListState extends State<LikedSongsList> {
                   children: [
                     TextButton.icon(
                         onPressed: () {
-                          deletefavourite(index);
+                          deletefavourite(index,context);
                           setState(
                             () {
                               isalready = !isalready;

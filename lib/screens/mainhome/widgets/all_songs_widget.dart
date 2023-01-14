@@ -108,6 +108,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                             HeadPhoneStrategy.pauseOnUnplugPlayOnPlug,
                         showNotification: true,
                       );
+
                       setState(() {});
                       rsongs = RecentlyPlayed(
                           id: songs.id,
@@ -377,7 +378,6 @@ showOptions(BuildContext context, int index) {
                         style:
                             GoogleFonts.kanit(color: colorblack, fontSize: 17),
                       )),
-                
                 ],
               ),
             ),

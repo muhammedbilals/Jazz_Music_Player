@@ -211,6 +211,14 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                                             //           artist: item.artist,
                                             //           id: item.id.toString())));
                                             // }
+                                            Navigator.pushReplacement(
+    context,
+    PageRouteBuilder(
+      pageBuilder: (context, animation1, animation2) => PlaylistFullList(playindex: widget.playindex!,playlistname: widget.playlistname),
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+    ),
+  );
                                           },
                                           icon: const Icon(
                                             Icons.delete,
