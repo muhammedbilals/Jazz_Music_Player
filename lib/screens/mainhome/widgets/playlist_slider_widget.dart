@@ -26,6 +26,7 @@ class PlaylistSlider extends StatelessWidget {
         ),
         SizedBox(
           height: 150,
+
           /////////////////////
           child: ValueListenableBuilder<Box<PlaylistSongs>>(
             valueListenable: playbox.listenable(),
@@ -35,6 +36,8 @@ class PlaylistSlider extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      mainAxisSpacing: 0,
+                      crossAxisSpacing: 0,
                       crossAxisCount:
                           (Orientation == Orientation.portrait) ? 1 : 1),
                   shrinkWrap: true,
@@ -56,7 +59,8 @@ class PlaylistSlider extends StatelessWidget {
                           children: [
                             playlistsong[index].playlistssongs!.isNotEmpty
                                 ? Padding(
-                                    padding: const EdgeInsets.only(top:4.0,bottom: 4.0),
+                                    padding: const EdgeInsets.only(
+                                        top: 4.0, bottom: 4.0),
                                     child: SizedBox(
                                       width: 115,
                                       height: 115,
@@ -81,7 +85,8 @@ class PlaylistSlider extends StatelessWidget {
                                     ),
                                   )
                                 : Padding(
-                                    padding: const EdgeInsets.only(top:4.0,bottom: 4.0),
+                                    padding: const EdgeInsets.only(
+                                        top: 4.0, bottom: 4.0),
                                     child: SizedBox(
                                       width: 115,
                                       height: 115,
