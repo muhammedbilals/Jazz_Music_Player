@@ -11,6 +11,7 @@ import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
+import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:music_player/screens/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -30,6 +31,7 @@ final songbox = SongBox.getInstance();
 final box4 = favocuritesbox.getInstance();
 List<favourites> favdb = box4.values.toList();
 final List<MostPlayed> mostplayedsong = mostbox.values.toList();
+final playlistbox = PlaylistSongsbox.getInstance();
 
 class _AllSongsWidgetState extends State<AllSongsWidget> {
   bool istaped = true;
@@ -206,86 +208,220 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
 showPlaylistOptions(BuildContext context, int songindex) {
   final box = PlaylistSongsbox.getInstance();
   double vwidth = MediaQuery.of(context).size.width;
-  showDialog(
-    context: context,
-    builder: (context) => StatefulBuilder(
-      builder: (context, setState) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          insetPadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          backgroundColor: colorextralight,
-          alignment: Alignment.bottomCenter,
-          content: Container(
-            height: 200,
-            width: vwidth,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ValueListenableBuilder<Box<PlaylistSongs>>(
-                      valueListenable: box.listenable(),
-                      builder:
-                          (context, Box<PlaylistSongs> playlistsongs, child) {
-                        List<PlaylistSongs> playlistsong =
-                            playlistsongs.values.toList();
-                        return ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: playlistsong.length,
-                          itemBuilder: ((context, index) {
-                            return ListTile(
-                              onTap: () {
-                                PlaylistSongs? playsongs =
-                                    playlistsongs.getAt(index);
-                                List<Songs> playsongdb =
-                                    playsongs!.playlistssongs!;
-                                List<Songs> songdb = songbox.values.toList();
-                                bool isAlreadyAdded = playsongdb.any(
-                                    (element) =>
-                                        element.id == songdb[songindex].id);
-                                if (!isAlreadyAdded) {
-                                  playsongdb.add(
-                                    Songs(
-                                      songname: songdb[songindex].songname,
-                                      artist: songdb[songindex].artist,
-                                      duration: songdb[songindex].duration,
-                                      songurl: songdb[songindex].songurl,
-                                      id: songdb[songindex].id,
+  final myController = TextEditingController();
+  playlistbox.isNotEmpty
+      ? showDialog(
+          context: context,
+          builder: (context) => StatefulBuilder(
+            builder: (context, setState) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                insetPadding: EdgeInsets.zero,
+                contentPadding: EdgeInsets.zero,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                backgroundColor: colorextralight,
+                alignment: Alignment.bottomCenter,
+                content: Container(
+                  height: 200,
+                  width: vwidth,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ValueListenableBuilder<Box<PlaylistSongs>>(
+                            valueListenable: box.listenable(),
+                            builder: (context, Box<PlaylistSongs> playlistsongs,
+                                child) {
+                              List<PlaylistSongs> playlistsong =
+                                  playlistsongs.values.toList();
+                              return ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: playlistsong.length,
+                                itemBuilder: ((context, index) {
+                                  return ListTile(
+                                    onTap: () {
+                                      PlaylistSongs? playsongs =
+                                          playlistsongs.getAt(index);
+                                      List<Songs> playsongdb =
+                                          playsongs!.playlistssongs!;
+                                      List<Songs> songdb =
+                                          songbox.values.toList();
+                                      bool isAlreadyAdded = playsongdb.any(
+                                          (element) =>
+                                              element.id ==
+                                              songdb[songindex].id);
+                                      if (!isAlreadyAdded) {
+                                        playsongdb.add(
+                                          Songs(
+                                            songname:
+                                                songdb[songindex].songname,
+                                            artist: songdb[songindex].artist,
+                                            duration:
+                                                songdb[songindex].duration,
+                                            songurl: songdb[songindex].songurl,
+                                            id: songdb[songindex].id,
+                                          ),
+                                        );
+                                      }
+                                      playlistsongs.putAt(
+                                          index,
+                                          PlaylistSongs(
+                                              playlistname: playlistsong[index]
+                                                  .playlistname,
+                                              playlistssongs: playsongdb));
+                                      // print(
+                                      //     'song added to${playlistsong[index].playlistname}');
+                                      Navigator.pop(context);
+                                    },
+                                    title: Text(
+                                      playlistsong[index].playlistname!,
+                                      style:
+                                          GoogleFonts.kanit(color: colorblack),
                                     ),
                                   );
-                                }
-                                playlistsongs.putAt(
-                                    index,
-                                    PlaylistSongs(
-                                        playlistname:
-                                            playlistsong[index].playlistname,
-                                        playlistssongs: playsongdb));
-                                // print(
-                                //     'song added to${playlistsong[index].playlistname}');
-                                Navigator.pop(context);
-                              },
-                              title: Text(
-                                playlistsong[index].playlistname!,
-                                style: GoogleFonts.kanit(color: colorblack),
+                                }),
+                              );
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        )
+      : showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            insetPadding: EdgeInsets.zero,
+            contentPadding: EdgeInsets.zero,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            backgroundColor: colorextralight,
+            alignment: Alignment.bottomCenter,
+            content: Container(
+              height: 250,
+              width: vwidth,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Center(
+                          child: Text(
+                            'Create Playlist',
+                            style: GoogleFonts.kanit(
+                                fontSize: 25, color: colorblack),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Container(
+                              width: vwidth * 0.90,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: colorlight,
                               ),
-                            );
-                          }),
-                        );
-                      },
-                    )
-                  ],
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  cursorColor: colordark,
+                                  controller: myController,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    label: Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 10.0),
+                                      child: Text(
+                                        'Enter Playlist Name:',
+                                        style: GoogleFonts.kanit(
+                                            fontSize: 20,
+                                            color: colorblack.withOpacity(0.5)),
+                                      ),
+                                    ),
+                                    // alignLabelWithHint: true,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                              width: vwidth * 0.40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: colorlight,
+                              ),
+                              child: TextButton.icon(
+                                icon: const Icon(
+                                  Icons.close,
+                                  color: colorblack,
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                label: Text(
+                                  'Cancel',
+                                  style: GoogleFonts.kanit(
+                                      fontSize: 20, color: colorblack),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                              width: vwidth * 0.43,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: colorlight,
+                              ),
+                              child: TextButton.icon(
+                                icon: const Icon(
+                                  Icons.done,
+                                  color: colorblack,
+                                ),
+                                onPressed: () {
+                                  createplaylist(myController.text);
+                                  Navigator.pop(context);
+                                },
+                                label: Text(
+                                  'Done',
+                                  style: GoogleFonts.kanit(
+                                      fontSize: 20, color: colorblack),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         );
-      },
-    ),
-  );
 }

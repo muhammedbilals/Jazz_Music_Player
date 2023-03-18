@@ -24,7 +24,7 @@ class _PlayerSplashState extends State<PlayerSplash> {
   void initState() {
     requestStoragePermission();
 
-    navigateToHome(context);
+    // navigateToHome(context);
     super.initState();
   }
 
@@ -32,36 +32,42 @@ class _PlayerSplashState extends State<PlayerSplash> {
     bool permissionStatus = await audioquery.permissionsStatus();
     if (!permissionStatus) {
       await audioquery.permissionsRequest();
-
-      fetchSongs = await audioquery.querySongs();
-      for (var element in fetchSongs) {
-        if (element.fileExtension == "mp3") {
-          allSongs.add(element);
-        }
+    }
+    fetchSongs = await audioquery.querySongs();
+    for (var element in fetchSongs) {
+      if (element.fileExtension == "mp3") {
+        allSongs.add(element);
       }
-      for (var element in allSongs) {
-        mostbox.add(
-          MostPlayed(
-              songname: element.title,
-              songurl: element.uri!,
-              duration: element.duration!,
-              artist: element.artist!,
-              count: 0,
-              id: element.id),
-        );
-      }
-      for (var element in allSongs) {
-        await box.add(Songs(
-          songname: element.title,
-          artist: element.artist,
-          duration: element.duration,
-          id: element.id,
-          songurl: element.uri,
-        ));
-      }
+    }
+    for (var element in allSongs) {
+      mostbox.add(
+        MostPlayed(
+            songname: element.title,
+            songurl: element.uri!,
+            duration: element.duration!,
+            artist: element.artist!,
+            count: 0,
+            id: element.id),
+      );
+    }
+    for (var element in allSongs) {
+      await box.add(Songs(
+        songname: element.title,
+        artist: element.artist,
+        duration: element.duration,
+        id: element.id,
+        songurl: element.uri,
+      ));
     }
     if (!mounted) return;
     setState(() {});
+    await Future.delayed(const Duration(milliseconds: 500), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (ctx) => const HomeMain(),
+        ),
+      );
+    });
   }
 
   @override
@@ -76,14 +82,4 @@ class _PlayerSplashState extends State<PlayerSplash> {
       backgroundColor: colordark,
     );
   }
-}
-
-navigateToHome(BuildContext ctx) async {
-  await Future.delayed(const Duration(milliseconds: 500), () {
-    Navigator.of(ctx).pushReplacement(
-      MaterialPageRoute(
-        builder: (ctx) => const HomeMain(),
-      ),
-    );
-  });
 }

@@ -5,6 +5,7 @@ import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screens/mainhome/screens/playlist_full_list.dart';
+import 'package:music_player/screens/mainhome/widgets/all_songs_widget.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class PlayListScreen extends StatefulWidget {
@@ -188,6 +189,7 @@ showPlaylistOptions(BuildContext context) {
   double vheight = MediaQuery.of(context).size.height;
   final myController = TextEditingController();
   double vwidth = MediaQuery.of(context).size.width;
+
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
@@ -229,22 +231,23 @@ showPlaylistOptions(BuildContext context) {
                           color: colorlight,
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.only(
+                              left: 20.0, top: 5, bottom: 5),
                           child: TextFormField(
                             cursorColor: colordark,
                             controller: myController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              label: Padding(
-                                padding: const EdgeInsets.only(left: 10.0),
-                                child: Text(
-                                  'Enter Playlist Name:',
-                                  style: GoogleFonts.kanit(
-                                      fontSize: 20,
-                                      color: colorblack.withOpacity(0.5)),
-                                ),
-                              ),
-                              // alignLabelWithHint: true,
+                              // label: Padding(
+                              //   padding: const EdgeInsets.only(left: 10.0),
+                              //   child: Text(
+                              //     'Enter Playlist Name:',
+                              //     style: GoogleFonts.kanit(
+                              //         fontSize: 20,
+                              //         color: colorblack.withOpacity(0.5)),
+                              //   ),
+                              // ),
+                              alignLabelWithHint: true,
                             ),
                           ),
                         ),
@@ -360,22 +363,25 @@ showPlaylistEditOption(BuildContext context, int index) {
                         borderRadius: BorderRadius.circular(15),
                         color: colorlight,
                       ),
-                      child: TextFormField(
-                        controller: textEditmyController,
-                        decoration: InputDecoration(
-                          icon: Icon(Icons.abc),
-                          border: InputBorder.none,
-                          fillColor: colorlightdark,
-                          label: Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
-                            child: Text(
-                              'Enter Playlist Name:',
-                              style: GoogleFonts.kanit(
-                                  fontSize: 20,
-                                  color: colorblack.withOpacity(0.5)),
-                            ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20.0, top: 5, bottom: 5),
+                        child: TextFormField(
+                          controller: textEditmyController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            fillColor: colorlightdark,
+                            // label: Padding(
+                            //   padding: const EdgeInsets.only(left: 10.0),
+                            //   child: Text(
+                            //     'Enter Playlist Name:',
+                            //     style: GoogleFonts.kanit(
+                            //         fontSize: 20,
+                            //         color: colorblack.withOpacity(0.5)),
+                            //   ),
+                            // ),
+                            // alignLabelWithHint: true,
                           ),
-                          // alignLabelWithHint: true,
                         ),
                       ),
                     ),
