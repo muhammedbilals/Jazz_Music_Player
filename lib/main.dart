@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/logic/allsongs/all_songs_bloc.dart';
+import 'package:music_player/logic/bloc/favourites_bloc.dart';
 import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/favourites.dart';
 import 'package:music_player/model/mostplayed.dart';
@@ -42,9 +43,9 @@ class _MyAppState extends State<MyApp> {
           create: (context) => AllSongsBloc(),
           // child: AllSongsWidget(),
         ),
-        // BlocProvider(
-        //   create: (context) => SubjectBloc(),
-        // ),
+        BlocProvider(
+          create: (context) => FavouritesBloc(),
+        ),
       ],
     
       child: MaterialApp(

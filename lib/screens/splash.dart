@@ -37,6 +37,8 @@ class _PlayerSplashState extends State<PlayerSplash> {
     for (var element in fetchSongs) {
       if (element.fileExtension == "mp3") {
         allSongs.add(element);
+      }else if (element.fileExtension == "flac") {
+        allSongs.add(element);
       }
     }
     for (var element in allSongs) {
