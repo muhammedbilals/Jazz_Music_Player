@@ -11,10 +11,17 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
     on<AddtoFavourites>((event, emit) {
       final favbox = favocuritesbox.getInstance();
       List<favourites> favourite = favbox.values.toList();
-
       try {
-        favbox.add(event.favsong);
-        print("${event.favsong.songname} song added to fav");
+        bool isAlreadyThere = favourite
+            .where((element) => element.songname == event.favsong.songname)
+            .isEmpty;
+        if (isAlreadyThere) {
+          favbox.add(event.favsong);
+          print("${event.favsong.songname} song added to fav");
+        } else {
+          print("already added");
+        }
+
         add(FetchFavSongs());
       } catch (e) {
         log(e.toString());

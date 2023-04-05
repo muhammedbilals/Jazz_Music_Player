@@ -1,12 +1,13 @@
 part of 'favourites_bloc.dart';
 
 @immutable
-abstract class FavouritesEvent extends Equatable{}
+abstract class FavouritesEvent extends Equatable {}
 
 class AddtoFavourites extends FavouritesEvent {
   final favourites favsong;
+  final int index;
 
-  AddtoFavourites(this.favsong);
+  AddtoFavourites(this.favsong,this.index);
   @override
   List<Object> get props => [favsong];
 }
@@ -14,6 +15,6 @@ class AddtoFavourites extends FavouritesEvent {
 class FetchFavSongs extends FavouritesEvent {
   FetchFavSongs();
 
-    @override
+  @override
   List<Object> get props => [];
 }

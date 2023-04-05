@@ -107,8 +107,6 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                     HeadPhoneStrategy.pauseOnUnplugPlayOnPlug,
                                 showNotification: true,
                               );
-
-                          
                               rsongs = RecentlyPlayed(
                                   id: songs.id,
                                   artist: songs.artist,
@@ -153,7 +151,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                               children: [
                                 IconButton(
                                     onPressed: () {
-                                      print(state.Allsongs[songindex].songname);
+                                    
                                       BlocProvider.of<FavouritesBloc>(context)
                                           .add(AddtoFavourites(favourites(
                                               songname: state
@@ -167,7 +165,8 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                               songurl: state
                                                   .Allsongs[songindex].songurl!,
                                               id: state
-                                                  .Allsongs[songindex].id!)));
+                                                  .Allsongs[songindex].id!),
+                                                  songindex));
                                       // if (checkFavoriteStatus(
                                       //     songindex, BuildContext)) {
                                       //   addToFavourites(songindex);

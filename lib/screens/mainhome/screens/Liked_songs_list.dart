@@ -131,69 +131,72 @@ class _LikedSongsListState extends State<LikedSongsList> {
                       context.read<FavouritesBloc>().add(FetchFavSongs());
                     }
                     if (state is DisplayFavSongs) {
-                     return state.favorites.isNotEmpty
-                      ?
-                      
-                      ListView.builder(
-                        // reverse: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: state.favorites.length,
-                        itemBuilder: ((context, index) => Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 8.0, left: 5),
-                              child: ListTile(
-                                  onTap: () {
-                                    _audioPlayer.open(
-                                        Playlist(
-                                            audios: favsong, startIndex: index),
-                                        showNotification: true,
-                                        headPhoneStrategy:
-                                            HeadPhoneStrategy.pauseOnUnplug,
-                                        loopMode: LoopMode.playlist);
-                                    // print(index);
-                                  },
-                                  leading: QueryArtworkWidget(
-                                    keepOldArtwork: true,
-                                    artworkBorder: BorderRadius.circular(10),
-                                    id: state.favorites[index].id!,
-                                    type: ArtworkType.AUDIO,
-                                    nullArtworkWidget: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image.asset(
-                                        'assets/images/music.jpeg',
-                                        height: vheight * 0.06,
-                                        width: vheight * 0.06,
-                                      ),
-                                    ),
-                                  ),
-                                  title: Text(
-                                    state.favorites[index].songname!,
-                                    style: GoogleFonts.kanit(color: colorwhite),
-                                  ),
-                                  subtitle: Text(
-                                      state.favorites[index].artist ??
-                                          "No Artist",
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.kanit(
-                                          color: colorwhite.withOpacity(0.7),
-                                          fontSize: 12)),
-                                  trailing: IconButton(
-                                      onPressed: () {
-                                        deletefavourite(index, context);
-                                      },
-                                      icon: const Icon(Icons.favorite),
-                                      color: Colors.white)),
-                            )),
-                      )
-                      :
-                      Padding(
-                        padding: EdgeInsets.only(top: vheight * 0.3),
-                        child: Text(
-                          "You haven't Liked any songs!",
-                          style: GoogleFonts.kanit(color: colorwhite),
-                        ),
-                      );
+                      return state.favorites.isNotEmpty
+                          ? ListView.builder(
+                              // reverse: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: state.favorites.length,
+                              itemBuilder: ((context, index) => Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 8.0, left: 5),
+                                    child: ListTile(
+                                        onTap: () {
+                                          _audioPlayer.open(
+                                              Playlist(
+                                                  audios: favsong,
+                                                  startIndex: index),
+                                              showNotification: true,
+                                              headPhoneStrategy:
+                                                  HeadPhoneStrategy
+                                                      .pauseOnUnplug,
+                                              loopMode: LoopMode.playlist);
+                                          // print(index);
+                                        },
+                                        leading: QueryArtworkWidget(
+                                          keepOldArtwork: true,
+                                          artworkBorder:
+                                              BorderRadius.circular(10),
+                                          id: state.favorites[index].id!,
+                                          type: ArtworkType.AUDIO,
+                                          nullArtworkWidget: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: Image.asset(
+                                              'assets/images/music.jpeg',
+                                              height: vheight * 0.06,
+                                              width: vheight * 0.06,
+                                            ),
+                                          ),
+                                        ),
+                                        title: Text(
+                                          state.favorites[index].songname!,
+                                          style: GoogleFonts.kanit(
+                                              color: colorwhite),
+                                        ),
+                                        subtitle: Text(
+                                            state.favorites[index].artist ??
+                                                "No Artist",
+                                            overflow: TextOverflow.ellipsis,
+                                            style: GoogleFonts.kanit(
+                                                color:
+                                                    colorwhite.withOpacity(0.7),
+                                                fontSize: 12)),
+                                        trailing: IconButton(
+                                            onPressed: () {
+                                              deletefavourite(index, context);
+                                            },
+                                            icon: const Icon(Icons.favorite),
+                                            color: Colors.white)),
+                                  )),
+                            )
+                          : Padding(
+                              padding: EdgeInsets.only(top: vheight * 0.3),
+                              child: Text(
+                                "You haven't Liked any songs!",
+                                style: GoogleFonts.kanit(color: colorwhite),
+                              ),
+                            );
                     }
                     return Text('sfgasfsadgasdfasdf');
                   },
