@@ -1,8 +1,10 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/logic/allsongs/all_songs_bloc.dart';
 import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/favourites.dart';
 import 'package:music_player/model/mostplayed.dart';
@@ -16,6 +18,7 @@ import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:music_player/screens/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:bloc/bloc.dart';
 
 class AllSongsWidget extends StatefulWidget {
   const AllSongsWidget({super.key});
@@ -76,129 +79,136 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
             ),
           ],
         ),
-        ///////////////////
-        ValueListenableBuilder<Box<Songs>>(
-          valueListenable: songbox.listenable(),
-          builder: ((context, Box<Songs> allsongbox, child) {
-            List<Songs> allDbsongs = allsongbox.values.toList();
-
-            // if (allDbsongs == null) {
-            //   print('no songs');
-            //   return const Center(
-            //     child: CircularProgressIndicator(),
-            //   );
-            // }
-            return ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: allDbsongs.length,
-              itemBuilder: ((context, songindex) {
-                RecentlyPlayed rsongs;
-                Songs songs = allDbsongs[songindex];
-                MostPlayed mostsong = mostplayedsong[songindex];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0, left: 5),
-                  child: ListTile(
-                    onTap: () {
-                      audioPlayer.open(
-                        Playlist(audios: convertAudios, startIndex: songindex),
-                        headPhoneStrategy:
-                            HeadPhoneStrategy.pauseOnUnplugPlayOnPlug,
-                        showNotification: true,
-                      );
-
-                      setState(() {});
-                      rsongs = RecentlyPlayed(
-                          id: songs.id,
-                          artist: songs.artist,
-                          duration: songs.duration,
-                          songname: songs.songname,
-                          songurl: songs.songurl,
-                          index: songindex);
-                      NowPlayingSlider.enteredvalue.value = songindex;
-                      updateRecentlyPlayed(rsongs);
-                      updatePlayedSongsCount(mostsong, songindex);
-                      // print(songindex);
-                      // print(allDbsongs[songindex].songname!);
-                    },
-                    leading: QueryArtworkWidget(
-                      artworkHeight: vheight * 0.06,
-                      artworkWidth: vheight * 0.06,
-                      keepOldArtwork: true,
-                      artworkBorder: BorderRadius.circular(10),
-                      id: allDbsongs[songindex].id!,
-                      type: ArtworkType.AUDIO,
-                      nullArtworkWidget: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          'assets/images/music.jpeg',
-                          height: vheight * 0.06,
-                          width: vheight * 0.06,
-                        ),
-                      ),
-                    ),
-                    title: Text(
-                      allDbsongs[songindex].songname!,
-                      style: GoogleFonts.kanit(color: colorwhite),
-                    ),
-                    subtitle: Text(allDbsongs[songindex].artist ?? "No Artist",
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.kanit(
-                            color: colorwhite.withOpacity(0.7), fontSize: 12)),
-                    trailing: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              if (checkFavoriteStatus(
-                                  songindex, BuildContext)) {
-                                addToFavourites(songindex);
-                                final snackbar = SnackBar(
-                                  content: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Added to Favourites',
-                                      style: GoogleFonts.kanit(
-                                          color: colordark, fontSize: 15),
-                                    ),
-                                  ),
-                                  backgroundColor: colorextralight,
-                                  dismissDirection: DismissDirection.down,
-                                  elevation: 10,
-                                  padding: EdgeInsets.only(top: 10, bottom: 15),
-                                );
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackbar);
-                              } else if (!checkFavoriteStatus(
-                                  songindex, BuildContext)) {
-                                removefavourite(songindex);
-                              }
-                              setState(
-                                () {
-                                  istaped = !istaped;
-                                },
+        BlocBuilder<AllSongsBloc, AllSongsState>(
+          builder: (context, state) {
+            if (state is AllSongsInitial) {
+              context.read<AllSongsBloc>().add(FetchAllSongs());
+            }
+            if (state is DisplayAllSongs) {
+              return state.Allsongs.isNotEmpty
+                  ? ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: state.Allsongs.length,
+                      itemBuilder: ((context, songindex) {
+                        RecentlyPlayed rsongs;
+                        Songs songs = state.Allsongs[songindex];
+                        MostPlayed mostsong = mostplayedsong[songindex];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0, left: 5),
+                          child: ListTile(
+                            onTap: () {
+                              audioPlayer.open(
+                                Playlist(
+                                    audios: convertAudios,
+                                    startIndex: songindex),
+                                headPhoneStrategy:
+                                    HeadPhoneStrategy.pauseOnUnplugPlayOnPlug,
+                                showNotification: true,
                               );
-                              print(allDbsongs[songindex].songname!);
+
+                              setState(() {});
+                              rsongs = RecentlyPlayed(
+                                  id: songs.id,
+                                  artist: songs.artist,
+                                  duration: songs.duration,
+                                  songname: songs.songname,
+                                  songurl: songs.songurl,
+                                  index: songindex);
+                              NowPlayingSlider.enteredvalue.value = songindex;
+                              updateRecentlyPlayed(rsongs);
+                              updatePlayedSongsCount(mostsong, songindex);
+                              // print(songindex);
+                              // print(allDbsongs[songindex].songname!);
                             },
-                            icon: Icon(Icons.favorite,
-                                color: (checkFavoriteStatus(
-                                        songindex, BuildContext))
-                                    ? Color.fromARGB(255, 85, 85, 85)
-                                    : Color.fromARGB(255, 255, 255, 255))),
-                        IconButton(
-                          onPressed: () {
-                            showPlaylistOptions(context, songindex);
-                          },
-                          icon: const Icon(Icons.playlist_add),
-                          color: colorwhite,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }),
-            );
-          }),
+                            leading: QueryArtworkWidget(
+                              artworkHeight: vheight * 0.06,
+                              artworkWidth: vheight * 0.06,
+                              keepOldArtwork: true,
+                              artworkBorder: BorderRadius.circular(10),
+                              id: state.Allsongs[songindex].id!,
+                              type: ArtworkType.AUDIO,
+                              nullArtworkWidget: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.asset(
+                                  'assets/images/music.jpeg',
+                                  height: vheight * 0.06,
+                                  width: vheight * 0.06,
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              state.Allsongs[songindex].songname!,
+                              style: GoogleFonts.kanit(color: colorwhite),
+                            ),
+                            subtitle: Text(
+                                state.Allsongs[songindex].artist ?? "No Artist",
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.kanit(
+                                    color: colorwhite.withOpacity(0.7),
+                                    fontSize: 12)),
+                            trailing: Wrap(
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      if (checkFavoriteStatus(
+                                          songindex, BuildContext)) {
+                                        addToFavourites(songindex);
+                                        final snackbar = SnackBar(
+                                          content: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              'Added to Favourites',
+                                              style: GoogleFonts.kanit(
+                                                  color: colordark,
+                                                  fontSize: 15),
+                                            ),
+                                          ),
+                                          backgroundColor: colorextralight,
+                                          dismissDirection:
+                                              DismissDirection.down,
+                                          elevation: 10,
+                                          padding: EdgeInsets.only(
+                                              top: 10, bottom: 15),
+                                        );
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackbar);
+                                      } else if (!checkFavoriteStatus(
+                                          songindex, BuildContext)) {
+                                        removefavourite(songindex);
+                                      }
+                                      setState(
+                                        () {
+                                          istaped = !istaped;
+                                        },
+                                      );
+                                      print(
+                                          state.Allsongs[songindex].songname!);
+                                    },
+                                    icon: Icon(Icons.favorite,
+                                        color: (checkFavoriteStatus(
+                                                songindex, BuildContext))
+                                            ? Color.fromARGB(255, 85, 85, 85)
+                                            : Color.fromARGB(
+                                                255, 255, 255, 255))),
+                                IconButton(
+                                  onPressed: () {
+                                    showPlaylistOptions(context, songindex);
+                                  },
+                                  icon: const Icon(Icons.playlist_add),
+                                  color: colorwhite,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                    )
+                  : Text('data');
+            }
+            return Text('data');
+          },
         )
       ],
     );

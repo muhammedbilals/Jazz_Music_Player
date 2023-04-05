@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:music_player/logic/allsongs/all_songs_bloc.dart';
 import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/favourites.dart';
 import 'package:music_player/model/mostplayed.dart';
@@ -7,6 +8,7 @@ import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:music_player/screens/splash.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,20 +36,32 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      builder: (context, child) {
-        return ScrollConfiguration(
-          behavior: MyBehavior(),
-          child: child!,
-        );
-      },
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        bottomSheetTheme:
-            BottomSheetThemeData(backgroundColor: Colors.black.withOpacity(0)),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AllSongsBloc(),
+          // child: AllSongsWidget(),
+        ),
+        // BlocProvider(
+        //   create: (context) => SubjectBloc(),
+        // ),
+      ],
+    
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        builder: (context, child) {
+          return ScrollConfiguration(
+            behavior: MyBehavior(),
+            child: child!,
+          );
+        },
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          bottomSheetTheme:
+              BottomSheetThemeData(backgroundColor: Colors.black.withOpacity(0)),
+        ),
+        home: const PlayerSplash(),
       ),
-      home: const PlayerSplash(),
     );
   }
 }
