@@ -17,9 +17,11 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
             .isEmpty;
         if (isAlreadyThere) {
           favbox.add(event.favsong);
+          
           print("${event.favsong.songname} song added to fav");
         } else {
           print("already added");
+          
         }
 
         add(FetchFavSongs());
@@ -36,5 +38,14 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
         log(e.toString());
       }
     });
+    // on<CheckFavouritesStatus>((event, emit) {
+    //   final favbox = favocuritesbox.getInstance();
+    //   List<favourites> favourite = favbox.values.toList();
+
+    //   bool isAlreadyThere = favourite
+    //       .where((element) => element.id == favourite[event.id].songname)
+    //       .isEmpty;
+    //   emit(ShowFaouritesStatus(isAlreadyThere));
+    // });
   }
 }

@@ -13,15 +13,16 @@ class FavouritesInitial extends FavouritesState {
   List<Object> get props => [];
 }
 
-// class CheckFaouritesStatus extends FavouritesState {
-//   final bool checkfavouritesStatus;
+// class ShowFaouritesStatus extends FavouritesState {
+//   final bool isAlreadyAdded;
 
-//   CheckFaouritesStatus(this.checkfavouritesStatus);
+//   ShowFaouritesStatus(this.isAlreadyAdded);
 // }
 class DisplayFavSongs extends FavouritesState {
   final List<favourites> favorites;
 
+
   DisplayFavSongs(this.favorites);
-    @override
-  List<Object> get props => [ favorites];
+  @override
+  List<Object> get props => [favorites];
 }

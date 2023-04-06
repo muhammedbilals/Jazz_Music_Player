@@ -1,8 +1,10 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/logic/recentlyplayed/recentlyplayed_bloc.dart';
 import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -111,68 +113,73 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
                     ),
                   ),
                 ),
-                ValueListenableBuilder<Box<RecentlyPlayed>>(
-                  valueListenable: box.listenable(),
-                  builder: ((context, Box<RecentlyPlayed> RecentDB, child) {
-                    List<RecentlyPlayed> Recentplayed =
-                        RecentDB.values.toList().reversed.toList();
-                    return Recentplayed.isNotEmpty
-                        ? (ListView.builder(
-                            // reverse: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: Recentplayed.length,
-                            itemBuilder: ((context, index) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.only(bottom: 8.0, left: 5),
-                                child: ListTile(
-                                  leading: QueryArtworkWidget(
-                                    keepOldArtwork: true,
-                                    artworkBorder: BorderRadius.circular(10),
-                                    id: Recentplayed[index].id!,
-                                    type: ArtworkType.AUDIO,
-                                    nullArtworkWidget: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image.asset(
-                                        'assets/images/music.jpeg',
-                                        height: vheight * 0.06,
-                                        width: vheight * 0.06,
+                BlocBuilder<RecentlyplayedBloc, RecentlyplayedState>(
+                  builder: (context, state) {
+                      if (state is RecentlyplayedInitial) {
+                      context.read<RecentlyplayedBloc>().add(FetchRecentlyPlayed());
+                    }
+                    if (state is DisplayRecentlyPlayed) {
+                      return state.recentPlay.isNotEmpty
+                          ? ListView.builder(
+                              // reverse: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: state.recentPlay.length,
+                              itemBuilder: ((context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 8.0, left: 5),
+                                  child: ListTile(
+                                    leading: QueryArtworkWidget(
+                                      keepOldArtwork: true,
+                                      artworkBorder: BorderRadius.circular(10),
+                                      id: state.recentPlay[index].id!,
+                                      type: ArtworkType.AUDIO,
+                                      nullArtworkWidget: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.asset(
+                                          'assets/images/music.jpeg',
+                                          height: vheight * 0.06,
+                                          width: vheight * 0.06,
+                                        ),
                                       ),
                                     ),
+                                    title: Text(
+                                      state.recentPlay[index].songname!,
+                                      style:
+                                          GoogleFonts.kanit(color: colorwhite),
+                                    ),
+                                    subtitle: Text(
+                                        state.recentPlay[index].artist ??
+                                            "No Artist",
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.kanit(
+                                            color: colorwhite.withOpacity(0.7),
+                                            fontSize: 12)),
+                                    onTap: () {
+                                      _audioPlayer.open(
+                                          Playlist(
+                                              audios: rcentplay,
+                                              startIndex: index),
+                                          showNotification: true,
+                                          headPhoneStrategy:
+                                              HeadPhoneStrategy.pauseOnUnplug,
+                                          loopMode: LoopMode.playlist);
+                                    },
                                   ),
-                                  title: Text(
-                                    Recentplayed[index].songname!,
-                                    style: GoogleFonts.kanit(color: colorwhite),
-                                  ),
-                                  subtitle: Text(
-                                      Recentplayed[index].artist ?? "No Artist",
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.kanit(
-                                          color: colorwhite.withOpacity(0.7),
-                                          fontSize: 12)),
-                                  onTap: () {
-                                    _audioPlayer.open(
-                                        Playlist(
-                                            audios: rcentplay,
-                                            startIndex: index),
-                                        showNotification: true,
-                                        headPhoneStrategy:
-                                            HeadPhoneStrategy.pauseOnUnplug,
-                                        loopMode: LoopMode.playlist);
-                                  },
-                                ),
-                              );
-                            }),
-                          ))
-                        : Padding(
-                            padding: EdgeInsets.only(top: vheight * 0.3),
-                            child: Text(
-                              "You Have't played any songs",
-                              style: GoogleFonts.kanit(color: colorwhite),
-                            ),
-                          );
-                  }),
+                                );
+                              }),
+                            )
+                          : Padding(
+                              padding: EdgeInsets.only(top: vheight * 0.3),
+                              child: Text(
+                                "You Have't played any songs",
+                                style: GoogleFonts.kanit(color: colorwhite),
+                              ),
+                            );
+                    }
+                    return Text('data');
+                  },
                 ),
               ],
             ),

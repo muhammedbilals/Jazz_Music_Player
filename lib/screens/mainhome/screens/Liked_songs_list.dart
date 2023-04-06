@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
-import 'package:music_player/logic/bloc/favourites_bloc.dart';
+import 'package:music_player/logic/favourites/favourites_bloc.dart';
 import 'package:music_player/model/favourites.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';

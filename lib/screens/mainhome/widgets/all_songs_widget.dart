@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/logic/allsongs/all_songs_bloc.dart';
-import 'package:music_player/logic/bloc/favourites_bloc.dart';
+import 'package:music_player/logic/favourites/favourites_bloc.dart';
 import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/favourites.dart';
 import 'package:music_player/model/mostplayed.dart';
@@ -154,6 +154,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                     
                                       BlocProvider.of<FavouritesBloc>(context)
                                           .add(AddtoFavourites(favourites(
+                                            
                                               songname: state
                                                   .Allsongs[songindex]
                                                   .songname!,
@@ -167,39 +168,40 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                               id: state
                                                   .Allsongs[songindex].id!),
                                                   songindex));
-                                      // if (checkFavoriteStatus(
-                                      //     songindex, BuildContext)) {
-                                      //   addToFavourites(songindex);
-                                      //   final snackbar = SnackBar(
-                                      //     content: Padding(
-                                      //       padding: const EdgeInsets.all(8.0),
-                                      //       child: Text(
-                                      //         'Added to Favourites',
-                                      //         style: GoogleFonts.kanit(
-                                      //             color: colordark,
-                                      //             fontSize: 15),
-                                      //       ),
-                                      //     ),
-                                      //     backgroundColor: colorextralight,
-                                      //     dismissDirection:
-                                      //         DismissDirection.down,
-                                      //     elevation: 10,
-                                      //     padding: EdgeInsets.only(
-                                      //         top: 10, bottom: 15),
-                                      //   );
-                                      //   ScaffoldMessenger.of(context)
-                                      //       .showSnackBar(snackbar);
-                                      // } else if (!checkFavoriteStatus(
-                                      //     songindex, BuildContext)) {
-                                      //   removefavourite(songindex);
-                                      // }
-                                      // setState(
-                                      //   () {
-                                      //     istaped = !istaped;
-                                      //   },
-                                      // );
-                                      // print(
-                                      //     state.Allsongs[songindex].songname!);
+                                      
+                                      if (checkFavoriteStatus(
+                                          songindex, BuildContext)) {
+                                        addToFavourites(songindex);
+                                        final snackbar = SnackBar(
+                                          content: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              'Added to Favourites',
+                                              style: GoogleFonts.kanit(
+                                                  color: colordark,
+                                                  fontSize: 15),
+                                            ),
+                                          ),
+                                          backgroundColor: colorextralight,
+                                          dismissDirection:
+                                              DismissDirection.down,
+                                          elevation: 10,
+                                          padding: EdgeInsets.only(
+                                              top: 10, bottom: 15),
+                                        );
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackbar);
+                                      } else if (!checkFavoriteStatus(
+                                          songindex, BuildContext)) {
+                                        removefavourite(songindex);
+                                      }
+                                      setState(
+                                        () {
+                                          istaped = !istaped;
+                                        },
+                                      );
+                                      print(
+                                          state.Allsongs[songindex].songname!);
                                     },
                                     icon: Icon(Icons.favorite,
                                         color: (checkFavoriteStatus(
