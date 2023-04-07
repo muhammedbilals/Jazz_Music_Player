@@ -115,68 +115,70 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
                 ),
                 BlocBuilder<RecentlyplayedBloc, RecentlyplayedState>(
                   builder: (context, state) {
-                      if (state is RecentlyplayedInitial) {
-                      context.read<RecentlyplayedBloc>().add(FetchRecentlyPlayed());
+                    if (state is RecentlyplayedInitial) {
+                      context
+                          .read<RecentlyplayedBloc>()
+                          .add(FetchRecentlyPlayed());
                     }
                     if (state is DisplayRecentlyPlayed) {
-                      return state.recentPlay.isNotEmpty
-                          ? ListView.builder(
-                              // reverse: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: state.recentPlay.length,
-                              itemBuilder: ((context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 8.0, left: 5),
-                                  child: ListTile(
-                                    leading: QueryArtworkWidget(
-                                      keepOldArtwork: true,
-                                      artworkBorder: BorderRadius.circular(10),
-                                      id: state.recentPlay[index].id!,
-                                      type: ArtworkType.AUDIO,
-                                      nullArtworkWidget: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Image.asset(
-                                          'assets/images/music.jpeg',
-                                          height: vheight * 0.06,
-                                          width: vheight * 0.06,
-                                        ),
-                                      ),
+                      // if (state.recentPlay.isNotEmpty) {
+                        return ListView.builder(
+                          // reverse: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: state.recentPlay.length,
+                          itemBuilder: ((context, index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 8.0, left: 5),
+                              child: ListTile(
+                                leading: QueryArtworkWidget(
+                                  keepOldArtwork: true,
+                                  artworkBorder: BorderRadius.circular(10),
+                                  id: state.recentPlay[index].id!,
+                                  type: ArtworkType.AUDIO,
+                                  nullArtworkWidget: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.asset(
+                                      'assets/images/music.jpeg',
+                                      height: vheight * 0.06,
+                                      width: vheight * 0.06,
                                     ),
-                                    title: Text(
-                                      state.recentPlay[index].songname!,
-                                      style:
-                                          GoogleFonts.kanit(color: colorwhite),
-                                    ),
-                                    subtitle: Text(
-                                        state.recentPlay[index].artist ??
-                                            "No Artist",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.kanit(
-                                            color: colorwhite.withOpacity(0.7),
-                                            fontSize: 12)),
-                                    onTap: () {
-                                      _audioPlayer.open(
-                                          Playlist(
-                                              audios: rcentplay,
-                                              startIndex: index),
-                                          showNotification: true,
-                                          headPhoneStrategy:
-                                              HeadPhoneStrategy.pauseOnUnplug,
-                                          loopMode: LoopMode.playlist);
-                                    },
                                   ),
-                                );
-                              }),
-                            )
-                          : Padding(
-                              padding: EdgeInsets.only(top: vheight * 0.3),
-                              child: Text(
-                                "You Have't played any songs",
-                                style: GoogleFonts.kanit(color: colorwhite),
+                                ),
+                                title: Text(
+                                  state.recentPlay[index].songname!,
+                                  style: GoogleFonts.kanit(color: colorwhite),
+                                ),
+                                subtitle: Text(
+                                    state.recentPlay[index].artist ??
+                                        "No Artist",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.kanit(
+                                        color: colorwhite.withOpacity(0.7),
+                                        fontSize: 12)),
+                                onTap: () {
+                                  _audioPlayer.open(
+                                      Playlist(
+                                          audios: rcentplay, startIndex: index),
+                                      showNotification: true,
+                                      headPhoneStrategy:
+                                          HeadPhoneStrategy.pauseOnUnplug,
+                                      loopMode: LoopMode.playlist);
+                                },
                               ),
                             );
+                          }),
+                        );
+                      // } else {
+                        Padding(
+                          padding: EdgeInsets.only(top: vheight * 0.3),
+                          child: Text(
+                            "You Have't played any songs",
+                            style: GoogleFonts.kanit(color: colorwhite),
+                          ),
+                        );
+                      // }
                     }
                     return Text('data');
                   },

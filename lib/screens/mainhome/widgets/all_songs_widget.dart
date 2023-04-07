@@ -6,6 +6,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/logic/allsongs/all_songs_bloc.dart';
 import 'package:music_player/logic/favourites/favourites_bloc.dart';
+import 'package:music_player/logic/recentlyplayed/recentlyplayed_bloc.dart';
 import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/favourites.dart';
 import 'package:music_player/model/mostplayed.dart';
@@ -116,6 +117,8 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                   index: songindex);
                               NowPlayingSlider.enteredvalue.value = songindex;
                               updateRecentlyPlayed(rsongs);
+                              BlocProvider.of<RecentlyplayedBloc>(context).add(AddToRecentlyPlayed(rsongs));
+                                         
                               updatePlayedSongsCount(mostsong, songindex);
                               // print(songindex);
                               // print(allDbsongs[songindex].songname!);
