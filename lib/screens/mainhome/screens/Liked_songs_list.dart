@@ -184,7 +184,7 @@ class _LikedSongsListState extends State<LikedSongsList> {
                                                 fontSize: 12)),
                                         trailing: IconButton(
                                             onPressed: () {
-                                              deletefavourite(index, context);
+                                             BlocProvider.of<FavouritesBloc>(context).add(RemoveFromFavourites(state.favorites[index], index));
                                             },
                                             icon: const Icon(Icons.favorite),
                                             color: Colors.white)),

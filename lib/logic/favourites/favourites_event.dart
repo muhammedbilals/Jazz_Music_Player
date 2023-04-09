@@ -11,6 +11,14 @@ class AddtoFavourites extends FavouritesEvent {
   @override
   List<Object> get props => [favsong];
 }
+class RemoveFromFavourites extends FavouritesEvent {
+  final favourites favsong;
+  final int index;
+
+  RemoveFromFavourites(this.favsong, this.index);
+  @override
+  List<Object> get props => [favsong];
+}
 
 class FetchFavSongs extends FavouritesEvent {
   FetchFavSongs();

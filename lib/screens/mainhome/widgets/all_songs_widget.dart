@@ -174,7 +174,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                       
                                       if (checkFavoriteStatus(
                                           songindex, BuildContext)) {
-                                        addToFavourites(songindex);
+                                        // addToFavourites(songindex);
                                         final snackbar = SnackBar(
                                           content: Padding(
                                             padding: const EdgeInsets.all(8.0),
@@ -196,7 +196,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                             .showSnackBar(snackbar);
                                       } else if (!checkFavoriteStatus(
                                           songindex, BuildContext)) {
-                                        removefavourite(songindex);
+                                        // removefavourite(songindex);
                                       }
                                       setState(
                                         () {
