@@ -6,6 +6,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/logic/allsongs/all_songs_bloc.dart';
 import 'package:music_player/logic/favourites/favourites_bloc.dart';
+import 'package:music_player/logic/playlist/playlist_bloc.dart';
 import 'package:music_player/logic/recentlyplayed/recentlyplayed_bloc.dart';
 import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/favourites.dart';
@@ -117,8 +118,9 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                   index: songindex);
                               NowPlayingSlider.enteredvalue.value = songindex;
                               updateRecentlyPlayed(rsongs);
-                              BlocProvider.of<RecentlyplayedBloc>(context).add(AddToRecentlyPlayed(rsongs));
-                                         
+                              BlocProvider.of<RecentlyplayedBloc>(context)
+                                  .add(AddToRecentlyPlayed(rsongs));
+
                               updatePlayedSongsCount(mostsong, songindex);
                               // print(songindex);
                               // print(allDbsongs[songindex].songname!);
@@ -154,24 +156,25 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                               children: [
                                 IconButton(
                                     onPressed: () {
-                                    
                                       BlocProvider.of<FavouritesBloc>(context)
-                                          .add(AddtoFavourites(favourites(
-                                            
-                                              songname: state
-                                                  .Allsongs[songindex]
-                                                  .songname!,
-                                              artist: state
-                                                  .Allsongs[songindex].artist!,
-                                              duration: state
-                                                  .Allsongs[songindex]
-                                                  .duration!,
-                                              songurl: state
-                                                  .Allsongs[songindex].songurl!,
-                                              id: state
-                                                  .Allsongs[songindex].id!),
-                                                  songindex));
-                                      
+                                          .add(AddtoFavourites(
+                                              favourites(
+                                                  songname: state
+                                                      .Allsongs[songindex]
+                                                      .songname!,
+                                                  artist: state
+                                                      .Allsongs[songindex]
+                                                      .artist!,
+                                                  duration: state
+                                                      .Allsongs[songindex]
+                                                      .duration!,
+                                                  songurl: state
+                                                      .Allsongs[songindex]
+                                                      .songurl!,
+                                                  id: state
+                                                      .Allsongs[songindex].id!),
+                                              songindex));
+
                                       if (checkFavoriteStatus(
                                           songindex, BuildContext)) {
                                         // addToFavourites(songindex);
@@ -434,8 +437,10 @@ showPlaylistOptions(BuildContext context, int songindex) {
                                   color: colorblack,
                                 ),
                                 onPressed: () {
-                                  createplaylist(myController.text);
-                                  Navigator.pop(context);
+                                  // createplaylist(myController.text)
+                                  BlocProvider.of<PlaylistBloc>(context)
+                                      .add(CreatePlaylist(myController.text));
+                                  // Navigator.pop(context);
                                 },
                                 label: Text(
                                   'Done',

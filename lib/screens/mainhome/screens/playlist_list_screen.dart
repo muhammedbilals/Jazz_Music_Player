@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
+import 'package:music_player/logic/playlist/playlist_bloc.dart';
 import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -296,7 +298,11 @@ showPlaylistOptions(BuildContext context) {
                             color: colorblack,
                           ),
                           onPressed: () {
-                            createplaylist(myController.text);
+                            // createplaylist(myController.text);
+                            // BlocProvider.of<PlaylistBloc>(context)
+                            //     .add(createplaylist(myController.text));
+
+                             context.read<PlaylistBloc>().add(CreatePlaylist(myController.text));
                             Navigator.pop(context);
                           },
                           label: Text(
