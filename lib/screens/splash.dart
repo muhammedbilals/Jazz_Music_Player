@@ -37,7 +37,7 @@ class _PlayerSplashState extends State<PlayerSplash> {
     for (var element in fetchSongs) {
       if (element.fileExtension == "mp3") {
         allSongs.add(element);
-      }else if (element.fileExtension == "flac") {
+      } else if (element.fileExtension == "flac") {
         allSongs.add(element);
       }
     }
@@ -52,14 +52,16 @@ class _PlayerSplashState extends State<PlayerSplash> {
             id: element.id),
       );
     }
-    for (var element in allSongs) {
-      await box.add(Songs(
-        songname: element.title,
-        artist: element.artist,
-        duration: element.duration,
-        id: element.id,
-        songurl: element.uri,
-      ));
+    if (box.isEmpty) {
+      for (var element in allSongs) {
+        await box.add(Songs(
+          songname: element.title,
+          artist: element.artist,
+          duration: element.duration,
+          id: element.id,
+          songurl: element.uri,
+        ));
+      }
     }
     if (!mounted) return;
     setState(() {});

@@ -18,3 +18,18 @@ class CreatePlaylist extends PlaylistEvent {
 
   CreatePlaylist(this.title);
 }
+
+class DeletePlaylistSong extends PlaylistEvent {
+  final int index;
+
+  DeletePlaylistSong(this.index);
+
+  @override
+  List<Object> get props => [index];
+}
+
+class DeletePlaylist extends PlaylistEvent {
+  final int index;
+
+  DeletePlaylist(this.index);
+}

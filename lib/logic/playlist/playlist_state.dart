@@ -4,7 +4,7 @@ part of 'playlist_bloc.dart';
 abstract class PlaylistState extends Equatable {}
 
 class PlaylistInitial extends PlaylistState {
-  PlaylistInitial();
+ 
 
   @override
   List<Object> get props => [];
@@ -16,5 +16,5 @@ class DisplayPlaylist extends PlaylistState {
   DisplayPlaylist(this.Playlist);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [Playlist];
 }

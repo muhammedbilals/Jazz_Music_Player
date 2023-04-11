@@ -1,3 +1,4 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,6 +9,7 @@ import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screens/mainhome/screens/playlist_full_list.dart';
 import 'package:music_player/screens/mainhome/widgets/all_songs_widget.dart';
+import 'package:music_player/screens/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class PlayListScreen extends StatefulWidget {
@@ -91,36 +93,35 @@ class _PlayListScreenState extends State<PlayListScreen> {
                   ],
                 ),
               ),
-              ValueListenableBuilder<Box<PlaylistSongs>>(
-                valueListenable: playlistbox.listenable(),
-                builder: (context, Box<PlaylistSongs> playlistsongs, child) {
-                  List<PlaylistSongs> playlistsong =
-                      playlistsongs.values.toList();
-                  return playlistsong.isNotEmpty
-                      ? (ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: playlistsong.length,
-                          itemBuilder: ((context, index) {
-                            return ListTile(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: ((context) => PlaylistFullList(
-                                            playindex: index,
-                                            playlistname: playlistsong[index]
-                                                .playlistname))));
-                              },
-                              leading: playlistsong[index]
-                                      .playlistssongs!
-                                      .isNotEmpty
+              BlocBuilder<PlaylistBloc, PlaylistState>(
+                builder: (context, state) {
+                  if (state is PlaylistInitial) {
+                    context.read<PlaylistBloc>().add(FetchPlayListSongs());
+                  }
+                  if (state is DisplayPlaylist) {
+                    // return state.Playlist.isNotEmpty
+                    return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: state.Playlist.length,
+                      itemBuilder: ((context, index) {
+                        return ListTile(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => PlaylistFullList(
+                                        playindex: index,
+                                        playlistname: state
+                                            .Playlist[index].playlistname))));
+                          },
+                          leading:
+                              state.Playlist[index].playlistssongs!.isNotEmpty
                                   ? QueryArtworkWidget(
                                       keepOldArtwork: true,
                                       artworkBorder: BorderRadius.circular(10),
-                                      id: playlistsong[index]
-                                          .playlistssongs![0]
-                                          .id!,
+                                      id: state.Playlist[index]
+                                          .playlistssongs![0].id!,
                                       type: ArtworkType.AUDIO,
                                       nullArtworkWidget: ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
@@ -143,40 +144,42 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                         ),
                                       ),
                                     ),
-                              title: Text(
-                                playlistsong[index].playlistname!,
-                                style: GoogleFonts.kanit(color: colorwhite),
+                          title: Text(
+                            state.Playlist[index].playlistname!,
+                            style: GoogleFonts.kanit(color: colorwhite),
+                          ),
+                          trailing: Wrap(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  showPlaylistEditOption(context, index);
+                                },
+                                icon: Icon(Icons.edit),
+                                color: colorwhite,
                               ),
-                              trailing: Wrap(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      showPlaylistEditOption(context, index);
-                                    },
-                                    icon: Icon(Icons.edit),
-                                    color: colorwhite,
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      showPlaylistDeleteConfirmation(
-                                          context, index);
-                                    },
-                                    icon: Icon(Icons.delete),
-                                    color: Colors.red,
-                                  ),
-                                ],
+                              IconButton(
+                                onPressed: () {
+                                  showPlaylistDeleteConfirmation(
+                                      context, index);
+                                },
+                                icon: Icon(Icons.delete),
+                                color: Colors.red,
                               ),
-                            );
-                          }),
-                        ))
-                      : Padding(
-                          padding: EdgeInsets.only(top: vheight * 0.3),
-                          child: Text(
-                            "You haven't created any playlist!",
-                            style: GoogleFonts.kanit(
-                                color: colorwhite, fontSize: 15),
+                            ],
                           ),
                         );
+                      }),
+                    );
+                    // : Padding(
+                    //     padding: EdgeInsets.only(top: vheight * 0.3),
+                    //     child: Text(
+                    //       "You haven't created any playlist!",
+                    //       style: GoogleFonts.kanit(
+                    //           color: colorwhite, fontSize: 15),
+                    //     ),
+                    //   );
+                  }
+                  return Text('data');
                 },
               )
             ],
@@ -300,9 +303,16 @@ showPlaylistOptions(BuildContext context) {
                           onPressed: () {
                             // createplaylist(myController.text);
                             // BlocProvider.of<PlaylistBloc>(context)
-                            //     .add(createplaylist(myController.text));
+                            //     .add(CreatePlaylist(myController.text));
 
-                             context.read<PlaylistBloc>().add(CreatePlaylist(myController.text));
+                            context
+                                .read<PlaylistBloc>()
+                                .add(CreatePlaylist(myController.text));
+
+                                                            context
+                                .read<PlaylistBloc>()
+                                .add(FetchPlayListSongs());
+                                
                             Navigator.pop(context);
                           },
                           label: Text(
@@ -521,7 +531,10 @@ showPlaylistDeleteConfirmation(BuildContext context, int index) {
                             color: colorwhite,
                           ),
                           onPressed: () {
-                            deletePlaylist(index);
+                            // deletePlaylist(index);
+                            // BlocProvider.of<PlaylistBloc>(context)
+                            //     .add(DeletePlaylist(index));
+                            context.read<PlaylistBloc>().add(DeletePlaylist(index));
                             Navigator.pop(context);
                           },
                           label: Text(
