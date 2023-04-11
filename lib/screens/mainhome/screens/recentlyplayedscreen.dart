@@ -37,7 +37,7 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
           ),
         ),
       );
-      setState(() {});
+     
     }
     super.initState();
   }

@@ -64,7 +64,7 @@ class _PlayerSplashState extends State<PlayerSplash> {
       }
     }
     if (!mounted) return;
-    setState(() {});
+
     await Future.delayed(const Duration(milliseconds: 500), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(

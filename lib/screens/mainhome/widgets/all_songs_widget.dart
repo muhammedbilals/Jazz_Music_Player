@@ -173,20 +173,6 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                               id: state
                                                   .Allsongs[songindex].id!),
                                           songindex));
-
-                                  // if (checkFavoriteStatus(
-                                  //     songindex, BuildContext)) {
-                                  // } else if (!checkFavoriteStatus(
-                                  //     songindex, BuildContext)) {
-                                  //   // removefavourite(songindex);
-                                  // }
-                                  // setState(
-                                  //   () {
-                                  //     istaped = !istaped;
-                                  //   },
-                                  // );
-                                  // print(
-                                  //     state.Allsongs[songindex].songname!);
                                 }, icon: BlocBuilder<FavouritesBloc, FavouritesState>(
                                   builder: (context, state) {
                                     return Icon(Icons.favorite,

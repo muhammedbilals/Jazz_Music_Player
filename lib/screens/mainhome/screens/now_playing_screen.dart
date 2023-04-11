@@ -267,7 +267,6 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                           children: [
                                             IconButton(
                                                 onPressed: () {
-                                                  setState(() {});
                                                   _audioPlayer.toggleShuffle();
                                                 },
                                                 icon: (isShuffleOn)
@@ -341,7 +340,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                                   // skipMusic(_audioPlayer,
                                                   //     value1, allDbdongs);
                                                   await _audioPlayer.next();
-                                                  setState(() {});
+                                                 
                                                 },
                                                 icon: const Icon(
                                                   Icons.skip_next,

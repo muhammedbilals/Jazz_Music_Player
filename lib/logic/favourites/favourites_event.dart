@@ -9,7 +9,7 @@ class AddorRemoveFavourites extends FavouritesEvent {
 
   AddorRemoveFavourites(this.favsong, this.index);
   @override
-  List<Object> get props => [favsong];
+  List<Object> get props => [favsong,index];
 }
 class RemoveFromFavourites extends FavouritesEvent {
   final favourites favsong;
@@ -17,7 +17,7 @@ class RemoveFromFavourites extends FavouritesEvent {
 
   RemoveFromFavourites(this.favsong, this.index);
   @override
-  List<Object> get props => [favsong];
+  List<Object> get props => [favsong,index];
 }
 
 class RemoveFromFavouritesList extends FavouritesEvent {
