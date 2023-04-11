@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,8 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/logic/favourites/favourites_bloc.dart';
 import 'package:music_player/model/favourites.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
 import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
@@ -28,8 +27,8 @@ class _LikedSongsListState extends State<LikedSongsList> {
 
   @override
   void initState() {
-    final List<favourites> favouritesongs =
-        box.values.toList().reversed.toList();
+    log('init state called in fav');
+    final List<favourites> favouritesongs = box.values.toList();
     for (var item in favouritesongs) {
       favsong.add(
         Audio.file(
@@ -42,7 +41,7 @@ class _LikedSongsListState extends State<LikedSongsList> {
         ),
       );
     }
-    setState(() {});
+
     super.initState();
   }
 
@@ -184,7 +183,17 @@ class _LikedSongsListState extends State<LikedSongsList> {
                                                 fontSize: 12)),
                                         trailing: IconButton(
                                             onPressed: () {
-                                             BlocProvider.of<FavouritesBloc>(context).add(RemoveFromFavourites(state.favorites[index], index));
+                                              // BlocProvider.of<FavouritesBloc>(
+                                              //         context)
+                                              //     .add(RemoveFromFavourites(
+                                              //         state.favorites[index],
+                                              //         index));
+                                              context
+                                                  .read<FavouritesBloc>()
+                                                  .add(RemoveFromFavouritesList(
+                                                      index));
+                                                      
+                                              // initState();
                                             },
                                             icon: const Icon(Icons.favorite),
                                             color: Colors.white)),

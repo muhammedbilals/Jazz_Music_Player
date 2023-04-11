@@ -42,9 +42,14 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
       }
     });
     on<RemoveFromFavouritesList>((event, emit) {
-      final favbox = favocuritesbox.getInstance();
-      favbox.deleteAt(event.index);
-      add(FetchFavSongs());
+      try {
+        final favbox = favocuritesbox.getInstance();
+        favbox.deleteAt(event.index);
+        
+        add(FetchFavSongs());
+      } on Exception catch (e) {
+        log(e.toString());
+      }
     });
 
     // on<RemoveFromFavourites>((event, emit) {
