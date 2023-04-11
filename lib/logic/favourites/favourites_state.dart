@@ -13,11 +13,6 @@ class FavouritesInitial extends FavouritesState {
   List<Object> get props => [];
 }
 
-// class ShowFaouritesStatus extends FavouritesState {
-//   final bool isAlreadyAdded;
-
-//   ShowFaouritesStatus(this.isAlreadyAdded);
-// }
 class DisplayFavSongs extends FavouritesState {
   final List<favourites> favorites;
 

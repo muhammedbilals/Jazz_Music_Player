@@ -34,11 +34,3 @@ class FetchFavSongs extends FavouritesEvent {
   @override
   List<Object> get props => [];
 }
-
-// class CheckFavouritesStatus extends FavouritesEvent {
-//   final int id;
-
-//   CheckFavouritesStatus(this.id);
-//   @override
-//   List<Object> get props => [];
-// }

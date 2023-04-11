@@ -9,7 +9,6 @@ import 'package:music_player/logic/bloc/mostplayed_bloc.dart';
 import 'package:music_player/logic/favourites/favourites_bloc.dart';
 import 'package:music_player/logic/playlist/playlist_bloc.dart';
 import 'package:music_player/logic/recentlyplayed/recentlyplayed_bloc.dart';
-import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/favourites.dart';
 import 'package:music_player/model/mostplayed.dart';
 import 'package:music_player/model/playlistmodel.dart';
@@ -17,12 +16,9 @@ import 'package:music_player/model/recentlyplayed.dart';
 import 'package:music_player/model/songmodel.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
-import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
-import 'package:music_player/screens/mainhome/screens/now_playing_slider.dart';
 import 'package:music_player/screens/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:bloc/bloc.dart';
 
 class AllSongsWidget extends StatefulWidget {
   const AllSongsWidget({super.key});
@@ -31,12 +27,9 @@ class AllSongsWidget extends StatefulWidget {
   State<AllSongsWidget> createState() => _AllSongsWidgetState();
 }
 
-// final alldbsongs = SongBox.getInstance();
-// List<Songs> allDbsongs = alldbsongs.values.toList();
 final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
 final songbox = SongBox.getInstance();
 final box4 = favocuritesbox.getInstance();
-List<favourites> favdb = box4.values.toList();
 final List<MostPlayed> mostplayedsong = mostbox.values.toList();
 final playlistbox = PlaylistSongsbox.getInstance();
 
@@ -111,14 +104,12 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                 showNotification: true,
                               );
                               rsongs = RecentlyPlayed(
-                                  id:state.Allsongs[songindex].id,
+                                  id: state.Allsongs[songindex].id,
                                   artist: state.Allsongs[songindex].artist,
                                   duration: state.Allsongs[songindex].duration,
                                   songname: state.Allsongs[songindex].songname,
                                   songurl: state.Allsongs[songindex].songurl,
                                   index: songindex);
-                              // NowPlayingSlider.enteredvalue.value = songindex;
-                              // updateRecentlyPlayed(rsongs);
                               BlocProvider.of<RecentlyplayedBloc>(context)
                                   .add(AddToRecentlyPlayed(rsongs));
 
@@ -155,8 +146,6 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: [
                                 IconButton(onPressed: () {
-                                  //                           int songindex = state.Allsongs.indexWhere(
-                                  // (element) => element.songname == playing.audio.audio.metas.title);
                                   BlocProvider.of<FavouritesBloc>(context).add(
                                       AddorRemoveFavourites(
                                           favourites(
@@ -173,7 +162,8 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                               id: state
                                                   .Allsongs[songindex].id!),
                                           songindex));
-                                }, icon: BlocBuilder<FavouritesBloc, FavouritesState>(
+                                }, icon: BlocBuilder<FavouritesBloc,
+                                    FavouritesState>(
                                   builder: (context, state) {
                                     return Icon(Icons.favorite,
                                         color: (checkFavoriteStatus(songindex))
@@ -274,8 +264,6 @@ showPlaylistOptions(BuildContext context, int songindex) {
                                               playlistname: playlistsong[index]
                                                   .playlistname,
                                               playlistssongs: playsongdb));
-                                      // print(
-                                      //     'song added to${playlistsong[index].playlistname}');
                                       Navigator.pop(context);
                                     },
                                     title: Text(

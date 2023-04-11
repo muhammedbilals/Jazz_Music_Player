@@ -301,18 +301,9 @@ showPlaylistOptions(BuildContext context) {
                             color: colorblack,
                           ),
                           onPressed: () {
-                            // createplaylist(myController.text);
-                            // BlocProvider.of<PlaylistBloc>(context)
-                            //     .add(CreatePlaylist(myController.text));
-
                             context
                                 .read<PlaylistBloc>()
                                 .add(CreatePlaylist(myController.text));
-
-                                //                             context
-                                // .read<PlaylistBloc>()
-                                // .add(FetchPlayListSongs());
-                                
                             Navigator.pop(context);
                           },
                           label: Text(
@@ -446,7 +437,8 @@ showPlaylistEditOption(BuildContext context, int index) {
                         ),
                         onPressed: () {
                           // editPlaylist(textEditmyController.text, index);
-                            context.read<PlaylistBloc>().add(EditPlaylist(index,textEditmyController.text));
+                          context.read<PlaylistBloc>().add(
+                              EditPlaylist(index, textEditmyController.text));
                           Navigator.pop(context);
                         },
                         label: Text(
@@ -532,10 +524,9 @@ showPlaylistDeleteConfirmation(BuildContext context, int index) {
                             color: colorwhite,
                           ),
                           onPressed: () {
-                            // deletePlaylist(index);
-                            // BlocProvider.of<PlaylistBloc>(context)
-                            //     .add(DeletePlaylist(index));
-                            context.read<PlaylistBloc>().add(DeletePlaylist(index));
+                            context
+                                .read<PlaylistBloc>()
+                                .add(DeletePlaylist(index));
                             Navigator.pop(context);
                           },
                           label: Text(

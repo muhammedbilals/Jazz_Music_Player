@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:music_player/model/dbfunctions.dart';
 import 'package:music_player/model/favourites.dart';
 import 'package:music_player/model/songmodel.dart';
-import 'package:music_player/screens/mainhome/screens/Liked_songs_list.dart';
 import 'package:music_player/screens/splash.dart';
 
 addToFavourites(int index) async {
@@ -41,17 +40,6 @@ removefavourite(int index) async {
   await favouritesdb.deleteAt(currentindex);
 }
 
-// deletefavourite(int index, BuildContext context) async {
-//   await favouritesdb.deleteAt(favouritesdb.length - index - 1);
-//   Navigator.pushReplacement(
-//     context,
-//     PageRouteBuilder(
-//       pageBuilder: (context, animation1, animation2) => LikedSongsList(),
-//       transitionDuration: Duration.zero,
-//       reverseTransitionDuration: Duration.zero,
-//     ),
-//   );
-// }
 
 bool checkFavoriteStatus(int index) {
   List<favourites> favouritessongs = [];

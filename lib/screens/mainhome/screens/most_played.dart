@@ -124,7 +124,6 @@ class _MostPlayedScreenState extends State<MostPlayedScreen> {
                   builder: (context, Box<MostPlayed> mostplayedDB, child) {
                     List<MostPlayed> mostplayedsongs =
                         mostplayedDB.values.toList();
-
                     return mostfinalsong.isNotEmpty
                         ? (ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),

@@ -183,16 +183,16 @@ class _LikedSongsListState extends State<LikedSongsList> {
                                                 fontSize: 12)),
                                         trailing: IconButton(
                                             onPressed: () {
-                                              // BlocProvider.of<FavouritesBloc>(
-                                              //         context)
-                                              //     .add(RemoveFromFavourites(
-                                              //         state.favorites[index],
-                                              //         index));
                                               context
                                                   .read<FavouritesBloc>()
                                                   .add(RemoveFromFavouritesList(
                                                       index));
-                                                      
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        LikedSongsList(),
+                                                  ));
                                               // initState();
                                             },
                                             icon: const Icon(Icons.favorite),

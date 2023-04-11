@@ -51,35 +51,5 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
         log(e.toString());
       }
     });
-
-    // on<RemoveFromFavourites>((event, emit) {
-    //   final favbox = favocuritesbox.getInstance();
-    //   List<favourites> favourite = favbox.values.toList();
-    //   try {
-    //     bool isAlreadyThere = favourite
-    //         .where((element) => element.songname == event.favsong.songname)
-    //         .isEmpty;
-    //     if (isAlreadyThere) {
-    //       favbox.delete(event.favsong);
-
-    //       print("${event.favsong.songname} song deleted from fav");
-    //     } else {
-    //       // print("already added");
-    //     }
-
-    //     add(FetchFavSongs());
-    //   } catch (e) {
-    //     log(e.toString());
-    //   }
-    // });
-    // on<CheckFavouritesStatus>((event, emit) {
-    //   final favbox = favocuritesbox.getInstance();
-    //   List<favourites> favourite = favbox.values.toList();
-
-    //   bool isAlreadyThere = favourite
-    //       .where((element) => element.id == favourite[event.id].songname)
-    //       .isEmpty;
-    //   emit(ShowFaouritesStatus(isAlreadyThere));
-    // });
   }
 }
