@@ -171,13 +171,13 @@ class _RecentlyPlayedScreenState extends State<RecentlyPlayedScreen> {
                           }),
                         );
                       // } else {
-                        Padding(
-                          padding: EdgeInsets.only(top: vheight * 0.3),
-                          child: Text(
-                            "You Have't played any songs",
-                            style: GoogleFonts.kanit(color: colorwhite),
-                          ),
-                        );
+                      //   Padding(
+                      //     padding: EdgeInsets.only(top: vheight * 0.3),
+                      //     child: Text(
+                      //       "You Have't played any songs",
+                      //       style: GoogleFonts.kanit(color: colorwhite),
+                      //     ),
+                      //   );
                       // }
                     }
                     return Text('data');

@@ -111,14 +111,14 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                 showNotification: true,
                               );
                               rsongs = RecentlyPlayed(
-                                  id: songs.id,
-                                  artist: songs.artist,
-                                  duration: songs.duration,
-                                  songname: songs.songname,
-                                  songurl: songs.songurl,
+                                  id:state.Allsongs[songindex].id,
+                                  artist: state.Allsongs[songindex].artist,
+                                  duration: state.Allsongs[songindex].duration,
+                                  songname: state.Allsongs[songindex].songname,
+                                  songurl: state.Allsongs[songindex].songurl,
                                   index: songindex);
-                              NowPlayingSlider.enteredvalue.value = songindex;
-                              updateRecentlyPlayed(rsongs);
+                              // NowPlayingSlider.enteredvalue.value = songindex;
+                              // updateRecentlyPlayed(rsongs);
                               BlocProvider.of<RecentlyplayedBloc>(context)
                                   .add(AddToRecentlyPlayed(rsongs));
 

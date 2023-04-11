@@ -32,16 +32,17 @@ class RecentlyplayedBloc
             .isEmpty;
         if (isAlready == true) {
           box.add(event.recentlyPlayed);
+          log('${event.recentlyPlayed.songname}  added to recentlyplayed');
           add(FetchRecentlyPlayed());
         } else {
           int index = recentlyplayed.indexWhere(
-              (element) => element.songname == event.recentlyPlayed.songname);
+              (element) => element.id == event.recentlyPlayed.id);
           box.deleteAt(index);
           box.add(event.recentlyPlayed);
-          print('${event.recentlyPlayed.songname}added to recentlyplayed');
+          log('${event.recentlyPlayed.songname}  added to recentlyplayed');
           add(FetchRecentlyPlayed());
         }
-      } on Exception catch (e) {
+      } catch (e) {
         log(e.toString());
       }
     });

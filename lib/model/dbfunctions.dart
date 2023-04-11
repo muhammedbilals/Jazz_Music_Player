@@ -18,20 +18,20 @@ openmostplayeddb() async {
 }
 
 
-updateRecentlyPlayed(RecentlyPlayed value) {
-  List<RecentlyPlayed> list = RecentlyPlayedBox.values.toList();
-  bool isAlready =
-      list.where((element) => element.songname == value.songname).isEmpty;
-  if (isAlready == true) {
-    RecentlyPlayedBox.add(value);
-  } else {
-    int index =
-        list.indexWhere((element) => element.songname == value.songname);
-    RecentlyPlayedBox.deleteAt(index);
-    RecentlyPlayedBox.add(value);
-    // print(value.songname);
-  }
-}
+// updateRecentlyPlayed(RecentlyPlayed value) {
+//   List<RecentlyPlayed> list = RecentlyPlayedBox.values.toList();
+//   bool isAlready =
+//       list.where((element) => element.songname == value.songname).isEmpty;
+//   if (isAlready == true) {
+//     RecentlyPlayedBox.add(value);
+//   } else {
+//     int index =
+//         list.indexWhere((element) => element.songname == value.songname);
+//     RecentlyPlayedBox.deleteAt(index);
+//     RecentlyPlayedBox.add(value);
+//     // print(value.songname);
+//   }
+// }
 
 updatePlayedSongsCount(MostPlayed value, int index) {
   final box = MostplayedBox.getInstance();

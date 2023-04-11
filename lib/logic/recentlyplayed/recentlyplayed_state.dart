@@ -12,5 +12,5 @@ class DisplayRecentlyPlayed extends RecentlyplayedState {
   List<RecentlyPlayed> recentPlay;
   DisplayRecentlyPlayed(this.recentPlay) {}
   @override
-  List<Object> get props => [];
+  List<Object> get props => [recentPlay];
 }
