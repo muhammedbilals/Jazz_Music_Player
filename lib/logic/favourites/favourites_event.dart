@@ -3,11 +3,11 @@ part of 'favourites_bloc.dart';
 @immutable
 abstract class FavouritesEvent extends Equatable {}
 
-class AddtoFavourites extends FavouritesEvent {
+class AddorRemoveFavourites extends FavouritesEvent {
   final favourites favsong;
   final int index;
 
-  AddtoFavourites(this.favsong, this.index);
+  AddorRemoveFavourites(this.favsong, this.index);
   @override
   List<Object> get props => [favsong];
 }
@@ -18,6 +18,14 @@ class RemoveFromFavourites extends FavouritesEvent {
   RemoveFromFavourites(this.favsong, this.index);
   @override
   List<Object> get props => [favsong];
+}
+
+class RemoveFromFavouritesList extends FavouritesEvent {
+  final int index;
+
+  RemoveFromFavouritesList( this.index);
+  @override
+  List<Object> get props => [index];
 }
 
 class FetchFavSongs extends FavouritesEvent {

@@ -190,23 +190,23 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                                   IconButton(
                                     onPressed: () {
                                       if (checkFavoriteStatus(
-                                          playing.index, BuildContext)) {
+                                          playing.index)) {
                                         addToFavourites(playing.index);
                                       } else if (!checkFavoriteStatus(
-                                          playing.index, BuildContext)) {
+                                          playing.index)) {
                                         removefavourite(playing.index);
                                       }
                                       setState(
                                         () {
                                           checkFavoriteStatus(playing.index,
-                                                  BuildContext) ==
+                                                  ) ==
                                               !checkFavoriteStatus(
-                                                  playing.index, BuildContext);
+                                                  playing.index, );
                                         },
                                       );
                                     },
                                     icon: (checkFavoriteStatus(
-                                            playing.index, BuildContext))
+                                            playing.index, ))
                                         ? const Icon(
                                             Icons.favorite_border_outlined,
                                             color: colorwhite,

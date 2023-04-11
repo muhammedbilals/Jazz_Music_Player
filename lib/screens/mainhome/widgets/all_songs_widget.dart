@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/logic/allsongs/all_songs_bloc.dart';
+import 'package:music_player/logic/bloc/mostplayed_bloc.dart';
 import 'package:music_player/logic/favourites/favourites_bloc.dart';
 import 'package:music_player/logic/playlist/playlist_bloc.dart';
 import 'package:music_player/logic/recentlyplayed/recentlyplayed_bloc.dart';
@@ -121,9 +122,8 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                               BlocProvider.of<RecentlyplayedBloc>(context)
                                   .add(AddToRecentlyPlayed(rsongs));
 
-                              updatePlayedSongsCount(mostsong, songindex);
-                              // print(songindex);
-                              // print(allDbsongs[songindex].songname!);
+                              context.read<MostplayedBloc>().add(
+                                  UpdateMostPlayedCount(mostsong, songindex));
                             },
                             leading: QueryArtworkWidget(
                               artworkHeight: vheight * 0.06,
@@ -154,67 +154,48 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                             trailing: Wrap(
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: [
-                                IconButton(
-                                    onPressed: () {
-                                      BlocProvider.of<FavouritesBloc>(context)
-                                          .add(AddtoFavourites(
-                                              favourites(
-                                                  songname: state
-                                                      .Allsongs[songindex]
-                                                      .songname!,
-                                                  artist: state
-                                                      .Allsongs[songindex]
-                                                      .artist!,
-                                                  duration: state
-                                                      .Allsongs[songindex]
-                                                      .duration!,
-                                                  songurl: state
-                                                      .Allsongs[songindex]
-                                                      .songurl!,
-                                                  id: state
-                                                      .Allsongs[songindex].id!),
-                                              songindex));
+                                IconButton(onPressed: () {
+                                  //                           int songindex = state.Allsongs.indexWhere(
+                                  // (element) => element.songname == playing.audio.audio.metas.title);
+                                  BlocProvider.of<FavouritesBloc>(context).add(
+                                      AddorRemoveFavourites(
+                                          favourites(
+                                              songname: state
+                                                  .Allsongs[songindex]
+                                                  .songname!,
+                                              artist: state
+                                                  .Allsongs[songindex].artist!,
+                                              duration: state
+                                                  .Allsongs[songindex]
+                                                  .duration!,
+                                              songurl: state
+                                                  .Allsongs[songindex].songurl!,
+                                              id: state
+                                                  .Allsongs[songindex].id!),
+                                          songindex));
 
-                                      if (checkFavoriteStatus(
-                                          songindex, BuildContext)) {
-                                        // addToFavourites(songindex);
-                                        final snackbar = SnackBar(
-                                          content: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              'Added to Favourites',
-                                              style: GoogleFonts.kanit(
-                                                  color: colordark,
-                                                  fontSize: 15),
-                                            ),
-                                          ),
-                                          backgroundColor: colorextralight,
-                                          dismissDirection:
-                                              DismissDirection.down,
-                                          elevation: 10,
-                                          padding: EdgeInsets.only(
-                                              top: 10, bottom: 15),
-                                        );
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackbar);
-                                      } else if (!checkFavoriteStatus(
-                                          songindex, BuildContext)) {
-                                        // removefavourite(songindex);
-                                      }
-                                      setState(
-                                        () {
-                                          istaped = !istaped;
-                                        },
-                                      );
-                                      print(
-                                          state.Allsongs[songindex].songname!);
-                                    },
-                                    icon: Icon(Icons.favorite,
-                                        color: (checkFavoriteStatus(
-                                                songindex, BuildContext))
+                                  // if (checkFavoriteStatus(
+                                  //     songindex, BuildContext)) {
+                                  // } else if (!checkFavoriteStatus(
+                                  //     songindex, BuildContext)) {
+                                  //   // removefavourite(songindex);
+                                  // }
+                                  // setState(
+                                  //   () {
+                                  //     istaped = !istaped;
+                                  //   },
+                                  // );
+                                  // print(
+                                  //     state.Allsongs[songindex].songname!);
+                                }, icon: BlocBuilder<FavouritesBloc, FavouritesState>(
+                                  builder: (context, state) {
+                                    return Icon(Icons.favorite,
+                                        color: (checkFavoriteStatus(songindex))
                                             ? Color.fromARGB(255, 85, 85, 85)
                                             : Color.fromARGB(
-                                                255, 255, 255, 255))),
+                                                255, 255, 255, 255));
+                                  },
+                                )),
                                 IconButton(
                                   onPressed: () {
                                     showPlaylistOptions(context, songindex);
