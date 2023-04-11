@@ -33,3 +33,13 @@ class DeletePlaylist extends PlaylistEvent {
 
   DeletePlaylist(this.index);
 }
+
+class EditPlaylist extends PlaylistEvent {
+  final int index;
+  final String title;
+
+  EditPlaylist(this.index,this.title);
+
+    @override
+  List<Object> get props => [index,title];
+}

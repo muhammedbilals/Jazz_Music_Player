@@ -76,5 +76,18 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
       box1.deleteAt(event.index);
       add(FetchPlayListSongs());
     });
+    on<EditPlaylist>((event, emit) {
+      final playlistbox = PlaylistSongsbox.getInstance();
+      List<PlaylistSongs> playlistsong = playlistbox.values.toList();
+      final box1 = PlaylistSongsbox.getInstance();
+
+      box1.putAt(
+          event.index,
+          PlaylistSongs(
+              playlistname: event.title,
+              playlistssongs: playlistsong[event.index].playlistssongs));
+      add(FetchPlayListSongs());
+
+    });
   }
 }

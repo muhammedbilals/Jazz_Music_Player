@@ -309,9 +309,9 @@ showPlaylistOptions(BuildContext context) {
                                 .read<PlaylistBloc>()
                                 .add(CreatePlaylist(myController.text));
 
-                                                            context
-                                .read<PlaylistBloc>()
-                                .add(FetchPlayListSongs());
+                                //                             context
+                                // .read<PlaylistBloc>()
+                                // .add(FetchPlayListSongs());
                                 
                             Navigator.pop(context);
                           },
@@ -445,7 +445,8 @@ showPlaylistEditOption(BuildContext context, int index) {
                           color: colorblack,
                         ),
                         onPressed: () {
-                          editPlaylist(textEditmyController.text, index);
+                          // editPlaylist(textEditmyController.text, index);
+                            context.read<PlaylistBloc>().add(EditPlaylist(index,textEditmyController.text));
                           Navigator.pop(context);
                         },
                         label: Text(

@@ -437,10 +437,10 @@ showPlaylistOptions(BuildContext context, int songindex) {
                                   color: colorblack,
                                 ),
                                 onPressed: () {
+                                  Navigator.pop(context);
                                   // createplaylist(myController.text)
                                   BlocProvider.of<PlaylistBloc>(context)
                                       .add(CreatePlaylist(myController.text));
-                                  // Navigator.pop(context);
                                 },
                                 label: Text(
                                   'Done',
