@@ -3,8 +3,8 @@ part of 'mostplayed_bloc.dart';
 @immutable
 abstract class MostplayedEvent {}
 
-class FetchRecentlyPlayed extends MostplayedEvent {
-  FetchRecentlyPlayed();
+class FetchMostPlayed extends MostplayedEvent {
+  FetchMostPlayed();
 }
 
 class UpdateMostPlayedCount extends MostplayedEvent {

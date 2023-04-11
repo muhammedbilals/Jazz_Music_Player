@@ -9,10 +9,10 @@ class MostplayedInitial extends MostplayedState {
   List<Object> get props => [];
 }
 
-class DisplayRecentlyPlayed extends MostplayedState {
+class DisplayMostPlayed extends MostplayedState {
  final List<MostPlayed> mostPlayed;
 
-  DisplayRecentlyPlayed(this.mostPlayed);
+  DisplayMostPlayed(this.mostPlayed);
 
     @override
   List<Object> get props => [mostPlayed];

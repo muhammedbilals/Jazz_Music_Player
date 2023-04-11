@@ -1,27 +1,19 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/logic/playlist/playlist_bloc.dart';
 import 'package:music_player/model/playlistmodel.dart';
-import 'package:music_player/screens/mainhome/functions/createplaylist.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screens/mainhome/screens/playlist_full_list.dart';
-import 'package:music_player/screens/mainhome/widgets/all_songs_widget.dart';
-import 'package:music_player/screens/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class PlayListScreen extends StatefulWidget {
-  const PlayListScreen({super.key});
+class PlayListScreen extends StatelessWidget {
+   PlayListScreen({super.key});
 
-  @override
-  State<PlayListScreen> createState() => _PlayListScreenState();
-}
-
-class _PlayListScreenState extends State<PlayListScreen> {
   final playlistbox = PlaylistSongsbox.getInstance();
+
   late List<PlaylistSongs> playlistsong = playlistbox.values.toList();
+
   final List<PlaylistModel> playlistsong1 = [];
 
   @override
@@ -170,16 +162,15 @@ class _PlayListScreenState extends State<PlayListScreen> {
                         );
                       }),
                     );
-                    // : Padding(
-                    //     padding: EdgeInsets.only(top: vheight * 0.3),
-                    //     child: Text(
-                    //       "You haven't created any playlist!",
-                    //       style: GoogleFonts.kanit(
-                    //           color: colorwhite, fontSize: 15),
-                    //     ),
-                    //   );
                   }
-                  return Text('data');
+                  return  Padding(
+                        padding: EdgeInsets.only(top: vheight * 0.3),
+                        child: Text(
+                          "You haven't created any playlist!",
+                          style: GoogleFonts.kanit(
+                              color: colorwhite, fontSize: 15),
+                        ),
+                      );
                 },
               )
             ],

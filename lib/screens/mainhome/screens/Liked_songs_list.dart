@@ -19,7 +19,6 @@ class LikedSongsList extends StatefulWidget {
 final _audioPlayer = AssetsAudioPlayer.withId('0');
 
 class _LikedSongsListState extends State<LikedSongsList> {
-  final List<favourites> favourite = [];
   final box = favocuritesbox.getInstance();
   late List<favourites> favouritesongs2 = box.values.toList();
   bool isalready = true;
@@ -189,9 +188,12 @@ class _LikedSongsListState extends State<LikedSongsList> {
                                                       index));
                                               Navigator.pushReplacement(
                                                   context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        LikedSongsList(),
+                                                  PageRouteBuilder(
+                                                    pageBuilder:(context, animation, secondaryAnimation) => LikedSongsList(),
+                                                  
+                                                     transitionDuration: Duration.zero,
+                                              reverseTransitionDuration:
+                                                  Duration.zero,
                                                   ));
                                               // initState();
                                             },

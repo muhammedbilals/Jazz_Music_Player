@@ -9,14 +9,9 @@ import 'package:music_player/screens/mainhome/widgets/card_widget.dart';
 import 'package:music_player/screens/mainhome/widgets/playlist_slider_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class PlayerHome extends StatefulWidget {
+class PlayerHome extends StatelessWidget {
   PlayerHome({super.key});
 
-  @override
-  State<PlayerHome> createState() => _PlayerHomeState();
-}
-
-class _PlayerHomeState extends State<PlayerHome> {
   final box = SongBox.getInstance();
 
   @override

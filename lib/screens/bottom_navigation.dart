@@ -5,16 +5,12 @@ import 'package:music_player/screens/mainhome/screens/profile_page.dart';
 import 'package:music_player/screens/searchSreen/screens/search_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-class HomeMain extends StatefulWidget {
-  const HomeMain({super.key});
+class HomeMain extends StatelessWidget {
+   HomeMain({super.key});
 
-  @override
-  State<HomeMain> createState() => _HomeMainState();
-}
-
-class _HomeMainState extends State<HomeMain> {
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
+
   List<Widget> _NavScreens() {
     return [PlayerHome(), const SearchScreen(), ProfilePage()];
   }
