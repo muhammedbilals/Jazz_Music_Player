@@ -27,7 +27,7 @@ class settingmenupopup extends StatelessWidget {
                       return Markdown(
                           styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(
                               textTheme: TextTheme(
-                                  bodyText2: TextStyle(
+                                  bodyMedium: TextStyle(
                                       fontFamily: "Inter",
                                       fontSize: 15.0,
                                       color: Colors.white)))),

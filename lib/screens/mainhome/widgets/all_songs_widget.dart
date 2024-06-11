@@ -151,12 +151,12 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                                           favourites(
                                               songname: state
                                                   .Allsongs[songindex]
-                                                  .songname!,
+                                                  .songname??"No Name",
                                               artist: state
-                                                  .Allsongs[songindex].artist!,
+                                                  .Allsongs[songindex].artist??"No Artist",
                                               duration: state
                                                   .Allsongs[songindex]
-                                                  .duration!,
+                                                  .duration??0,
                                               songurl: state
                                                   .Allsongs[songindex].songurl!,
                                               id: state

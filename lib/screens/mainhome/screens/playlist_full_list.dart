@@ -164,7 +164,7 @@ class _PlaylistFullListState extends State<PlaylistFullList> {
                                     playsong[index].songname!,
                                     style: GoogleFonts.kanit(color: colorwhite),
                                   ),
-                                  subtitle: Text(playsong[index].artist!,
+                                  subtitle: Text(playsong[index].artist??"No Artist",
                                       style: GoogleFonts.kanit(
                                           color: colorwhite.withOpacity(0.7),
                                           fontSize: 12)),
