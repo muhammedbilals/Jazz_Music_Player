@@ -7,6 +7,7 @@ import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/screens/mainhome/screens/playlist_full_list.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
+// ignore: must_be_immutable
 class PlayListScreen extends StatelessWidget {
    PlayListScreen({super.key});
 
@@ -182,7 +183,6 @@ class PlayListScreen extends StatelessWidget {
 }
 
 showPlaylistOptions(BuildContext context) {
-  double vheight = MediaQuery.of(context).size.height;
   final myController = TextEditingController();
   double vwidth = MediaQuery.of(context).size.width;
 

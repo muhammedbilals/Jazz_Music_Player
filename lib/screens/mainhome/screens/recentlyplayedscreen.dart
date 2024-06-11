@@ -2,7 +2,6 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/logic/recentlyplayed/recentlyplayed_bloc.dart';
 import 'package:music_player/model/recentlyplayed.dart';

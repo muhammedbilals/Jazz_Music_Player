@@ -18,7 +18,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screens/mainhome/functions/addToFavourites.dart';
 import 'package:music_player/screens/splash.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 class AllSongsWidget extends StatefulWidget {
   const AllSongsWidget({super.key});
@@ -89,7 +88,7 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
                       itemCount: state.Allsongs.length,
                       itemBuilder: ((context, songindex) {
                         RecentlyPlayed rsongs;
-                        Songs songs = state.Allsongs[songindex];
+                        // Songs songs = state.Allsongs[songindex];
                         MostPlayed mostsong = mostplayedsong[songindex];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 8.0, left: 5),

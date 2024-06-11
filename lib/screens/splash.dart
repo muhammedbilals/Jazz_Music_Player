@@ -48,7 +48,7 @@ class _PlayerSplashState extends State<PlayerSplash> {
             songname: element.title,
             songurl: element.uri!,
             duration: element.duration!,
-            artist: element.artist!,
+            artist: element.artist??"No Name",
             count: 0,
             id: element.id),
       );

@@ -114,12 +114,6 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                           child: CircularProgressIndicator(),
                         );
                       }
-                      if (allsongs == null) {
-                        // print('no songs');
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
                       return _audioPlayer.builderCurrent(
                         builder: ((context, playing) {
                           return Column(

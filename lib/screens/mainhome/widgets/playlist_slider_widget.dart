@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_player/colors/colors.dart';
 import 'package:music_player/logic/playlist/playlist_bloc.dart';
-import 'package:music_player/model/playlistmodel.dart';
 import 'package:music_player/screens/mainhome/screens/playlist_full_list.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
@@ -12,7 +11,7 @@ class PlaylistSlider extends StatelessWidget {
 
   Widget build(BuildContext context) {
     double vheight = MediaQuery.of(context).size.height;
-    final playbox = PlaylistSongsbox.getInstance();
+    // final playbox = PlaylistSongsbox.getInstance();
 
     return Column(
       children: [

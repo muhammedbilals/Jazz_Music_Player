@@ -40,7 +40,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double vwidth = MediaQuery.of(context).size.width;
     double vheight = MediaQuery.of(context).size.height;
     return Container(
       color: colordark,

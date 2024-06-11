@@ -1,5 +1,4 @@
 import 'package:music_player/model/playlistmodel.dart';
-import 'package:music_player/model/songmodel.dart';
 
 
 editPlaylist(String name, index) async {
