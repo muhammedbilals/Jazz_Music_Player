@@ -22,7 +22,7 @@ class PlayListScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: colordark,
-        body: SingleChildScrollView(
+        body: SingleChildScrollView( 
           child: Column(
             children: [
               Row(
