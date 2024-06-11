@@ -14,5 +14,6 @@ class UpdateMostPlayedCount extends MostplayedEvent {
   UpdateMostPlayedCount(this.mostplay, this.index);
   
       @override
+  // ignore: override_on_non_overriding_member
   List<Object> get props => [mostplay,index];
 }

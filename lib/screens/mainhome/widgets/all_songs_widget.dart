@@ -54,15 +54,16 @@ class _AllSongsWidgetState extends State<AllSongsWidget> {
     }
     super.initState();
   }
-
   @override
-  Widget build(BuildContext context) {
-    double vheight = MediaQuery.of(context).size.height;
-    @override
     void dispose() {
       audioPlayer.dispose();
       super.dispose();
     }
+
+  @override
+  Widget build(BuildContext context) {
+    double vheight = MediaQuery.of(context).size.height;
+    
 
     return Column(
       children: [
